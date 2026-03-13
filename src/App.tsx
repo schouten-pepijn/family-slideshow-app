@@ -1,49 +1,70 @@
 import { useEffect, useMemo, useState } from "react";
+import type { Photo } from "./types/photo";
+import { fetchPhotos } from "./api/photos";
 
-// Defines the structure of a Photo object with id, title, and url properties.
-type Photo = {
-  id: string;
-  title: string;
-  description?: string;
-  url: string;
-};
-
-// Initial set of photos to be displayed in the slideshow, each with a unique id, title, and URL pointing to an image.
-const initialPhotos: Photo[] = [
-  {
-    id: "1",
-    title: "Sample Photo 1",
-    description: "This is a sample description",
-    url: "https://picsum.photos/id/1015/1200/800",
-  },
-  {
-    id: "2",
-    title: "Sample Photo 2",
-    description: "This is also a sample description",
-    url: "https://picsum.photos/id/1025/1200/800",
-  },
-  {
-    id: "3",
-    title: "Sample Photo 3",
-    url: "https://picsum.photos/id/1035/1200/800",
-  },
-];
-
-// Main App component that renders a photo slideshow with auto-rotation and manual controls for navigating through the photos.
 export default function App() {
-  // State to hold the list of photos and the index of the currently active photo. The active photo is derived using useMemo for performance optimization.
-  const [photos] = useState<Photo[]>(initialPhotos);
+  const [photos, setPhotos] = useState<Photo[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [activeIndex, setActiveIndex] = useState(0);
-  const activePhoto = useMemo(() => photos[activeIndex], [photos, activeIndex]);
 
-  // useEffect hook to set up an interval that automatically advances the active photo every 8 seconds. The interval is cleared when the component unmounts or when the number of photos changes.
   useEffect(() => {
+    async function loadPhotos() {
+      try {
+        setIsLoading(true);
+        setError(null);
+        const data = await fetchPhotos();
+        setPhotos(data);
+      } catch {
+        setError("Er is een fout opgetreden bij het laden van de foto's.");
+      } finally {
+        setIsLoading(false);
+      }
+    }
+
+    loadPhotos();
+  }, []);
+
+  const activePhotos = useMemo(
+    () => photos.filter((photo) => photo.is_active),
+    [photos],
+  );
+
+  const activePhoto = activePhotos[activeIndex];
+
+  useEffect(() => {
+    if (activeIndex >= activePhotos.length) {
+      setActiveIndex(0);
+    }
+  }, [activeIndex, activePhotos.length]);
+
+  useEffect(() => {
+    if (activePhotos.length <= 1) {
+      return;
+    }
+
     const timer = setInterval(() => {
-      setActiveIndex((prev) => (prev + 1) % photos.length);
+      setActiveIndex((currentIndex) => (currentIndex + 1) % activePhotos.length);
     }, 8000);
 
     return () => clearInterval(timer);
-  }, [photos.length]);
+  }, [activePhotos.length]);
+
+  if (isLoading) {
+    return <div className="min-h-screen p-8 text-white">Foto's laden...</div>;
+  }
+
+  if (error) {
+    return <div className="min-h-screen p-8 text-white">{error}</div>;
+  }
+
+  if (activePhotos.length === 0) {
+    return (
+      <div className="min-h-screen p-8 text-white">
+        Nog geen actieve foto's beschikbaar.
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen flex flex-col gap-6 p-8">
@@ -61,18 +82,20 @@ export default function App() {
         <div className="relative w-full rounded-2xl overflow-hidden shadow-[0_20px_40px_rgba(0,0,0,0.5)]">
           <img
             className="w-full h-auto block object-cover"
-            src={activePhoto.url}
-            alt={activePhoto.title}
+            src={activePhoto.image_url}
+            alt={activePhoto.title ?? "Foto"}
           />
           <div className="absolute bottom-0 left-0 right-0 px-5 py-4 bg-black/45 text-white">
             <div className="flex justify-between items-baseline mb-1">
-              <strong className="text-base">{activePhoto.title}</strong>
+              <strong className="text-base">
+                {activePhoto.title ?? "Zonder titel"}
+              </strong>
               <span className="text-sm text-white/60">
-                {activeIndex + 1} / {photos.length}
+                {activeIndex + 1} / {activePhotos.length}
               </span>
             </div>
             <p className="text-sm text-white/75 m-0">
-              {activePhoto.description ?? "No description available"}
+              {activePhoto.description ?? "Geen beschrijving beschikbaar"}
             </p>
           </div>
         </div>
@@ -82,7 +105,9 @@ export default function App() {
             type="button"
             className="px-5 py-3 rounded-full border border-white/20 bg-white/8 text-white font-semibold cursor-pointer transition-all duration-150 hover:bg-white/14 hover:-translate-y-px active:translate-y-0"
             onClick={() =>
-              setActiveIndex((idx) => (idx - 1 + photos.length) % photos.length)
+              setActiveIndex(
+                (idx) => (idx - 1 + activePhotos.length) % activePhotos.length,
+              )
             }
           >
             Vorige
@@ -90,7 +115,9 @@ export default function App() {
           <button
             type="button"
             className="px-5 py-3 rounded-full border border-white/20 bg-white/8 text-white font-semibold cursor-pointer transition-all duration-150 hover:bg-white/14 hover:-translate-y-px active:translate-y-0"
-            onClick={() => setActiveIndex((idx) => (idx + 1) % photos.length)}
+            onClick={() =>
+              setActiveIndex((idx) => (idx + 1) % activePhotos.length)
+            }
           >
             Volgende
           </button>
