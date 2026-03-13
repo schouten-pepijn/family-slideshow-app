@@ -14,7 +14,7 @@ export async function fetchPhotos(): Promise<Photo[]> {
 }
 
 // Asynchronous function to add a new photo to the in-memory store. It takes a File object and optional title and description parameters. The function simulates a network request by introducing a delay before creating a new Photo object, adding it to the store, and returning the newly added photo.
-export async function addPhoto(
+export async function uploadPhoto(
   file: File,
   title?: string,
   description?: string,
