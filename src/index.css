@@ -1,10 +1,8 @@
-html,
+@import "tailwindcss";
+
 body {
-  padding: 0; /* Remove default padding */
-  margin: 0; /* Remove default margin */
-  height: 100%; /* Ensure the body takes up the full height of the viewport */
-}
-/* Ensure the root element takes up the full height of the viewport */
-#root {
-  min-height: 100%;
+  background:
+    radial-gradient(circle at top, rgba(59, 130, 246, 0.15), transparent 55%),
+    #0b1220;
+  color: #f5f7ff;
 }
