@@ -1,5 +1,5 @@
 // Defines the structure of a Photo object with id, title, and url properties.
-type Photo = {
+export type Photo = {
   id: number;
   filename: string;
   stored_filename: string;
@@ -13,5 +13,3 @@ type Photo = {
   updated_at: string;
   image_url: string;
 };
-
-export default Photo;
