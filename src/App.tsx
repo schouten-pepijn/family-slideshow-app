@@ -8,10 +8,6 @@ type Photo = {
   url: string;
 };
 
-const defaultPhotoValues = {
-  description: "No description available",
-};
-
 // Initial set of photos to be displayed in the slideshow, each with a unique id, title, and URL pointing to an image.
 const initialPhotos: Photo[] = [
   {
@@ -68,14 +64,16 @@ export default function App() {
             src={activePhoto.url}
             alt={activePhoto.title}
           />
-          <div className="absolute bottom-0 left-0 right-0 px-5 py-4 bg-black/45 flex justify-between items-start text-white text-[0.95rem]">
-            <strong>{activePhoto.title}</strong>
-            <span className="text-[0.85rem] text-white/75 text-center whitespace-nowrap pointer-events-none">
-              {activePhoto.description ?? defaultPhotoValues.description}
-            </span>
-            <span className="text-[0.9rem]">
-              {activeIndex + 1} / {photos.length}
-            </span>
+          <div className="absolute bottom-0 left-0 right-0 px-5 py-4 bg-black/45 text-white">
+            <div className="flex justify-between items-baseline mb-1">
+              <strong className="text-base">{activePhoto.title}</strong>
+              <span className="text-sm text-white/60">
+                {activeIndex + 1} / {photos.length}
+              </span>
+            </div>
+            <p className="text-sm text-white/75 m-0">
+              {activePhoto.description ?? "No description available"}
+            </p>
           </div>
         </div>
 
