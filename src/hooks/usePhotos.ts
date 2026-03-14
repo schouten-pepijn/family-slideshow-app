@@ -6,7 +6,12 @@ import {
   useState,
   type ReactNode,
 } from "react";
-import { uploadPhoto, fetchPhotos, updatePhoto } from "../api/photos";
+import {
+  uploadPhoto,
+  fetchPhotos,
+  updatePhoto,
+  deletePhoto,
+} from "../api/photos";
 import type { Photo } from "../types/photo";
 
 type UsePhotosResult = {
@@ -20,6 +25,7 @@ type UsePhotosResult = {
     description?: string,
   ) => Promise<void>;
   toggleActive: (photoId: number) => Promise<void>;
+  removePhoto: (photoId: number) => Promise<void>;
 };
 
 const PhotosContext = createContext<UsePhotosResult | null>(null);
@@ -45,12 +51,8 @@ function usePhotosState(): UsePhotosResult {
   async function addNewPhoto(file: File, title?: string, description?: string) {
     try {
       setError(null);
-      const newPhoto = await uploadPhoto(file, title, description);
-      setPhotos((currentPhotos) =>
-        [...currentPhotos, newPhoto].sort(
-          (a, b) => a.sort_order - b.sort_order,
-        ),
-      );
+      await uploadPhoto(file, title, description);
+      await refresh();
     } catch {
       setError("Er is een fout opgetreden bij het toevoegen van de foto.");
     }
@@ -65,17 +67,22 @@ function usePhotosState(): UsePhotosResult {
         throw new Error("Photo not found");
       }
 
-      const updatedPhoto = await updatePhoto(photoId, {
+      await updatePhoto(photoId, {
         is_active: !currentPhoto.is_active,
       });
-
-      setPhotos((currentPhotos) =>
-        currentPhotos.map((photo) =>
-          photo.id === photoId ? updatedPhoto : photo,
-        ),
-      );
+      await refresh();
     } catch {
       setError("Er is een fout opgetreden bij het bijwerken van de foto.");
+    }
+  }
+
+  async function removePhoto(photoId: number) {
+    try {
+      setError(null);
+      await deletePhoto(photoId);
+      await refresh();
+    } catch {
+      setError("Er is een fout opgetreden bij het verwijderen van de foto.");
     }
   }
 
@@ -90,6 +97,7 @@ function usePhotosState(): UsePhotosResult {
     refresh,
     addNewPhoto,
     toggleActive,
+    removePhoto,
   };
 }
 
