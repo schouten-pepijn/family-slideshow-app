@@ -2,7 +2,8 @@ import { UploadForm } from "../components/upload/UploadForm";
 import { usePhotos } from "../hooks/usePhotos";
 
 export function AdminPage() {
-  const { photos, isLoading, error, addNewPhoto, toggleActive } = usePhotos();
+  const { photos, isLoading, error, addNewPhoto, toggleActive, removePhoto } =
+    usePhotos();
 
   return (
     <div className="min-h-screen px-4 py-8 text-white sm:px-6 lg:px-8">
@@ -13,8 +14,8 @@ export function AdminPage() {
           </p>
           <h1 className="text-3xl font-semibold">Beheer je fotolijst</h1>
           <p className="max-w-2xl text-sm text-white/70">
-            Voeg nieuwe foto's toe, bekijk de huidige selectie en zet foto's
-            actief of inactief voor de slideshow.
+            Voeg nieuwe foto's toe, bekijk de huidige selectie, verwijder foto's
+            en zet foto's actief of inactief voor de slideshow.
           </p>
         </header>
 
@@ -105,6 +106,13 @@ export function AdminPage() {
                       className="rounded-full border border-white/15 bg-white/10 px-4 py-2 text-sm font-semibold transition-colors hover:bg-white/15"
                     >
                       {photo.is_active ? "Zet inactief" : "Zet actief"}
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => removePhoto(photo.id)}
+                      className="ml-2 rounded-full border border-red-400/30 bg-red-500/10 px-4 py-2 text-sm font-semibold text-red-100 transition-colors hover:bg-red-500/20"
+                    >
+                      Verwijder
                     </button>
                   </div>
                 </article>
