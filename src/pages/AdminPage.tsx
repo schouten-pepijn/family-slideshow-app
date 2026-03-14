@@ -59,22 +59,26 @@ export function AdminPage() {
   }
 
   return (
-    <div className="min-h-screen px-4 py-8 text-white sm:px-6 lg:px-8">
-      <div className="mx-auto flex w-full max-w-6xl flex-col gap-8">
-        <header className="flex flex-col gap-2">
-          <p className="text-sm uppercase tracking-[0.2em] text-white/50">
+    <div className="min-h-screen px-4 pt-24 pb-8 text-white sm:px-6 lg:px-8">
+      <div className="mx-auto flex w-full max-w-7xl flex-col gap-8">
+        <header className="flex flex-col gap-3 text-center">
+          <p className="text-xs font-semibold uppercase tracking-[0.28em] text-white/45">
             Admin
           </p>
-          <h1 className="text-3xl font-semibold">Beheer je fotolijst</h1>
-          <p className="max-w-2xl text-sm text-white/70">
+          <h1 className="text-3xl font-semibold tracking-tight sm:text-5xl">
+            Beheer jouw digitale fotolijst
+          </h1>
+          <p className="mx-auto max-w-2xl text-sm leading-7 text-white/65 sm:text-base">
             Voeg nieuwe foto's toe, bekijk de huidige selectie, verwijder foto's
             en zet foto's actief of inactief voor de slideshow.
           </p>
         </header>
 
-        <UploadForm onSubmit={addNewPhoto} />
+        <div className="mx-auto w-full max-w-3xl">
+          <UploadForm onSubmit={addNewPhoto} />
+        </div>
 
-        <section className="rounded-3xl border border-white/10 bg-white/5 p-6 shadow-[0_20px_60px_rgba(0,0,0,0.25)] backdrop-blur">
+        <section className="rounded-[2rem] border border-white/10 bg-white/5 p-6 shadow-[0_30px_80px_rgba(0,0,0,0.35)] backdrop-blur md:p-8">
           <div className="mb-5 flex items-center justify-between gap-4">
             <div>
               <h2 className="text-2xl font-semibold">Huidige foto's</h2>
