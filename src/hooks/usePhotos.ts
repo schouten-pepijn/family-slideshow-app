@@ -24,6 +24,11 @@ type UsePhotosResult = {
     title?: string,
     description?: string,
   ) => Promise<void>;
+  editPhotoDetails: (
+    photoId: number,
+    title?: string,
+    description?: string,
+  ) => Promise<void>;
   toggleActive: (photoId: number) => Promise<void>;
   removePhoto: (photoId: number) => Promise<void>;
 };
@@ -59,6 +64,24 @@ function usePhotosState(): UsePhotosResult {
       await refresh({ silent: true });
     } catch {
       setError("Er is een fout opgetreden bij het toevoegen van de foto.");
+    }
+  }
+
+  async function editPhotoDetails(
+    photoId: number,
+    title?: string,
+    description?: string,
+  ) {
+    try {
+      setError(null);
+
+      await updatePhoto(photoId, {
+        title: title?.trim() || null,
+        description: description?.trim() || null,
+      });
+      await refresh({ silent: true });
+    } catch {
+      setError("Er is een fout opgetreden bij het bijwerken van de foto.");
     }
   }
 
@@ -100,6 +123,7 @@ function usePhotosState(): UsePhotosResult {
     error,
     refresh,
     addNewPhoto,
+    editPhotoDetails,
     toggleActive,
     removePhoto,
   };
