@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
 import type { Photo } from "../../types/photo";
+import { useSlideshow } from "../../hooks/useSlideshow";
 import { SlideshowImage } from "./SlideshowImage";
 
 type SlideshowProps = {
@@ -7,26 +7,10 @@ type SlideshowProps = {
 };
 
 export function Slideshow({ photos }: SlideshowProps) {
-  const [activeIndex, setActiveIndex] = useState(0);
-  const activePhoto = photos[activeIndex];
-
-  useEffect(() => {
-    if (activeIndex >= photos.length) {
-      setActiveIndex(0);
-    }
-  }, [activeIndex, photos.length]);
-
-  useEffect(() => {
-    if (photos.length <= 1) {
-      return;
-    }
-
-    const timer = setInterval(() => {
-      setActiveIndex((currentIndex) => (currentIndex + 1) % photos.length);
-    }, 8000);
-
-    return () => clearInterval(timer);
-  }, [photos.length]);
+  const { activeIndex, activePhoto, goToNext, goToPrevious } = useSlideshow({
+    photos,
+    intervalMs: 8000,
+  });
 
   return (
     <div className="min-h-screen flex flex-col gap-6 p-8">
@@ -51,16 +35,14 @@ export function Slideshow({ photos }: SlideshowProps) {
           <button
             type="button"
             className="px-5 py-3 rounded-full border border-white/20 bg-white/8 text-white font-semibold cursor-pointer transition-all duration-150 hover:bg-white/14 hover:-translate-y-px active:translate-y-0"
-            onClick={() =>
-              setActiveIndex((idx) => (idx - 1 + photos.length) % photos.length)
-            }
+            onClick={goToPrevious}
           >
             Vorige
           </button>
           <button
             type="button"
             className="px-5 py-3 rounded-full border border-white/20 bg-white/8 text-white font-semibold cursor-pointer transition-all duration-150 hover:bg-white/14 hover:-translate-y-px active:translate-y-0"
-            onClick={() => setActiveIndex((idx) => (idx + 1) % photos.length)}
+            onClick={goToNext}
           >
             Volgende
           </button>
