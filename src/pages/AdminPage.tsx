@@ -1,9 +1,45 @@
+import { FormEvent, useState } from "react";
 import { UploadForm } from "../components/upload/UploadForm";
 import { usePhotos } from "../hooks/usePhotos";
 
 export function AdminPage() {
-  const { photos, isLoading, error, addNewPhoto, toggleActive, removePhoto } =
-    usePhotos();
+  const {
+    photos,
+    isLoading,
+    error,
+    addNewPhoto,
+    editPhotoDetails,
+    toggleActive,
+    removePhoto,
+  } = usePhotos();
+  const [editingPhotoId, setEditingPhotoId] = useState<number | null>(null);
+  const [editTitle, setEditTitle] = useState("");
+  const [editDescription, setEditDescription] = useState("");
+
+  function handleStartEditing(
+    photoId: number,
+    title: string | null,
+    description: string | null,
+  ) {
+    setEditingPhotoId(photoId);
+    setEditTitle(title ?? "");
+    setEditDescription(description ?? "");
+  }
+
+  function handleCancelEditing() {
+    setEditingPhotoId(null);
+    setEditTitle("");
+    setEditDescription("");
+  }
+
+  async function handleSavePhotoDetails(
+    event: FormEvent<HTMLFormElement>,
+    photoId: number,
+  ) {
+    event.preventDefault();
+    await editPhotoDetails(photoId, editTitle, editDescription);
+    handleCancelEditing();
+  }
 
   async function handleRemovePhoto(photoId: number) {
     const confirmed = window.confirm(
@@ -12,6 +48,10 @@ export function AdminPage() {
 
     if (!confirmed) {
       return;
+    }
+
+    if (editingPhotoId === photoId) {
+      handleCancelEditing();
     }
 
     await removePhoto(photoId);
@@ -78,24 +118,83 @@ export function AdminPage() {
                   </div>
 
                   <div className="flex flex-col gap-2">
-                    <div className="flex flex-wrap items-center gap-2">
-                      <h3 className="text-lg font-semibold">
-                        {photo.title ?? "Zonder titel"}
-                      </h3>
-                      <span
-                        className={`rounded-full px-3 py-1 text-xs font-semibold ${
-                          photo.is_active
-                            ? "bg-emerald-400/20 text-emerald-100"
-                            : "bg-white/10 text-white/70"
-                        }`}
+                    {editingPhotoId === photo.id ? (
+                      <form
+                        onSubmit={(event) =>
+                          handleSavePhotoDetails(event, photo.id)
+                        }
+                        className="flex flex-col gap-3"
                       >
-                        {photo.is_active ? "Actief" : "Inactief"}
-                      </span>
-                    </div>
+                        <label className="flex flex-col gap-2 text-sm font-medium text-white/80">
+                          Titel
+                          <input
+                            type="text"
+                            value={editTitle}
+                            onChange={(event) => setEditTitle(event.target.value)}
+                            className="rounded-2xl border border-white/15 bg-black/30 px-4 py-3 text-white placeholder:text-white/40"
+                          />
+                        </label>
 
-                    <p className="text-sm text-white/70">
-                      {photo.description ?? "Geen beschrijving beschikbaar."}
-                    </p>
+                        <label className="flex flex-col gap-2 text-sm font-medium text-white/80">
+                          Beschrijving
+                          <textarea
+                            value={editDescription}
+                            onChange={(event) =>
+                              setEditDescription(event.target.value)
+                            }
+                            rows={4}
+                            className="rounded-2xl border border-white/15 bg-black/30 px-4 py-3 text-white placeholder:text-white/40"
+                          />
+                        </label>
+
+                        <div className="flex flex-wrap gap-3">
+                          <button
+                            type="submit"
+                            className="rounded-full bg-white px-4 py-2 text-sm font-semibold text-black transition-opacity hover:opacity-90"
+                          >
+                            Opslaan
+                          </button>
+                          <button
+                            type="button"
+                            onClick={handleCancelEditing}
+                            className="rounded-full border border-white/15 bg-white/10 px-4 py-2 text-sm font-semibold transition-colors hover:bg-white/15"
+                          >
+                            Annuleren
+                          </button>
+                        </div>
+                      </form>
+                    ) : (
+                      <button
+                        type="button"
+                        onClick={() =>
+                          handleStartEditing(
+                            photo.id,
+                            photo.title,
+                            photo.description,
+                          )
+                        }
+                        className="flex flex-col items-start gap-2 rounded-2xl border border-transparent px-2 py-2 text-left transition-colors hover:border-white/10 hover:bg-white/5"
+                      >
+                        <div className="flex flex-wrap items-center gap-2">
+                          <h3 className="text-lg font-semibold">
+                            {photo.title ?? "Zonder titel"}
+                          </h3>
+                          <span
+                            className={`rounded-full px-3 py-1 text-xs font-semibold ${
+                              photo.is_active
+                                ? "bg-emerald-400/20 text-emerald-100"
+                                : "bg-white/10 text-white/70"
+                            }`}
+                          >
+                            {photo.is_active ? "Actief" : "Inactief"}
+                          </span>
+                        </div>
+
+                        <p className="text-sm text-white/70">
+                          {photo.description ?? "Geen beschrijving beschikbaar."}
+                        </p>
+                      </button>
+                    )}
 
                     <dl className="grid gap-2 text-xs text-white/50 sm:grid-cols-2">
                       <div>
