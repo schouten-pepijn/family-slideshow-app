@@ -1,12 +1,34 @@
-import { NavLink, Route, Routes } from "react-router-dom";
+import { NavLink, Route, Routes, useLocation } from "react-router-dom";
 import { AdminPage } from "./pages/AdminPage";
 import { SlideshowPage } from "./pages/SlideshowPage";
 
 export default function App() {
+  const location = useLocation();
+  const isSlideshowRoute = location.pathname === "/";
+
   return (
     <div className="min-h-screen">
-      <nav className="sticky top-0 z-10 border-b border-white/10 bg-black/20 backdrop-blur">
-        <div className="mx-auto flex w-full max-w-6xl items-center gap-3 px-4 py-4 sm:px-6 lg:px-8">
+      <nav
+        className={
+          isSlideshowRoute
+            ? "pointer-events-none fixed inset-x-0 top-0 z-20"
+            : "sticky top-0 z-20 border-b border-white/10 bg-black/20 backdrop-blur"
+        }
+      >
+        <div
+          className={
+            isSlideshowRoute
+              ? "mx-auto flex w-full max-w-7xl justify-end px-4 py-4 sm:px-6 lg:px-8"
+              : "mx-auto flex w-full max-w-6xl items-center gap-3 px-4 py-4 sm:px-6 lg:px-8"
+          }
+        >
+          <div
+            className={
+              isSlideshowRoute
+                ? "pointer-events-auto flex items-center gap-2 rounded-full border border-white/10 bg-black/35 p-2 shadow-[0_18px_50px_rgba(0,0,0,0.3)] backdrop-blur-md"
+                : "flex items-center gap-3"
+            }
+          >
           <NavLink
             to="/"
             end
@@ -32,6 +54,7 @@ export default function App() {
           >
             Admin
           </NavLink>
+          </div>
         </div>
       </nav>
 
