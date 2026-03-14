@@ -67,3 +67,19 @@ export async function updatePhoto(
 
   return updatedPhoto;
 }
+
+export async function deletePhoto(photoId: number): Promise<void> {
+  await wait(200); // Simulate network delay
+
+  const photo = photoStore.find((item) => item.id === photoId);
+  if (!photo) {
+    throw new Error("Photo not found");
+  }
+
+  const remainingPhotos = photoStore.filter((item) => item.id !== photoId);
+
+  photoStore = remainingPhotos.map((item, index) => ({
+    ...item,
+    sort_order: index + 1,
+  }));
+}
