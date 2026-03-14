@@ -1,8 +1,14 @@
-import { useEffect, useState } from "react";
+import {
+  createElement,
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+  type ReactNode,
+} from "react";
 import { uploadPhoto, fetchPhotos, updatePhoto } from "../api/photos";
 import type { Photo } from "../types/photo";
 
-// Custom hook to manage photos state and actions
 type UsePhotosResult = {
   photos: Photo[];
   isLoading: boolean;
@@ -16,13 +22,13 @@ type UsePhotosResult = {
   toggleActive: (photoId: number) => Promise<void>;
 };
 
-// This hook encapsulates the logic for fetching, adding, and updating photos,
-export function usePhotos(): UsePhotosResult {
+const PhotosContext = createContext<UsePhotosResult | null>(null);
+
+function usePhotosState(): UsePhotosResult {
   const [photos, setPhotos] = useState<Photo[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  // Function to refresh the list of photos from the API
   async function refresh() {
     try {
       setIsLoading(true);
@@ -36,7 +42,6 @@ export function usePhotos(): UsePhotosResult {
     }
   }
 
-  // Function to add a new photo using the API and update the local state
   async function addNewPhoto(file: File, title?: string, description?: string) {
     try {
       setError(null);
@@ -51,7 +56,6 @@ export function usePhotos(): UsePhotosResult {
     }
   }
 
-  // Function to toggle the active state of a photo and update it via the API
   async function toggleActive(photoId: number) {
     try {
       setError(null);
@@ -75,7 +79,6 @@ export function usePhotos(): UsePhotosResult {
     }
   }
 
-  // Load photos when the hook is first used
   useEffect(() => {
     refresh();
   }, []);
@@ -88,4 +91,24 @@ export function usePhotos(): UsePhotosResult {
     addNewPhoto,
     toggleActive,
   };
+}
+
+type PhotosProviderProps = {
+  children: ReactNode;
+};
+
+export function PhotosProvider({ children }: PhotosProviderProps) {
+  const value = usePhotosState();
+
+  return createElement(PhotosContext.Provider, { value }, children);
+}
+
+export function usePhotos(): UsePhotosResult {
+  const context = useContext(PhotosContext);
+
+  if (!context) {
+    throw new Error("usePhotos must be used within a PhotosProvider");
+  }
+
+  return context;
 }
