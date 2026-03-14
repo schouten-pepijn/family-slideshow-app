@@ -18,7 +18,7 @@ type UsePhotosResult = {
   photos: Photo[];
   isLoading: boolean;
   error: string | null;
-  refresh: () => Promise<void>;
+  refresh: (options?: { silent?: boolean }) => Promise<void>;
   addNewPhoto: (
     file: File,
     title?: string,
