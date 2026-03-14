@@ -33,18 +33,22 @@ const PhotosContext = createContext<UsePhotosResult | null>(null);
 function usePhotosState(): UsePhotosResult {
   const [photos, setPhotos] = useState<Photo[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [isRefreshing, setIsRefreshing] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  async function refresh() {
+  async function refresh(options?: { silent?: boolean }) {
     try {
-      setIsLoading(true);
+      if (options?.silent) setIsRefreshing(true);
+      else setIsLoading(true);
+
       setError(null);
       const data = await fetchPhotos();
       setPhotos(data);
     } catch {
       setError("Er is een fout opgetreden bij het laden van de foto's.");
     } finally {
-      setIsLoading(false);
+      if (options?.silent) setIsRefreshing(false);
+      else setIsLoading(false);
     }
   }
 
@@ -52,7 +56,7 @@ function usePhotosState(): UsePhotosResult {
     try {
       setError(null);
       await uploadPhoto(file, title, description);
-      await refresh();
+      await refresh({ silent: true });
     } catch {
       setError("Er is een fout opgetreden bij het toevoegen van de foto.");
     }
@@ -70,7 +74,7 @@ function usePhotosState(): UsePhotosResult {
       await updatePhoto(photoId, {
         is_active: !currentPhoto.is_active,
       });
-      await refresh();
+      await refresh({ silent: true });
     } catch {
       setError("Er is een fout opgetreden bij het bijwerken van de foto.");
     }
@@ -80,7 +84,7 @@ function usePhotosState(): UsePhotosResult {
     try {
       setError(null);
       await deletePhoto(photoId);
-      await refresh();
+      await refresh({ silent: true });
     } catch {
       setError("Er is een fout opgetreden bij het verwijderen van de foto.");
     }
