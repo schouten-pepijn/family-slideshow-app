@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import type { Photo } from "../../types/photo";
+import { SlideshowImage } from "./SlideshowImage";
 
 type SlideshowProps = {
   photos: Photo[];
@@ -40,26 +41,11 @@ export function Slideshow({ photos }: SlideshowProps) {
       </header>
 
       <main className="flex flex-col items-center gap-6 max-w-[920px] w-full mx-auto">
-        <div className="relative w-full rounded-2xl overflow-hidden shadow-[0_20px_40px_rgba(0,0,0,0.5)]">
-          <img
-            className="w-full h-auto block object-cover"
-            src={activePhoto.image_url}
-            alt={activePhoto.title ?? "Foto"}
-          />
-          <div className="absolute bottom-0 left-0 right-0 px-5 py-4 bg-black/45 text-white">
-            <div className="flex justify-between items-baseline mb-1">
-              <strong className="text-base">
-                {activePhoto.title ?? "Zonder titel"}
-              </strong>
-              <span className="text-sm text-white/60">
-                {activeIndex + 1} / {photos.length}
-              </span>
-            </div>
-            <p className="text-sm text-white/75 m-0">
-              {activePhoto.description ?? "Geen beschrijving beschikbaar"}
-            </p>
-          </div>
-        </div>
+        <SlideshowImage
+          photo={activePhoto}
+          currentIndex={activeIndex}
+          totalPhotos={photos.length}
+        />
 
         <div className="flex items-center gap-3">
           <button
