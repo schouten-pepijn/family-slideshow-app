@@ -7,8 +7,8 @@ def hash_password(password: str) -> str:
     return ph.hash(password)
 
 
-def verify_password(hash: str, password: str) -> bool:
+def verify_password(password: str, hashed_password: str) -> bool:
     try:
-        return ph.verify(hash, password)
+        return ph.verify(hashed_password, password)
     except Exception:
         return False
