@@ -15,3 +15,6 @@ wheels/
 # local folders
 guidelines/
 uploads/
+
+# database
+*.db
