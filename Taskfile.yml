@@ -1,0 +1,13 @@
+version: '3'
+
+
+tasks:
+  run-dev:
+    cmds:
+      - uv run fastapi dev src/main.py --reload
+
+  alembic-head:
+    cmds:
+      - uv run alembic upgrade head
+
+
