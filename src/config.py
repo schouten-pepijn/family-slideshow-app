@@ -16,6 +16,12 @@ class Settings(BaseSettings):
     allowed_origins: list[str] = ["http://localhost:5173"]
     environment: str = "development"
 
+    # user seeds
+    admin_username: str = "admin"
+    admin_password: str
+    viewer_username: str = "viewer"
+    viewer_password: str
+
     @property
     def is_production(self) -> bool:
         return self.environment == "production"
