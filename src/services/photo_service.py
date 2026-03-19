@@ -29,6 +29,7 @@ async def create_photo(
 ) -> Photo:
     result = await db.execute(select(func.max(Photo.sort_order)))
     max_sort_order = result.scalar_one()
+    sort_order = 0 if max_sort_order is None else max_sort_order + 1
 
     photo = Photo(
         filename=filename,
@@ -38,7 +39,7 @@ async def create_photo(
         title=title,
         description=description,
         is_active=True,
-        sort_order=0 if max_sort_order is None else max_sort_order + 1,
+        sort_order=sort_order,
     )
     db.add(photo)
     await db.commit()
