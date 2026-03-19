@@ -6,6 +6,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from src.database import Base, SessionLocal, engine
 from src.config import settings
+from src.routers import auth_router
 from src.services.seed_service import seed_users
 
 
@@ -30,3 +31,5 @@ app.add_middleware(
     allow_methods=["GET", "POST", "PATCH", "DELETE", "OPTIONS"],
     allow_headers=["Content-Type"],
 )
+
+app.include_router(auth_router)
