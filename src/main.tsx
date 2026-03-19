@@ -3,15 +3,18 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
 import App from "./App";
+import { AuthProvider } from "./hooks/useAuth";
 import { PhotosProvider } from "./hooks/usePhotos";
 import "./index.css";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <BrowserRouter>
-      <PhotosProvider>
-        <App />
-      </PhotosProvider>
+      <AuthProvider>
+        <PhotosProvider>
+          <App />
+        </PhotosProvider>
+      </AuthProvider>
     </BrowserRouter>
   </React.StrictMode>,
 );
