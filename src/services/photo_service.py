@@ -2,6 +2,7 @@ from sqlalchemy import func, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from src.models.photo import Photo
+from src.services.collection_service import replace_photo_memberships
 
 
 async def list_photos(db: AsyncSession) -> list[Photo]:
@@ -26,6 +27,7 @@ async def create_photo(
     file_size: int,
     title: str | None = None,
     description: str | None = None,
+    collection_ids: list[int] | None = None,
 ) -> Photo:
     result = await db.execute(select(func.max(Photo.sort_order)))
     max_sort_order = result.scalar_one()
@@ -44,6 +46,16 @@ async def create_photo(
     db.add(photo)
     await db.commit()
     await db.refresh(photo)
+
+    # If memberships were provided, replace to exactly match the payload.
+    if collection_ids is not None:
+        await replace_photo_memberships(
+            db,
+            photo_id=photo.id,
+            collection_ids=collection_ids,
+        )
+        await db.refresh(photo)
+
     return photo
 
 
@@ -54,6 +66,7 @@ async def update_photo(
     title: str | None = None,
     description: str | None = None,
     is_active: bool | None = None,
+    collection_ids: list[int] | None = None,
 ) -> Photo:
     if title is not None:
         photo.title = title
@@ -66,6 +79,16 @@ async def update_photo(
 
     await db.commit()
     await db.refresh(photo)
+
+    # None means no membership change, [] means clear all memberships.
+    if collection_ids is not None:
+        await replace_photo_memberships(
+            db,
+            photo_id=photo.id,
+            collection_ids=collection_ids,
+        )
+        await db.refresh(photo)
+
     return photo
 
 
