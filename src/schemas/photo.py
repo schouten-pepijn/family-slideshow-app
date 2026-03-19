@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from pydantic import BaseModel, ConfigDict
+from pydantic import BaseModel, ConfigDict, Field
 
 
 class PhotoResponse(BaseModel):
@@ -16,6 +16,9 @@ class PhotoResponse(BaseModel):
     created_at: datetime
     updated_at: datetime
     image_url: str
+
+    # from Collection
+    collection_ids: list[int] = Field(default_factory=list)
 
     model_config = ConfigDict(from_attributes=True)
 
