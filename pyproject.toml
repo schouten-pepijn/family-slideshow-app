@@ -15,4 +15,14 @@ dependencies = [
 ]
 
 [dependency-groups]
-dev = ["black>=26.3.1"]
+dev = ["black>=26.3.1", "bump-my-version>=1.2.7"]
+
+[tool.bumpversion]
+current_version = "0.1.0"
+commit = true
+tag = true
+
+[[tool.bumpversion.files]]
+filename = "pyproject.toml"
+search = 'version = "{current_version}"'
+replace = 'version = "{new_version}"'
