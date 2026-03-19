@@ -1,4 +1,4 @@
-from sqlalchemy import select
+from sqlalchemy import func, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from src.models.photo import Photo
@@ -21,19 +21,24 @@ async def create_photo(
     db: AsyncSession,
     *,
     filename: str,
-    storage_filename: str,
+    stored_filename: str,
     mime_type: str,
     file_size: int,
     title: str | None = None,
     description: str | None = None,
 ) -> Photo:
+    result = await db.execute(select(func.max(Photo.sort_order)))
+    max_sort_order = result.scalar_one()
+
     photo = Photo(
         filename=filename,
-        storage_filename=storage_filename,
+        stored_filename=stored_filename,
         mime_type=mime_type,
         file_size=file_size,
         title=title,
         description=description,
+        is_active=True,
+        sort_order=0 if max_sort_order is None else max_sort_order + 1,
     )
     db.add(photo)
     await db.commit()
