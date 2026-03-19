@@ -53,7 +53,7 @@ async def login(
         max_age=settings.session_max_age,
         httponly=True,
         secure=settings.is_production,
-        samesite="lax",
+        samesite=settings.session_cookie_samesite,
         path="/",
     )
 
@@ -76,7 +76,7 @@ async def logout(
         path="/",
         httponly=True,
         secure=settings.is_production,
-        samesite="lax",
+        samesite=settings.session_cookie_samesite,
     )
 
     return {}

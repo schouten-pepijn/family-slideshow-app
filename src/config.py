@@ -10,6 +10,7 @@ class Settings(BaseSettings):
     database_url: str = "sqlite+aiosqlite:///./slideshow.db"
     secret_key: str
     session_cookie_name: str = "session"
+    session_cookie_samesite: str = "lax"
     session_max_age: int = 86400 * 30
     uploads_dir: str = "uploads"
     max_upload_size_bytes: int = 20 * 1024 * 1024
