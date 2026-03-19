@@ -32,5 +32,16 @@ app.add_middleware(
     allow_headers=["Content-Type"],
 )
 
+
+@app.get("/")
+async def root() -> dict[str, str]:
+    return {"status": "ok"}
+
+
+@app.get("/health")
+async def health() -> dict[str, str]:
+    return {"status": "healthy"}
+
+
 app.include_router(auth_router)
 app.include_router(photos_router)
