@@ -128,6 +128,18 @@ async def list_collection_photo_ids(
     return list(result.scalars().all())
 
 
+async def list_photo_ids_for_collection(
+    db: AsyncSession,
+    collection_id: int,
+) -> list[int]:
+    result = await db.execute(
+        select(PhotoCollectionJunction.photo_id)
+        .where(PhotoCollectionJunction.collection_id == collection_id)
+        .order_by(PhotoCollectionJunction.photo_id.asc())
+    )
+    return list(result.scalars().all())
+
+
 async def replace_photo_memberships(
     db: AsyncSession,
     *,
