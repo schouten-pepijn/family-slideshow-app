@@ -1,8 +1,9 @@
-from sqlalchemy import func, select
+from sqlalchemy import delete, func, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 
 from src.models.collection import Collection
+from src.models.photo_collection_junction import PhotoCollectionJunction
 from src.models.user import User
 
 
@@ -113,3 +114,64 @@ async def delete_collection(
     await db.delete(collection)
     await db.commit()
     await resequence_sort_order(db)
+
+
+async def list_collection_photo_ids(
+    db: AsyncSession,
+    photo_id: int,
+) -> list[int]:
+    result = await db.execute(
+        select(PhotoCollectionJunction.collection_id)
+        .where(PhotoCollectionJunction.photo_id == photo_id)
+        .order_by(PhotoCollectionJunction.collection_id.asc())
+    )
+    return list(result.scalars().all())
+
+
+async def replace_photo_memberships(
+    db: AsyncSession,
+    *,
+    photo_id: int,
+    collection_ids: list[int],
+) -> None:
+    target_ids = set(collection_ids)
+
+    if target_ids:
+        result = await db.execute(
+            select(Collection.id).where(Collection.id.in_(target_ids))
+        )
+
+        existing_ids = set(result.scalars().all())
+        missing_ids = target_ids - existing_ids
+        if missing_ids:
+            raise ValueError(
+                f"Collections with IDs {sorted(missing_ids)} do not exist."
+            )
+
+    result = await db.execute(
+        select(PhotoCollectionJunction.collection_id).where(
+            PhotoCollectionJunction.photo_id == photo_id
+        )
+    )
+    current_ids = set(result.scalars().all())
+
+    to_add = target_ids - current_ids
+    to_remove = current_ids - target_ids
+
+    if to_remove:
+        await db.execute(
+            delete(PhotoCollectionJunction).where(
+                PhotoCollectionJunction.photo_id == photo_id,
+                PhotoCollectionJunction.collection_id.in_(to_remove),
+            )
+        )
+
+    for collection_id in to_add:
+        junction = PhotoCollectionJunction(
+            photo_id=photo_id,
+            collection_id=collection_id,
+            sort_order=0,
+        )
+        db.add(junction)
+
+    await db.commit()
