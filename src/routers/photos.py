@@ -24,6 +24,7 @@ from src.dependencies import get_current_user, require_admin
 from src.models.photo import Photo
 from src.models.user import User
 from src.schemas.photo import PhotoResponse, PhotoUpdateRequest
+from src.services.collection_service import list_collection_photo_ids
 from src.services.photo_service import (
     create_photo,
     delete_photo,
@@ -52,7 +53,9 @@ ALLOWED_MIME_TYPES = {
 }
 
 
-def to_photo_response(photo: Photo) -> PhotoResponse:
+async def to_photo_response(db: AsyncSession, photo: Photo) -> PhotoResponse:
+    collection_ids = await list_collection_photo_ids(db, photo.id)
+
     return PhotoResponse(
         id=photo.id,
         filename=photo.filename,
@@ -66,6 +69,7 @@ def to_photo_response(photo: Photo) -> PhotoResponse:
         created_at=photo.created_at,
         updated_at=photo.updated_at,
         image_url=f"/api/photos/{photo.id}/image",
+        collection_ids=collection_ids,
     )
 
 
@@ -75,7 +79,7 @@ async def get_photos(
     _: get_current_user_dependency,
 ) -> list[PhotoResponse]:
     photos = await list_photos(db)
-    return [to_photo_response(photo) for photo in photos]
+    return [await to_photo_response(db, photo) for photo in photos]
 
 
 @router.post(
@@ -87,6 +91,7 @@ async def upload_photo(
     file: UploadFile = File(...),
     title: str | None = Form(None),
     description: str | None = Form(None),
+    collection_ids: list[int] | None = Form(None),
 ) -> PhotoResponse:
     if file.content_type not in ALLOWED_MIME_TYPES:
         raise HTTPException(
@@ -124,9 +129,10 @@ async def upload_photo(
         file_size=file_size,
         title=title,
         description=description,
+        collection_ids=collection_ids,
     )
 
-    return to_photo_response(photo)
+    return await to_photo_response(db, photo)
 
 
 @router.patch("/{photo_id}", response_model=PhotoResponse)
@@ -151,9 +157,12 @@ async def patch_photo(
         title=updates["title"] if "title" in updates else None,
         description=updates["description"] if "description" in updates else None,
         is_active=updates["is_active"] if "is_active" in updates else None,
+        collection_ids=(
+            updates["collection_ids"] if "collection_ids" in updates else None
+        ),
     )
 
-    return to_photo_response(photo)
+    return await to_photo_response(db, photo)
 
 
 @router.delete("/{photo_id}", status_code=status.HTTP_204_NO_CONTENT)
