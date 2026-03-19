@@ -1,58 +1,48 @@
 import type { AuthUser, UserRole } from "../types/auth";
 
-type MockUser = {
-  id: number;
-  username: string;
-  password: string;
-  role: UserRole;
-};
-
-const mockUsers: MockUser[] = [
-  {
-    id: 1,
-    username: "admin",
-    password: "admin123",
-    role: "admin",
-  },
-  {
-    id: 2,
-    username: "viewer",
-    password: "viewer123",
-    role: "viewer",
-  },
-];
-
-let currentUser: AuthUser | null = null;
-
-const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
-
 export async function login(
   username: string,
   password: string,
 ): Promise<AuthUser> {
-  await wait(200); // Simulate network delay
+  const response = await fetch("/api/auth/login", {
+    method: "POST",
+    credentials: "include",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ username, password }),
+  });
 
-  const user = mockUsers.find(
-    (item) => item.username === username && item.password === password,
-  );
+  if (!response.ok) {
+    const data = await response.json().catch(() => null);
+    throw new Error(data?.detail ?? "Inloggen mislukt.");
+  }
 
-  if (!user) throw new Error("Invalid username or password");
-
-  currentUser = {
-    id: user.id,
-    username: user.username,
-    role: user.role,
-  };
-
-  return currentUser;
+  return response.json();
 }
 
 export async function logout(): Promise<void> {
-  await wait(200); // Simulate network delay
-  currentUser = null;
+  const response = await fetch("/api/auth/logout", {
+    method: "POST",
+    credentials: "include",
+  });
+
+  if (!response.ok)
+    throw new Error("Uitloggen mislukt.");
+
 }
 
 export async function fetchCurrentUser(): Promise<AuthUser | null> {
-  await wait(200); // Simulate network delay
-  return currentUser;
+  const response = await fetch("/api/auth/me", {
+    method: "GET",
+    credentials: "include",
+  });
+
+  if (response.status === 401)
+    return null; // Not authenticated
+
+  if (!response.ok)
+    throw new Error("Gebruiker ophalen mislukt.");
+
+  return response.json();
 }
