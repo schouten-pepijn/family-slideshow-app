@@ -27,3 +27,4 @@ class PhotoUpdateRequest(BaseModel):
     title: str | None = None
     description: str | None = None
     is_active: bool | None = None
+    collection_ids: list[int] | None = None
