@@ -84,7 +84,7 @@ export function AdminPage() {
               <h2 className="text-2xl font-semibold">Huidige foto's</h2>
               <p className="mt-1 text-sm text-white/70">
                 {photos.length} foto{photos.length === 1 ? "" : "'s"} in de
-                lokale mock-state.
+                huidige selectie.
               </p>
             </div>
           </div>
