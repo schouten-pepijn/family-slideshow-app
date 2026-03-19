@@ -1,7 +1,16 @@
 import type { Photo } from "../types/photo";
+import { buildApiUrl, resolveAssetUrl } from "../lib/api";
+
+
+function normalizePhoto(photo: Photo): Photo {
+  return {
+    ...photo,
+    image_url: resolveAssetUrl(photo.image_url),
+  };
+}
 
 export async function fetchPhotos(): Promise<Photo[]> {
-  const res = await fetch("/api/photos", {
+  const res = await fetch(buildApiUrl("/api/photos"), {
     credentials: "include",
   });
 
@@ -9,7 +18,8 @@ export async function fetchPhotos(): Promise<Photo[]> {
     throw new Error("Foto's ophalen mislukt.");
   }
 
-  return res.json();
+  const photos = (await res.json()) as Photo[];
+  return photos.map(normalizePhoto);
 }
 
 export async function uploadPhoto(
@@ -20,13 +30,15 @@ export async function uploadPhoto(
   const formData = new FormData();
   formData.append("file", file);
 
-  if (title?.trim())
+  if (title?.trim()) {
     formData.append("title", title.trim());
+  }
 
-  if (description?.trim())
+  if (description?.trim()) {
     formData.append("description", description.trim());
+  }
 
-  const res = await fetch("/api/photos/upload", {
+  const res = await fetch(buildApiUrl("/api/photos/upload"), {
     method: "POST",
     credentials: "include",
     body: formData,
@@ -37,14 +49,14 @@ export async function uploadPhoto(
     throw new Error(data?.detail ?? "Foto uploaden mislukt.");
   }
 
-  return res.json();
+  return normalizePhoto((await res.json()) as Photo);
 }
 
 export async function updatePhoto(
   photoId: number,
   updates: Partial<Pick<Photo, "title" | "description" | "is_active">>,
 ): Promise<Photo> {
-  const res = await fetch(`/api/photos/${photoId}`, {
+  const res = await fetch(buildApiUrl(`/api/photos/${photoId}`), {
     method: "PATCH",
     credentials: "include",
     headers: { "Content-Type": "application/json" },
@@ -56,11 +68,11 @@ export async function updatePhoto(
     throw new Error(data?.detail ?? "Foto bijwerken mislukt.");
   }
 
-  return res.json();
+  return normalizePhoto((await res.json()) as Photo);
 }
 
 export async function deletePhoto(photoId: number): Promise<void> {
-  const res = await fetch(`/api/photos/${photoId}`, {
+  const res = await fetch(buildApiUrl(`/api/photos/${photoId}`), {
     method: "DELETE",
     credentials: "include",
   });

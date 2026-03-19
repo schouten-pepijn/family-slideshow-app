@@ -1,10 +1,11 @@
-import type { AuthUser, UserRole } from "../types/auth";
+import type { AuthUser } from "../types/auth";
+import { buildApiUrl } from "../lib/api";
 
 export async function login(
   username: string,
   password: string,
 ): Promise<AuthUser> {
-  const response = await fetch("/api/auth/login", {
+  const response = await fetch(buildApiUrl("/api/auth/login"), {
     method: "POST",
     credentials: "include",
     headers: {
@@ -22,27 +23,29 @@ export async function login(
 }
 
 export async function logout(): Promise<void> {
-  const response = await fetch("/api/auth/logout", {
+  const response = await fetch(buildApiUrl("/api/auth/logout"), {
     method: "POST",
     credentials: "include",
   });
 
-  if (!response.ok)
+  if (!response.ok) {
     throw new Error("Uitloggen mislukt.");
-
+  }
 }
 
 export async function fetchCurrentUser(): Promise<AuthUser | null> {
-  const response = await fetch("/api/auth/me", {
+  const response = await fetch(buildApiUrl("/api/auth/me"), {
     method: "GET",
     credentials: "include",
   });
 
-  if (response.status === 401)
-    return null; // Not authenticated
+  if (response.status === 401) {
+    return null;
+  }
 
-  if (!response.ok)
+  if (!response.ok) {
     throw new Error("Gebruiker ophalen mislukt.");
+  }
 
   return response.json();
 }
