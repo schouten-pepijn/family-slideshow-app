@@ -15,6 +15,12 @@ export function AdminPage() {
     removePhoto,
   } = usePhotos();
   const [editingPhotoId, setEditingPhotoId] = useState<number | null>(null);
+  const [editingCollectionId, setEditingCollectionId] = useState<number | null>(
+    null,
+  );
+  const [collectionName, setCollectionName] = useState("");
+  const [collectionDescription, setCollectionDescription] = useState("");
+  const [collectionIsPublic, setCollectionIsPublic] = useState(false);
   const [editTitle, setEditTitle] = useState("");
   const [editDescription, setEditDescription] = useState("");
 
@@ -66,6 +72,59 @@ export function AdminPage() {
     }
 
     await removePhoto(photoId);
+  }
+
+  function handleStartEditingCollection(
+    collectionId: number,
+    name: string,
+    description: string | null,
+    isPublic: boolean,
+  ) {
+    setEditingCollectionId(collectionId);
+    setCollectionName(name);
+    setCollectionDescription(description ?? "");
+    setCollectionIsPublic(isPublic);
+  }
+
+  function handleCancelCollectionEditing() {
+    setEditingCollectionId(null);
+    setCollectionName("");
+    setCollectionDescription("");
+    setCollectionIsPublic(false);
+  }
+
+  async function handleSaveCollection(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+
+    if (!collectionName.trim()) return;
+
+    if (editingCollectionId !== null) {
+      await editCollection(editingCollectionId, {
+        name: collectionName.trim(),
+        description: collectionDescription.trim() || null,
+        is_public: collectionIsPublic,
+      });
+    } else {
+      await createNewCollection(
+        collectionName.trim(),
+        collectionDescription.trim() || undefined,
+        collectionIsPublic,
+      );
+    }
+
+    handleCancelCollectionEditing();
+  }
+
+  async function handleRemoveCollection(collectionId: number) {
+    const confirmed = window.confirm(
+      "Weet je zeker dat je deze collectie wilt verwijderen?",
+    );
+
+    if (!confirmed) return;
+
+    if (editingCollectionId === collectionId) handleCancelCollectionEditing();
+
+    await removeCollection(collectionId);
   }
 
   return (
