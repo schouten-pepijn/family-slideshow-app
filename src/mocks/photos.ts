@@ -14,6 +14,7 @@ export const mockPhotos: Photo[] = [
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
     image_url: "https://picsum.photos/id/1015/1200/800",
+    collection_ids: [],
   },
   {
     id: 2,
@@ -28,6 +29,7 @@ export const mockPhotos: Photo[] = [
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
     image_url: "https://picsum.photos/id/1025/1200/800",
+    collection_ids: [],
   },
   {
     id: 3,
@@ -42,5 +44,6 @@ export const mockPhotos: Photo[] = [
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
     image_url: "https://picsum.photos/id/1035/1200/800",
+    collection_ids: [],
   },
 ];
