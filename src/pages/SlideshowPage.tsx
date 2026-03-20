@@ -1,15 +1,28 @@
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { Slideshow } from "../components/slideshow/Slideshow";
 import { SlideshowEmptyState } from "../components/slideshow/SlideshowEmptyState";
 import { usePhotos } from "../hooks/usePhotos";
+import { useCollections } from "../hooks/useCollections";
 
 export function SlideshowPage() {
   const { photos, isLoading, error } = usePhotos();
+  const { collections } = useCollections();
+  const [selectedCollectionId, setSelectedCollectionId] = useState<
+    number | "all"
+  >("all");
 
   const activePhotos = useMemo(
     () => photos.filter((photo) => photo.is_active),
     [photos],
   );
+
+  const filteredPhotos = useMemo(() => {
+    if (selectedCollectionId === "all") return activePhotos;
+
+    return activePhotos.filter((photo) =>
+      photo.collection_ids.includes(selectedCollectionId),
+    );
+  }, [activePhotos, selectedCollectionId]);
 
   if (isLoading) {
     return (
@@ -47,9 +60,9 @@ export function SlideshowPage() {
     );
   }
 
-  if (activePhotos.length === 0) {
-    return <SlideshowEmptyState />;
-  }
+  if (activePhotos.length === 0) return <SlideshowEmptyState />;
 
-  return <Slideshow photos={activePhotos} />;
+  if (collections.length > 0) return <SlideshowEmptyState />;
+
+  return <Slideshow photos={filteredPhotos} />;
 }
