@@ -1,13 +1,14 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import type { Photo } from "../../types/photo";
 import { useSlideshow } from "../../hooks/useSlideshow";
 import { SlideshowImage } from "./SlideshowImage";
 
 type SlideshowProps = {
   photos: Photo[];
+  headerContent?: ReactNode;
 };
 
-export function Slideshow({ photos }: SlideshowProps) {
+export function Slideshow({ photos, headerContent }: SlideshowProps) {
   const { activeIndex, activePhoto, goToNext, goToPrevious } = useSlideshow({
     photos,
     intervalMs: 8000,
@@ -81,6 +82,8 @@ export function Slideshow({ photos }: SlideshowProps) {
               Laat automatisch doorlopen of navigeer met de pijltjestoetsen en
               de knoppen onderaan.
             </p>
+
+            {headerContent && <div className="pt-3">{headerContent}</div>}
           </header>
         )}
 
