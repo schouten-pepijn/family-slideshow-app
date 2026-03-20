@@ -38,3 +38,49 @@ type UseCollectionsResult = {
 };
 
 const CollectionsContext = createContext<UseCollectionsResult | null>(null);
+
+function useCollectionsState(): UseCollectionsResult {
+  const [collections, setCollections] = useState<Collection[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isRefreshing, setIsRefreshing] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  async function refresh(options?: { silent?: boolean }) {
+    return Promise.resolve();
+  }
+
+  async function createNewCollection(
+    name: string,
+    description?: string,
+    isPublic?: boolean,
+    sortOrder?: number,
+  ) {
+    return Promise.resolve();
+  }
+
+  async function editCollection(
+    collectionId: number,
+    updates: {
+      name?: string;
+      description?: string | null;
+      is_public?: boolean;
+      sort_order?: number;
+    },
+  ) {
+    return Promise.resolve();
+  }
+
+  async function removeCollection(collectionId: number) {
+    return Promise.resolve();
+  }
+
+  return {
+    collections,
+    isLoading,
+    error,
+    refresh,
+    createNewCollection,
+    editCollection,
+    removeCollection,
+  };
+}
