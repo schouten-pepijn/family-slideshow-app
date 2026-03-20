@@ -3,6 +3,7 @@ import { Slideshow } from "../components/slideshow/Slideshow";
 import { SlideshowEmptyState } from "../components/slideshow/SlideshowEmptyState";
 import { usePhotos } from "../hooks/usePhotos";
 import { useCollections } from "../hooks/useCollections";
+import { CollectionSelector } from "../components/slideshow/CollectionSelector";
 
 export function SlideshowPage() {
   const { photos, isLoading, error } = usePhotos();
@@ -23,6 +24,16 @@ export function SlideshowPage() {
       photo.collection_ids.includes(selectedCollectionId),
     );
   }, [activePhotos, selectedCollectionId]);
+
+  const selectedCollection = useMemo(() => {
+    if (selectedCollectionId === "all") {
+      return null;
+    }
+
+    return collections.find(
+      (collection) => collection.id === selectedCollectionId,
+    );
+  }, [collections, selectedCollectionId]);
 
   if (isLoading) {
     return (
@@ -62,7 +73,35 @@ export function SlideshowPage() {
 
   if (activePhotos.length === 0) return <SlideshowEmptyState />;
 
-  if (collections.length > 0) return <SlideshowEmptyState />;
+  return (
+    <div className="min-h-screen px-4 pt-24 pb-8 text-white sm:px-6 lg:px-8">
+      <div className="mx-auto flex w-full max-w-7xl flex-col gap-6">
+        {collections.length > 0 && (
+          <CollectionSelector
+            collections={collections}
+            selectedCollectionId={selectedCollectionId}
+            onSelectCollection={setSelectedCollectionId}
+          />
+        )}
 
-  return <Slideshow photos={filteredPhotos} />;
+        {filteredPhotos.length === 0 ? (
+          <div className="mx-auto w-full max-w-3xl rounded-[2rem] border border-white/10 bg-black/25 px-8 py-14 text-center shadow-[0_30px_80px_rgba(0,0,0,0.35)] backdrop-blur-md">
+            <p className="text-xs font-semibold uppercase tracking-[0.3em] text-white/45">
+              Collectie
+            </p>
+            <h2 className="mt-4 text-3xl font-semibold sm:text-4xl">
+              Geen actieve foto&apos;s in deze collectie
+            </h2>
+            <p className="mt-4 text-sm leading-7 text-white/70 sm:text-base">
+              {selectedCollection
+                ? `De collectie "${selectedCollection.name}" heeft nu geen actieve foto's.`
+                : "Deze selectie heeft nu geen actieve foto's."}
+            </p>
+          </div>
+        ) : (
+          <Slideshow photos={filteredPhotos} />
+        )}
+      </div>
+    </div>
+  );
 }
