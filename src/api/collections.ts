@@ -13,7 +13,7 @@ export async function fetchCollections(): Promise<Collection[]> {
 
 type CreateCollectionInput = {
   name: string;
-  description?: string;
+  description?: string | null;
   is_public?: boolean;
   sort_order?: number;
 };

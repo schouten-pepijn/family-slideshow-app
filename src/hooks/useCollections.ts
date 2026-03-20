@@ -67,7 +67,19 @@ function useCollectionsState(): UseCollectionsResult {
     isPublic?: boolean,
     sortOrder?: number,
   ) {
-    return Promise.resolve();
+    try {
+      setError(null);
+
+      await createCollection({
+        name: name.trim(),
+        description: description?.trim() || null,
+        is_public: isPublic,
+        sort_order: sortOrder,
+      });
+      await refresh({ silent: true });
+    } catch {
+      setError("Er is een fout opgetreden bij het aanmaken van de collectie.");
+    }
   }
 
   async function editCollection(
@@ -79,12 +91,38 @@ function useCollectionsState(): UseCollectionsResult {
       sort_order?: number;
     },
   ) {
-    return Promise.resolve();
+    try {
+      setError(null);
+
+      await updateCollection(collectionId, {
+        ...updates,
+        name: updates.name?.trim(),
+        description:
+          updates.description === undefined
+            ? undefined
+            : updates.description?.trim() || null,
+      });
+
+      await refresh({ silent: true });
+    } catch {
+      setError("Er is een fout opgetreden bij het bijwerken van de collectie.");
+    }
   }
 
   async function removeCollection(collectionId: number) {
-    return Promise.resolve();
+    try {
+      setError(null);
+
+      await deleteCollection(collectionId);
+      await refresh({ silent: true });
+    } catch {
+      setError("Er is een fout opgetreden bij het verwijderen van de collectie.");
+    }
   }
+
+  useEffect(() => {
+    void refresh();
+  }, []);
 
   return {
     collections,
@@ -95,4 +133,24 @@ function useCollectionsState(): UseCollectionsResult {
     editCollection,
     removeCollection,
   };
+}
+
+type CollectionsProviderProps = {
+  children: ReactNode;
+};
+
+export function CollectionsProvider({ children }: CollectionsProviderProps) {
+  const value = useCollectionsState();
+
+  return createElement(CollectionsContext.Provider, { value }, children);
+}
+
+export function useCollections(): UseCollectionsResult {
+  const context = useContext(CollectionsContext);
+
+  if (!context) {
+    throw new Error("useCollections must be used within a CollectionsProvider");
+  }
+
+  return context;
 }
