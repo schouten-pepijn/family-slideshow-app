@@ -56,7 +56,9 @@ export async function uploadPhoto(
 
 export async function updatePhoto(
   photoId: number,
-  updates: Partial<Pick<Photo, "title" | "description" | "is_active">>,
+  updates: Partial<
+    Pick<Photo, "title" | "description" | "is_active" | "collection_ids">
+  >,
 ): Promise<Photo> {
   const res = await fetch(buildApiUrl(`/api/photos/${photoId}`), {
     method: "PATCH",
