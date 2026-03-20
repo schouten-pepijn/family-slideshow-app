@@ -31,7 +31,7 @@ type UseCollectionsResult = {
       name?: string;
       description?: string | null;
       is_public?: boolean;
-      sort_order?: number | null;
+      sort_order?: number;
     },
   ) => Promise<void>;
   removeCollection: (collectionId: number) => Promise<void>;
@@ -46,7 +46,19 @@ function useCollectionsState(): UseCollectionsResult {
   const [error, setError] = useState<string | null>(null);
 
   async function refresh(options?: { silent?: boolean }) {
-    return Promise.resolve();
+    try {
+      if (options?.silent) setIsRefreshing(true);
+      else setIsLoading(true);
+
+      setError(null);
+      const data = await fetchCollections();
+      setCollections(data);
+    } catch {
+      setError("Er is een fout opgetreden bij het laden van de collecties.");
+    } finally {
+      if (options?.silent) setIsRefreshing(false);
+      else setIsLoading(false);
+    }
   }
 
   async function createNewCollection(
