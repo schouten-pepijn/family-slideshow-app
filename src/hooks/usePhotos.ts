@@ -12,6 +12,7 @@ import {
   updatePhoto,
   deletePhoto,
 } from "../api/photos";
+import { useAuth } from "./useAuth";
 import type { Photo } from "../types/photo";
 
 type UsePhotosResult = {
@@ -36,12 +37,21 @@ type UsePhotosResult = {
 const PhotosContext = createContext<UsePhotosResult | null>(null);
 
 function usePhotosState(): UsePhotosResult {
+  const { isAuthenticated, isLoading: isAuthLoading } = useAuth();
   const [photos, setPhotos] = useState<Photo[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   async function refresh(options?: { silent?: boolean }) {
+    if (!isAuthenticated) {
+      setPhotos([]);
+      setError(null);
+      setIsLoading(false);
+      setIsRefreshing(false);
+      return;
+    }
+
     try {
       if (options?.silent) setIsRefreshing(true);
       else setIsLoading(true);
@@ -114,8 +124,19 @@ function usePhotosState(): UsePhotosResult {
   }
 
   useEffect(() => {
-    refresh();
-  }, []);
+    if (isAuthLoading) {
+      return;
+    }
+
+    if (!isAuthenticated) {
+      setPhotos([]);
+      setError(null);
+      setIsLoading(false);
+      return;
+    }
+
+    void refresh();
+  }, [isAuthenticated, isAuthLoading]);
 
   return {
     photos,
