@@ -3,6 +3,8 @@ import { PhotoList } from "../components/admin/PhotoList";
 import { UploadForm } from "../components/upload/UploadForm";
 import { usePhotos } from "../hooks/usePhotos";
 import { useCollections } from "../hooks/useCollections";
+import { CollectionForm } from "../components/admin/CollectionForm";
+import { CollectionList } from "../components/admin/CollectionList";
 
 export function AdminPage() {
   const {
@@ -146,6 +148,59 @@ export function AdminPage() {
         <div className="mx-auto w-full max-w-3xl">
           <UploadForm onSubmit={addNewPhoto} />
         </div>
+        <section className="rounded-[2rem] border border-white/10 bg-white/5 p-6 shadow-[0_30px_80px_rgba(0,0,0,0.35)] backdrop-blur md:p-8">
+          <div className="mb-5 flex items-center justify-between gap-4">
+            <div>
+              <h2 className="text-2xl font-semibold">Collecties</h2>
+              <p className="mt-1 text-sm text-white/70">
+                Beheer welke verzamelingen zichtbaar zijn in de slideshow.
+              </p>
+            </div>
+          </div>
+
+          <div className="grid gap-6">
+            <CollectionForm
+              name={collectionName}
+              description={collectionDescription}
+              isPublic={collectionIsPublic}
+              isEditing={editingCollectionId !== null}
+              onNameChange={setCollectionName}
+              onDescriptionChange={setCollectionDescription}
+              onIsPublicChange={setCollectionIsPublic}
+              onSubmit={handleSaveCollection}
+              onCancel={handleCancelCollectionEditing}
+            />
+
+            {collectionsLoading && (
+              <p className="rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-sm text-white/70">
+                Collecties laden...
+              </p>
+            )}
+
+            {!collectionsLoading && collectionsError && (
+              <p className="rounded-2xl border border-red-400/30 bg-red-500/10 px-4 py-3 text-sm text-red-100">
+                {collectionsError}
+              </p>
+            )}
+
+            {!collectionsLoading &&
+              !collectionsError &&
+              collections.length === 0 && (
+                <p className="rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-sm text-white/70">
+                  Er zijn nog geen collecties toegevoegd.
+                </p>
+              )}
+
+            {!collectionsLoading && collections.length > 0 && (
+              <CollectionList
+                collections={collections}
+                editingCollectionId={editingCollectionId}
+                onStartEditing={handleStartEditingCollection}
+                onRemoveCollection={handleRemoveCollection}
+              />
+            )}
+          </div>
+        </section>
 
         <section className="rounded-[2rem] border border-white/10 bg-white/5 p-6 shadow-[0_30px_80px_rgba(0,0,0,0.35)] backdrop-blur md:p-8">
           <div className="mb-5 flex items-center justify-between gap-4">
