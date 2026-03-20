@@ -1,7 +1,6 @@
 import type { Photo } from "../types/photo";
 import { buildApiUrl, resolveAssetUrl } from "../lib/api";
 
-
 function normalizePhoto(photo: Photo): Photo {
   return {
     ...photo,
@@ -26,16 +25,19 @@ export async function uploadPhoto(
   file: File,
   title?: string,
   description?: string,
+  collection_ids?: number[],
 ): Promise<Photo> {
   const formData = new FormData();
   formData.append("file", file);
 
-  if (title?.trim()) {
-    formData.append("title", title.trim());
-  }
+  if (title?.trim()) formData.append("title", title.trim());
 
-  if (description?.trim()) {
-    formData.append("description", description.trim());
+  if (description?.trim()) formData.append("description", description.trim());
+
+  if (collection_ids?.length) {
+    collection_ids.forEach((id) =>
+      formData.append("collection_ids", id.toString()),
+    );
   }
 
   const res = await fetch(buildApiUrl("/api/photos/upload"), {
