@@ -73,18 +73,21 @@ export function SlideshowPage() {
 
   if (activePhotos.length === 0) return <SlideshowEmptyState />;
 
-  return (
-    <div className="min-h-screen px-4 pt-24 pb-8 text-white sm:px-6 lg:px-8">
-      <div className="mx-auto flex w-full max-w-7xl flex-col gap-6">
-        {collections.length > 0 && (
-          <CollectionSelector
-            collections={collections}
-            selectedCollectionId={selectedCollectionId}
-            onSelectCollection={setSelectedCollectionId}
-          />
-        )}
+  const selector =
+    collections.length > 0 ? (
+      <CollectionSelector
+        collections={collections}
+        selectedCollectionId={selectedCollectionId}
+        onSelectCollection={setSelectedCollectionId}
+      />
+    ) : null;
 
-        {filteredPhotos.length === 0 ? (
+  if (filteredPhotos.length === 0) {
+    return (
+      <div className="min-h-screen px-4 pt-24 pb-8 text-white sm:px-6 lg:px-8">
+        <div className="mx-auto flex w-full max-w-7xl flex-col gap-6">
+          {selector}
+
           <div className="mx-auto w-full max-w-3xl rounded-[2rem] border border-white/10 bg-black/25 px-8 py-14 text-center shadow-[0_30px_80px_rgba(0,0,0,0.35)] backdrop-blur-md">
             <p className="text-xs font-semibold uppercase tracking-[0.3em] text-white/45">
               Collectie
@@ -98,10 +101,10 @@ export function SlideshowPage() {
                 : "Deze selectie heeft nu geen actieve foto's."}
             </p>
           </div>
-        ) : (
-          <Slideshow photos={filteredPhotos} />
-        )}
+        </div>
       </div>
-    </div>
-  );
+    );
+  }
+
+  return <Slideshow photos={filteredPhotos} headerContent={selector} />;
 }
