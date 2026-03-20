@@ -2,6 +2,7 @@ import { FormEvent, useState } from "react";
 import { PhotoList } from "../components/admin/PhotoList";
 import { UploadForm } from "../components/upload/UploadForm";
 import { usePhotos } from "../hooks/usePhotos";
+import { useCollections } from "../hooks/useCollections";
 
 export function AdminPage() {
   const {
@@ -16,6 +17,15 @@ export function AdminPage() {
   const [editingPhotoId, setEditingPhotoId] = useState<number | null>(null);
   const [editTitle, setEditTitle] = useState("");
   const [editDescription, setEditDescription] = useState("");
+
+  const {
+    collections,
+    isLoading: collectionsLoading,
+    error: collectionsError,
+    createNewCollection,
+    editCollection,
+    removeCollection,
+  } = useCollections();
 
   function handleStartEditing(
     photoId: number,
