@@ -12,6 +12,7 @@ import {
   updateCollection,
   deleteCollection,
 } from "../api/collections";
+import { useAuth } from "./useAuth";
 import type { Collection } from "../types/collection";
 
 type UseCollectionsResult = {
@@ -40,12 +41,21 @@ type UseCollectionsResult = {
 const CollectionsContext = createContext<UseCollectionsResult | null>(null);
 
 function useCollectionsState(): UseCollectionsResult {
+  const { isAuthenticated, isLoading: isAuthLoading } = useAuth();
   const [collections, setCollections] = useState<Collection[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   async function refresh(options?: { silent?: boolean }) {
+    if (!isAuthenticated) {
+      setCollections([]);
+      setError(null);
+      setIsLoading(false);
+      setIsRefreshing(false);
+      return;
+    }
+
     try {
       if (options?.silent) setIsRefreshing(true);
       else setIsLoading(true);
@@ -121,8 +131,19 @@ function useCollectionsState(): UseCollectionsResult {
   }
 
   useEffect(() => {
+    if (isAuthLoading) {
+      return;
+    }
+
+    if (!isAuthenticated) {
+      setCollections([]);
+      setError(null);
+      setIsLoading(false);
+      return;
+    }
+
     void refresh();
-  }, []);
+  }, [isAuthenticated, isAuthLoading]);
 
   return {
     collections,
