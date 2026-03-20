@@ -5,15 +5,18 @@ import { BrowserRouter } from "react-router-dom";
 import App from "./App";
 import { AuthProvider } from "./hooks/useAuth";
 import { PhotosProvider } from "./hooks/usePhotos";
+import { CollectionsProvider } from "./hooks/useCollections";
 import "./index.css";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <BrowserRouter>
       <AuthProvider>
-        <PhotosProvider>
-          <App />
-        </PhotosProvider>
+        <CollectionsProvider>
+          <PhotosProvider>
+            <App />
+          </PhotosProvider>
+        </CollectionsProvider>
       </AuthProvider>
     </BrowserRouter>
   </React.StrictMode>,
