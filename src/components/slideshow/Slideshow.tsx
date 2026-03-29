@@ -61,13 +61,15 @@ export function Slideshow({ photos, headerContent }: SlideshowProps) {
   return (
     <div
       ref={slideshowRef}
-      className={`min-h-screen px-4 pt-24 pb-8 text-white sm:px-6 lg:px-8 ${
-        isFullscreen ? "theme-fullscreen-bg p-0" : ""
-      }`}
+      className={
+        isFullscreen
+          ? "theme-fullscreen-bg min-h-screen w-screen p-0 text-white"
+          : "min-h-screen px-4 pt-24 pb-8 text-white sm:px-6 lg:px-8"
+      }
     >
       <div
-        className={`mx-auto flex w-full flex-col ${
-          isFullscreen ? "max-w-none" : "max-w-7xl gap-6"
+        className={`flex w-full flex-col ${
+          isFullscreen ? "max-w-none" : "mx-auto max-w-7xl gap-6"
         }`}
       >
         {!isFullscreen && (
