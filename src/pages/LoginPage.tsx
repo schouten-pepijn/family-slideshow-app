@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 
 import { useAuth } from "../hooks/useAuth";
 
-
 export function LoginPage() {
   const navigate = useNavigate();
   const { login, isAuthenticated, isLoading, error } = useAuth();
@@ -33,9 +32,7 @@ export function LoginPage() {
       await login(username.trim(), password);
       void navigate("/", { replace: true });
     } catch (err) {
-      setFormError(
-        err instanceof Error ? err.message : "Inloggen is mislukt.",
-      );
+      setFormError(err instanceof Error ? err.message : "Inloggen is mislukt.");
     } finally {
       setIsSubmitting(false);
     }
