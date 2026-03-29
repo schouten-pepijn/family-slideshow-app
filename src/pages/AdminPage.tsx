@@ -1,10 +1,57 @@
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { PhotoList } from "../components/admin/PhotoList";
+import { PhotoDetailsDrawer } from "../components/admin/PhotoDetailsDrawer";
 import { UploadForm } from "../components/upload/UploadForm";
 import { usePhotos } from "../hooks/usePhotos";
 import { useCollections } from "../hooks/useCollections";
 import { CollectionForm } from "../components/admin/CollectionForm";
 import { CollectionList } from "../components/admin/CollectionList";
+import type { Photo } from "../types/photo";
+
+type PhotoStatusFilter = "all" | "active" | "inactive";
+type PhotoSortOption =
+  | "updated-desc"
+  | "updated-asc"
+  | "title-asc"
+  | "title-desc"
+  | "size-desc"
+  | "size-asc";
+
+const PAGE_SIZE_OPTIONS = [12, 24, 48];
+
+function comparePhotos(a: Photo, b: Photo, sortOption: PhotoSortOption) {
+  switch (sortOption) {
+    case "updated-asc":
+      return (
+        new Date(a.updated_at).getTime() - new Date(b.updated_at).getTime()
+      );
+    case "title-asc":
+      return (a.title ?? a.filename).localeCompare(
+        b.title ?? b.filename,
+        "nl",
+        {
+          sensitivity: "base",
+        },
+      );
+    case "title-desc":
+      return (b.title ?? b.filename).localeCompare(
+        a.title ?? a.filename,
+        "nl",
+        {
+          sensitivity: "base",
+        },
+      );
+    case "size-desc":
+      return b.file_size - a.file_size;
+    case "size-asc":
+      return a.file_size - b.file_size;
+    case "updated-desc":
+    default:
+      return (
+        new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime()
+      );
+  }
+}
 
 export function AdminPage() {
   const {
@@ -26,6 +73,12 @@ export function AdminPage() {
   const [editTitle, setEditTitle] = useState("");
   const [editDescription, setEditDescription] = useState("");
   const [editCollectionIds, setEditCollectionIds] = useState<number[]>([]);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [statusFilter, setStatusFilter] = useState<PhotoStatusFilter>("all");
+  const [collectionFilter, setCollectionFilter] = useState<string>("all");
+  const [sortOption, setSortOption] = useState<PhotoSortOption>("updated-desc");
+  const [pageSize, setPageSize] = useState(12);
+  const [currentPage, setCurrentPage] = useState(1);
 
   const {
     collections,
