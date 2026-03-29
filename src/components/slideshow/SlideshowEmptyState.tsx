@@ -17,7 +17,7 @@ export function SlideshowEmptyState() {
         </p>
         <Link
           to="/admin"
-          className="mt-8 rounded-full bg-white px-6 py-3 text-sm font-semibold text-black transition-opacity hover:opacity-90"
+          className="theme-pill-button mt-8 rounded-full px-6 py-3 text-sm font-semibold"
         >
           Open beheer
         </Link>

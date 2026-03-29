@@ -63,7 +63,9 @@ export function CollectionListItem({
               collection.is_public,
             )
           }
-          className="rounded-full border border-white/15 bg-white/10 px-4 py-2 text-sm font-semibold transition-colors hover:bg-white/15"
+          className={`rounded-full px-4 py-2 text-sm font-semibold ${
+            isEditing ? "theme-pill-button-active" : "theme-pill-button"
+          }`}
         >
           {isEditing ? "Wordt bewerkt" : "Bewerken"}
         </button>

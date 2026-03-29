@@ -171,7 +171,8 @@ export function UploadForm({ collections, onSubmit }: UploadFormProps) {
                     <span className="flex flex-col gap-1">
                       <span className="font-medium">{collection.name}</span>
                       <span className="text-xs text-white/55">
-                        {collection.description ?? "Geen beschrijving beschikbaar."}
+                        {collection.description ??
+                          "Geen beschrijving beschikbaar."}
                       </span>
                     </span>
                   </label>
@@ -203,7 +204,7 @@ export function UploadForm({ collections, onSubmit }: UploadFormProps) {
         <button
           type="submit"
           disabled={isSubmitting}
-          className="rounded-full bg-white px-5 py-3 font-semibold text-black transition-opacity disabled:cursor-not-allowed disabled:opacity-60"
+          className="theme-pill-button rounded-full px-5 py-3 font-semibold disabled:cursor-not-allowed disabled:opacity-60"
         >
           {isSubmitting ? "Bezig met uploaden..." : "Foto toevoegen"}
         </button>

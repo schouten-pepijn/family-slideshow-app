@@ -128,7 +128,7 @@ export function LoginPage() {
             <button
               type="submit"
               disabled={isSubmitting || isLoading}
-              className="w-full rounded-2xl bg-white px-4 py-3 text-sm font-semibold text-black transition hover:bg-white/90 disabled:cursor-not-allowed disabled:bg-white/50"
+              className="theme-pill-button w-full rounded-2xl px-4 py-3 text-sm font-semibold disabled:cursor-not-allowed disabled:opacity-60"
             >
               {isSubmitting ? "Bezig met inloggen..." : "Inloggen"}
             </button>
