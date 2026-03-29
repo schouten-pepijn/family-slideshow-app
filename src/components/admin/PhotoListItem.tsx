@@ -1,17 +1,22 @@
 import type { FormEvent } from "react";
+import type { Collection } from "../../types/collection";
 import type { Photo } from "../../types/photo";
 
 type PhotoListItemProps = {
   photo: Photo;
+  collections: Collection[];
   isEditing: boolean;
   editTitle: string;
   editDescription: string;
+  editCollectionIds: number[];
   onEditTitleChange: (value: string) => void;
   onEditDescriptionChange: (value: string) => void;
+  onEditCollectionIdsChange: (value: number[]) => void;
   onStartEditing: (
     photoId: number,
     title: string | null,
     description: string | null,
+    collectionIds: number[],
   ) => void;
   onCancelEditing: () => void;
   onSavePhotoDetails: (
@@ -24,17 +29,32 @@ type PhotoListItemProps = {
 
 export function PhotoListItem({
   photo,
+  collections,
   isEditing,
   editTitle,
   editDescription,
+  editCollectionIds,
   onEditTitleChange,
   onEditDescriptionChange,
+  onEditCollectionIdsChange,
   onStartEditing,
   onCancelEditing,
   onSavePhotoDetails,
   onToggleActive,
   onRemovePhoto,
 }: PhotoListItemProps) {
+  const photoCollections = collections.filter((collection) =>
+    photo.collection_ids.includes(collection.id),
+  );
+
+  function handleToggleCollection(collectionId: number) {
+    onEditCollectionIdsChange(
+      editCollectionIds.includes(collectionId)
+        ? editCollectionIds.filter((id) => id !== collectionId)
+        : [...editCollectionIds, collectionId],
+    );
+  }
+
   return (
     <article className="grid gap-4 rounded-3xl border border-white/10 bg-black/20 p-4 md:grid-cols-[180px_1fr_auto]">
       <div className="overflow-hidden rounded-2xl bg-black/30">
@@ -73,6 +93,44 @@ export function PhotoListItem({
               />
             </label>
 
+            {collections.length > 0 && (
+              <fieldset className="rounded-2xl border border-white/10 bg-black/20 p-4">
+                <legend className="px-2 text-sm font-medium text-white/80">
+                  Collecties
+                </legend>
+                <div className="mt-2 grid gap-2 sm:grid-cols-2">
+                  {collections.map((collection) => {
+                    const isSelected = editCollectionIds.includes(collection.id);
+
+                    return (
+                      <label
+                        key={collection.id}
+                        className={`flex items-start gap-3 rounded-2xl border px-3 py-3 text-sm transition-colors ${
+                          isSelected
+                            ? "border-white/25 bg-white/10 text-white"
+                            : "border-white/10 bg-black/20 text-white/80 hover:bg-white/5"
+                        }`}
+                      >
+                        <input
+                          type="checkbox"
+                          checked={isSelected}
+                          onChange={() => handleToggleCollection(collection.id)}
+                          className="mt-0.5"
+                        />
+                        <span className="flex flex-col gap-1">
+                          <span className="font-medium">{collection.name}</span>
+                          <span className="text-xs text-white/55">
+                            {collection.description ??
+                              "Geen beschrijving beschikbaar."}
+                          </span>
+                        </span>
+                      </label>
+                    );
+                  })}
+                </div>
+              </fieldset>
+            )}
+
             <div className="flex flex-wrap gap-3">
               <button
                 type="submit"
@@ -93,7 +151,12 @@ export function PhotoListItem({
           <button
             type="button"
             onClick={() =>
-              onStartEditing(photo.id, photo.title, photo.description)
+              onStartEditing(
+                photo.id,
+                photo.title,
+                photo.description,
+                photo.collection_ids,
+              )
             }
             className="flex flex-col items-start gap-2 rounded-2xl border border-transparent px-2 py-2 text-left transition-colors hover:border-white/10 hover:bg-white/5"
           >
@@ -115,6 +178,23 @@ export function PhotoListItem({
             <p className="text-sm text-white/70">
               {photo.description ?? "Geen beschrijving beschikbaar."}
             </p>
+
+            <div className="flex flex-wrap gap-2 pt-1">
+              {photoCollections.length > 0 ? (
+                photoCollections.map((collection) => (
+                  <span
+                    key={collection.id}
+                    className="rounded-full border border-white/10 bg-white/8 px-3 py-1 text-xs font-medium text-white/75"
+                  >
+                    {collection.name}
+                  </span>
+                ))
+              ) : (
+                <span className="rounded-full border border-white/10 bg-white/6 px-3 py-1 text-xs font-medium text-white/55">
+                  Geen collectie
+                </span>
+              )}
+            </div>
           </button>
         )}
 
