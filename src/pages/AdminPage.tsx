@@ -191,6 +191,81 @@ export function AdminPage() {
     await removeCollection(collectionId);
   }
 
+  const normalizedSearchQuery = searchQuery.trim().toLowerCase();
+  const selectedCollectionId =
+    collectionFilter === "all" ? null : Number(collectionFilter);
+
+  const filteredPhotos = [...photos]
+    .filter((photo) => {
+      if (statusFilter === "active" && !photo.is_active) {
+        return false;
+      }
+
+      if (statusFilter === "inactive" && photo.is_active) {
+        return false;
+      }
+
+      if (
+        selectedCollectionId !== null &&
+        !photo.collection_ids.includes(selectedCollectionId)
+      ) {
+        return false;
+      }
+
+      if (!normalizedSearchQuery) {
+        return true;
+      }
+
+      const matchingCollectionNames = collections
+        .filter((collection) => photo.collection_ids.includes(collection.id))
+        .map((collection) => collection.name)
+        .join(" ");
+
+      const searchableText = [
+        photo.title,
+        photo.description,
+        photo.filename,
+        matchingCollectionNames,
+      ]
+        .filter(Boolean)
+        .join(" ")
+        .toLowerCase();
+
+      return searchableText.includes(normalizedSearchQuery);
+    })
+    .sort((a, b) => comparePhotos(a, b, sortOption));
+
+  const totalPages = Math.max(1, Math.ceil(filteredPhotos.length / pageSize));
+
+  useEffect(() => {
+    if (currentPage > totalPages) {
+      setCurrentPage(totalPages);
+    }
+  }, [currentPage, totalPages]);
+
+  const paginatedPhotos = filteredPhotos.slice(
+    (currentPage - 1) * pageSize,
+    currentPage * pageSize,
+  );
+
+  const selectedPhoto =
+    editingPhotoId === null
+      ? null
+      : (photos.find((photo) => photo.id === editingPhotoId) ?? null);
+
+  function resetToFirstPage() {
+    setCurrentPage(1);
+  }
+
+  function handleClearPhotoFilters() {
+    setSearchQuery("");
+    setStatusFilter("all");
+    setCollectionFilter("all");
+    setSortOption("updated-desc");
+    setPageSize(12);
+    setCurrentPage(1);
+  }
+
   return (
     <div className="min-h-screen px-4 pt-24 pb-8 text-white sm:px-6 lg:px-8">
       <div className="mx-auto flex w-full max-w-7xl flex-col gap-8">
