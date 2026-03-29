@@ -113,6 +113,14 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+.login-display {
+  font-family: "Manrope", "Segoe UI", sans-serif;
+}
+
+.login-ui {
+  font-family: "Outfit", "Segoe UI", sans-serif;
+}
+
 .theme-fullscreen-bg {
   background-color: var(--app-fullscreen-bg);
   background-image: var(--app-bg);
