@@ -24,36 +24,34 @@ export function CollectionSelector({
 
       <div className="mt-3 overflow-x-auto pb-1">
         <div className="flex min-w-max gap-2">
-        <button
-          type="button"
-          onClick={() => onSelectCollection("all")}
-          className={`shrink-0 rounded-full border px-3 py-2 text-sm font-medium whitespace-nowrap transition-all duration-150 ${
-            selectedCollectionId === "all"
-              ? "border-white bg-white text-black shadow-[0_12px_30px_rgba(255,255,255,0.2)]"
-              : "border-white/10 bg-white/8 text-white hover:-translate-y-px hover:border-white/20 hover:bg-white/14"
-          }`}
-        >
-          Alle actieve foto's
-        </button>
+          <button
+            type="button"
+            onClick={() => onSelectCollection("all")}
+            className={`shrink-0 rounded-full px-3 py-2 text-sm font-medium whitespace-nowrap transition-all duration-150 hover:-translate-y-px ${
+              selectedCollectionId === "all"
+                ? "theme-pill-button-active"
+                : "theme-pill-button"
+            }`}
+          >
+            Alle actieve foto's
+          </button>
 
-        {collections.map((collection) => {
-          const isSelected = selectedCollectionId === collection.id;
+          {collections.map((collection) => {
+            const isSelected = selectedCollectionId === collection.id;
 
-          return (
-            <button
-              key={collection.id}
-              type="button"
-              onClick={() => onSelectCollection(collection.id)}
-              className={`shrink-0 rounded-full border px-3 py-2 text-sm font-medium whitespace-nowrap transition-all duration-150 ${
-                isSelected
-                  ? "border-white bg-white text-black shadow-[0_12px_30px_rgba(255,255,255,0.2)]"
-                  : "border-white/10 bg-white/8 text-white hover:-translate-y-px hover:border-white/20 hover:bg-white/14"
-              }`}
-            >
-              {collection.name}
-            </button>
-          );
-        })}
+            return (
+              <button
+                key={collection.id}
+                type="button"
+                onClick={() => onSelectCollection(collection.id)}
+                className={`shrink-0 rounded-full px-3 py-2 text-sm font-medium whitespace-nowrap transition-all duration-150 hover:-translate-y-px ${
+                  isSelected ? "theme-pill-button-active" : "theme-pill-button"
+                }`}
+              >
+                {collection.name}
+              </button>
+            );
+          })}
         </div>
       </div>
     </section>

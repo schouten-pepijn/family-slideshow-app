@@ -6,18 +6,21 @@ import App from "./App";
 import { AuthProvider } from "./hooks/useAuth";
 import { PhotosProvider } from "./hooks/usePhotos";
 import { CollectionsProvider } from "./hooks/useCollections";
+import { ThemeProvider } from "./hooks/useTheme";
 import "./index.css";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <BrowserRouter>
-      <AuthProvider>
-        <CollectionsProvider>
-          <PhotosProvider>
-            <App />
-          </PhotosProvider>
-        </CollectionsProvider>
-      </AuthProvider>
-    </BrowserRouter>
+    <ThemeProvider>
+      <BrowserRouter>
+        <AuthProvider>
+          <CollectionsProvider>
+            <PhotosProvider>
+              <App />
+            </PhotosProvider>
+          </CollectionsProvider>
+        </AuthProvider>
+      </BrowserRouter>
+    </ThemeProvider>
   </React.StrictMode>,
 );

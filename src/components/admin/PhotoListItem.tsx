@@ -100,7 +100,9 @@ export function PhotoListItem({
                 </legend>
                 <div className="mt-2 grid gap-2 sm:grid-cols-2">
                   {collections.map((collection) => {
-                    const isSelected = editCollectionIds.includes(collection.id);
+                    const isSelected = editCollectionIds.includes(
+                      collection.id,
+                    );
 
                     return (
                       <label
@@ -134,14 +136,14 @@ export function PhotoListItem({
             <div className="flex flex-wrap gap-3">
               <button
                 type="submit"
-                className="rounded-full bg-white px-4 py-2 text-sm font-semibold text-black transition-opacity hover:opacity-90"
+                className="theme-pill-button rounded-full px-4 py-2 text-sm font-semibold"
               >
                 Opslaan
               </button>
               <button
                 type="button"
                 onClick={onCancelEditing}
-                className="rounded-full border border-white/15 bg-white/10 px-4 py-2 text-sm font-semibold transition-colors hover:bg-white/15"
+                className="theme-pill-button rounded-full px-4 py-2 text-sm font-semibold"
               >
                 Annuleren
               </button>
@@ -216,7 +218,9 @@ export function PhotoListItem({
         <button
           type="button"
           onClick={() => onToggleActive(photo.id)}
-          className="rounded-full border border-white/15 bg-white/10 px-4 py-2 text-sm font-semibold transition-colors hover:bg-white/15"
+          className={`rounded-full px-4 py-2 text-sm font-semibold ${
+            photo.is_active ? "theme-pill-button-active" : "theme-pill-button"
+          }`}
         >
           {photo.is_active ? "Zet inactief" : "Zet actief"}
         </button>

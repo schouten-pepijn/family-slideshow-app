@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 
 import { useAuth } from "../hooks/useAuth";
 
-
 export function LoginPage() {
   const navigate = useNavigate();
   const { login, isAuthenticated, isLoading, error } = useAuth();
@@ -33,9 +32,7 @@ export function LoginPage() {
       await login(username.trim(), password);
       void navigate("/", { replace: true });
     } catch (err) {
-      setFormError(
-        err instanceof Error ? err.message : "Inloggen is mislukt.",
-      );
+      setFormError(err instanceof Error ? err.message : "Inloggen is mislukt.");
     } finally {
       setIsSubmitting(false);
     }
@@ -46,22 +43,22 @@ export function LoginPage() {
       <div className="mx-auto grid w-full max-w-6xl gap-10 lg:grid-cols-[1.15fr_0.85fr] lg:items-center">
         <section className="space-y-6 text-white">
           <p className="text-xs font-semibold uppercase tracking-[0.3em] text-white/45">
-            Private Family Slideshow
+            Familie fotolijstje
           </p>
           <h1 className="max-w-3xl text-4xl font-semibold tracking-tight sm:text-5xl lg:text-6xl">
-            Meld je aan om de fotolijst te bekijken of beheren.
+            Meld je aan voor toegang
           </h1>
           <p className="max-w-2xl text-sm leading-7 text-white/70 sm:text-base">
-            De slideshow en het beheer zijn alleen beschikbaar voor de gedeelde
-            accounts <span className="font-semibold text-white">viewer</span>{" "}
-            en <span className="font-semibold text-white">admin</span>.
+            De slideshow en beheer zijn alleen beschikbaar voor de accounts{" "}
+            <span className="font-semibold text-white">viewer</span> en{" "}
+            <span className="font-semibold text-white">admin</span>.
           </p>
 
           <div className="grid gap-4 sm:grid-cols-2">
             <div className="rounded-[1.75rem] border border-white/10 bg-white/6 p-5 shadow-[0_24px_60px_rgba(0,0,0,0.25)] backdrop-blur-md">
               <p className="text-sm font-semibold text-white">Viewer</p>
               <p className="mt-2 text-sm leading-6 text-white/65">
-                Kan de slideshow en alle foto’s bekijken.
+                Kan de slideshow met geselecteerde foto's bekijken.
               </p>
             </div>
             <div className="rounded-[1.75rem] border border-white/10 bg-white/6 p-5 shadow-[0_24px_60px_rgba(0,0,0,0.25)] backdrop-blur-md">
@@ -131,7 +128,7 @@ export function LoginPage() {
             <button
               type="submit"
               disabled={isSubmitting || isLoading}
-              className="w-full rounded-2xl bg-white px-4 py-3 text-sm font-semibold text-black transition hover:bg-white/90 disabled:cursor-not-allowed disabled:bg-white/50"
+              className="theme-pill-button w-full rounded-2xl px-4 py-3 text-sm font-semibold disabled:cursor-not-allowed disabled:opacity-60"
             >
               {isSubmitting ? "Bezig met inloggen..." : "Inloggen"}
             </button>

@@ -1,5 +1,96 @@
 @import "tailwindcss";
 
+:root,
+:root[data-theme="standaard"] {
+  --app-bg:
+    radial-gradient(
+      circle at 78% 8%,
+      rgba(167, 216, 255, 0.26),
+      transparent 34%
+    ),
+    radial-gradient(
+      circle at 14% 18%,
+      rgba(96, 166, 255, 0.2),
+      transparent 30%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(8, 21, 39, 0.44) 0%,
+      rgba(10, 28, 52, 0.62) 60%,
+      rgba(9, 25, 45, 0.74) 100%
+    ),
+    url("/backgrounds/standaard_bg.png");
+  --app-fullscreen-bg: #0a1d35;
+  --app-bg-size: cover;
+  --app-bg-position: center 22%;
+  --app-bg-repeat: no-repeat;
+  --app-bg-attachment: scroll;
+  --shell-bg: rgba(6, 16, 30, 0.46);
+  --shell-border: rgba(185, 220, 255, 0.18);
+  --btn-bg: rgba(255, 255, 255, 0.08);
+  --btn-hover-bg: rgba(255, 255, 255, 0.16);
+  --btn-border: rgba(189, 222, 255, 0.2);
+  --btn-text: #eef6ff;
+  --btn-active-bg: #ffffff;
+  --btn-active-text: #0c213a;
+  --btn-active-border: rgba(255, 255, 255, 0.84);
+  --btn-active-shadow: 0 12px 30px rgba(155, 210, 255, 0.25);
+}
+
+:root[data-theme="madeliefjes"] {
+  --app-bg:
+    radial-gradient(
+      circle at 88% 9%,
+      rgba(255, 243, 170, 0.3),
+      transparent 34%
+    ),
+    radial-gradient(
+      circle at 14% 84%,
+      rgba(255, 236, 158, 0.22),
+      transparent 33%
+    ),
+    radial-gradient(
+      circle at 14% 16%,
+      rgba(218, 255, 230, 0.18),
+      transparent 30%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(22, 47, 36, 0.44) 0%,
+      rgba(21, 48, 35, 0.5) 56%,
+      rgba(18, 40, 30, 0.56) 100%
+    ),
+    url("/backgrounds/madeliefje_bg.png");
+  --app-fullscreen-bg: #1f4634;
+  --app-bg-size: cover;
+  --app-bg-position: center;
+  --app-bg-repeat: no-repeat;
+  --app-bg-attachment: scroll;
+  --shell-bg: rgba(239, 251, 243, 0.2);
+  --shell-border: rgba(227, 247, 233, 0.5);
+  --btn-bg: rgba(246, 255, 248, 0.24);
+  --btn-hover-bg: rgba(249, 255, 250, 0.38);
+  --btn-border: rgba(226, 247, 232, 0.62);
+  --btn-text: #1c3e2f;
+  --btn-active-bg: #ffe07a;
+  --btn-active-text: #624c00;
+  --btn-active-border: rgba(255, 245, 201, 0.95);
+  --btn-active-shadow: 0 12px 30px rgba(255, 209, 90, 0.34);
+  --btn-active-rainbow: var(--btn-rainbow);
+  --btn-rainbow: repeating-linear-gradient(
+    112deg,
+    #ff4d4d 0%,
+    #ff9f1a 14%,
+    #ffe94d 28%,
+    #52d66a 42%,
+    #3ca8ff 56%,
+    #7a5cff 70%,
+    #ff5ccf 84%,
+    #ff4d4d 100%
+  );
+  --btn-rainbow-speed: 7.5s;
+}
+
 html,
 body,
 #root {
@@ -8,12 +99,78 @@ body,
 
 body {
   margin: 0;
-  background:
-    radial-gradient(circle at top, rgba(242, 196, 125, 0.12), transparent 38%),
-    radial-gradient(circle at 20% 20%, rgba(111, 162, 216, 0.16), transparent 30%),
-    linear-gradient(180deg, #0a1019 0%, #101927 52%, #0e1623 100%);
+  background: var(--app-bg);
+  background-size: var(--app-bg-size);
+  background-position: var(--app-bg-position);
+  background-repeat: var(--app-bg-repeat);
+  background-attachment: var(--app-bg-attachment);
   color: #f5f7ff;
-  font-feature-settings: "liga" 1, "kern" 1;
+  font-feature-settings:
+    "liga" 1,
+    "kern" 1;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.theme-fullscreen-bg {
+  background-color: var(--app-fullscreen-bg);
+}
+
+.theme-shell {
+  border-color: var(--shell-border);
+  background-color: var(--shell-bg);
+}
+
+.theme-pill-button {
+  border: 1px solid var(--btn-border);
+  background-color: var(--btn-bg);
+  color: var(--btn-text);
+  transition:
+    background-color 160ms ease,
+    border-color 160ms ease,
+    transform 140ms ease;
+}
+
+.theme-pill-button:hover {
+  background-color: var(--btn-hover-bg);
+  border-color: color-mix(in srgb, var(--btn-border) 70%, #ffffff 30%);
+}
+
+:root[data-theme="madeliefjes"] .theme-pill-button:hover {
+  background-image: var(--btn-rainbow);
+  background-size: 180% 100%;
+  background-position: 0% 50%;
+  animation: rainbowShift var(--btn-rainbow-speed) linear infinite;
+  border-color: rgba(255, 255, 255, 0.75);
+  color: #123022;
+}
+
+@keyframes rainbowShift {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  100% {
+    background-position: -180% 50%;
+  }
+}
+
+.theme-pill-button:active {
+  transform: translateY(0);
+}
+
+.theme-pill-button-active {
+  border: 1px solid var(--btn-active-border);
+  background-color: var(--btn-active-bg);
+  color: var(--btn-active-text);
+  box-shadow: var(--btn-active-shadow);
+}
+
+:root[data-theme="madeliefjes"] .theme-pill-button-active:hover {
+  background-image: var(--btn-active-rainbow);
+  background-size: 180% 100%;
+  background-position: 0% 50%;
+  animation: rainbowShift var(--btn-rainbow-speed) linear infinite;
+  border-color: color-mix(in srgb, var(--btn-active-border) 75%, #ffffff 25%);
+  color: #4f3d00;
 }

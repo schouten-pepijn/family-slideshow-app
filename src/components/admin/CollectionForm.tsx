@@ -73,7 +73,7 @@ export function CollectionForm({
         <div className="flex flex-wrap gap-3">
           <button
             type="submit"
-            className="rounded-full bg-white px-4 py-2 text-sm font-semibold text-black transition-opacity hover:opacity-90"
+            className="theme-pill-button rounded-full px-4 py-2 text-sm font-semibold"
           >
             {isEditing ? "Wijzigingen opslaan" : "Collectie toevoegen"}
           </button>
@@ -82,7 +82,7 @@ export function CollectionForm({
             <button
               type="button"
               onClick={onCancel}
-              className="rounded-full border border-white/15 bg-white/10 px-4 py-2 text-sm font-semibold transition-colors hover:bg-white/15"
+              className="theme-pill-button rounded-full px-4 py-2 text-sm font-semibold"
             >
               Annuleren
             </button>

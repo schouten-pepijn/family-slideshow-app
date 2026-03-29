@@ -8,16 +8,16 @@ export function SlideshowEmptyState() {
           Slideshow
         </p>
         <h1 className="mt-4 text-3xl font-semibold sm:text-4xl">
-          Nog geen actieve foto&apos;s beschikbaar
+          Nog geen actieve foto's beschikbaar
         </h1>
         <p className="mt-4 max-w-xl text-sm leading-7 text-white/70 sm:text-base">
-          Voeg eerst een paar foto&apos;s toe of zet bestaande items actief in
-          het beheerscherm. Zodra er actieve foto&apos;s zijn, verschijnt de
-          fotolijst hier automatisch.
+          Voeg eerst een paar foto's toe of zet bestaande items actief in het
+          beheerscherm. Zodra er actieve foto's zijn, verschijnt de fotolijst
+          hier automatisch.
         </p>
         <Link
           to="/admin"
-          className="mt-8 rounded-full bg-white px-6 py-3 text-sm font-semibold text-black transition-opacity hover:opacity-90"
+          className="theme-pill-button mt-8 rounded-full px-6 py-3 text-sm font-semibold"
         >
           Open beheer
         </Link>

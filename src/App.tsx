@@ -3,12 +3,14 @@ import { NavLink, Route, Routes } from "react-router-dom";
 import { ProtectedRoute } from "./components/auth/ProtectedRoute";
 import { RoleRoute } from "./components/auth/RoleRoute";
 import { useAuth } from "./hooks/useAuth";
+import { useTheme } from "./hooks/useTheme";
 import { AdminPage } from "./pages/AdminPage";
 import { LoginPage } from "./pages/LoginPage";
 import { SlideshowPage } from "./pages/SlideshowPage";
 
 export default function App() {
   const { isAuthenticated, isAdmin, logout, user } = useAuth();
+  const { theme, setTheme } = useTheme();
 
   async function handleLogout() {
     try {
@@ -20,34 +22,59 @@ export default function App() {
 
   return (
     <div className="min-h-screen">
-      {isAuthenticated && (
-        <nav className="pointer-events-none fixed inset-x-0 top-0 z-20">
-          <div className="mx-auto flex w-full max-w-7xl justify-end px-4 py-4 sm:px-6 lg:px-8">
-            <div className="pointer-events-auto flex items-center gap-2 rounded-full border border-white/10 bg-black/35 p-2 shadow-[0_18px_50px_rgba(0,0,0,0.3)] backdrop-blur-md">
+      <nav className="pointer-events-none fixed inset-x-0 top-0 z-20">
+        <div className="mx-auto flex w-full max-w-7xl justify-between px-4 py-4 sm:px-6 lg:px-8">
+          <div className="theme-shell pointer-events-auto flex items-center gap-1 rounded-full border p-1.5 shadow-[0_18px_50px_rgba(0,0,0,0.3)] backdrop-blur-md">
+            <button
+              type="button"
+              onClick={() => setTheme("standaard")}
+              className={`rounded-full px-3 py-2 text-xs font-semibold uppercase tracking-[0.14em] ${
+                theme === "standaard"
+                  ? "theme-pill-button-active"
+                  : "theme-pill-button"
+              }`}
+            >
+              Standaard
+            </button>
+            <button
+              type="button"
+              onClick={() => setTheme("madeliefjes")}
+              className={`rounded-full px-3 py-2 text-xs font-semibold uppercase tracking-[0.14em] ${
+                theme === "madeliefjes"
+                  ? "theme-pill-button-active"
+                  : "theme-pill-button"
+              }`}
+            >
+              Madeliefjes
+            </button>
+          </div>
+
+          {isAuthenticated && (
+            <div className="theme-shell pointer-events-auto flex items-center gap-2 rounded-full border p-2 shadow-[0_18px_50px_rgba(0,0,0,0.3)] backdrop-blur-md">
               <NavLink
                 to="/"
                 end
                 className={({ isActive }) =>
-                  `rounded-full px-4 py-2 text-sm font-semibold transition-colors ${isActive
-                    ? "bg-white text-black"
-                    : "bg-white/10 text-white hover:bg-white/15"
+                  `rounded-full px-4 py-2 text-sm font-semibold ${
+                    isActive ? "theme-pill-button-active" : "theme-pill-button"
                   }`
                 }
               >
-                Slideshow
+                Fotolijst
               </NavLink>
 
               {isAdmin && (
                 <NavLink
                   to="/admin"
                   className={({ isActive }) =>
-                    `rounded-full px-4 py-2 text-sm font-semibold transition-colors ${isActive
-                      ? "bg-white text-black"
-                      : "bg-white/10 text-white hover:bg-white/15"
+                    `rounded-full px-4 py-2 text-sm font-semibold ${
+                      isActive
+                        ? "theme-pill-button-active"
+                        : "theme-pill-button"
                     }`
                   }
                 >
-                  Admin
+                  Beheer
                 </NavLink>
               )}
 
@@ -58,15 +85,15 @@ export default function App() {
                 <button
                   type="button"
                   onClick={() => void handleLogout()}
-                  className="rounded-full bg-white/10 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-white/15"
+                  className="theme-pill-button rounded-full px-4 py-2 text-sm font-semibold"
                 >
                   Uitloggen
                 </button>
               </div>
             </div>
-          </div>
-        </nav>
-      )}
+          )}
+        </div>
+      </nav>
 
       <Routes>
         <Route path="/login" element={<LoginPage />} />
