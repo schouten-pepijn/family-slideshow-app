@@ -25,6 +25,7 @@ export function AdminPage() {
   const [collectionIsPublic, setCollectionIsPublic] = useState(false);
   const [editTitle, setEditTitle] = useState("");
   const [editDescription, setEditDescription] = useState("");
+  const [editCollectionIds, setEditCollectionIds] = useState<number[]>([]);
 
   const {
     collections,
@@ -39,16 +40,19 @@ export function AdminPage() {
     photoId: number,
     title: string | null,
     description: string | null,
+    collectionIds: number[],
   ) {
     setEditingPhotoId(photoId);
     setEditTitle(title ?? "");
     setEditDescription(description ?? "");
+    setEditCollectionIds(collectionIds);
   }
 
   function handleCancelEditing() {
     setEditingPhotoId(null);
     setEditTitle("");
     setEditDescription("");
+    setEditCollectionIds([]);
   }
 
   async function handleSavePhotoDetails(
@@ -56,7 +60,12 @@ export function AdminPage() {
     photoId: number,
   ) {
     event.preventDefault();
-    await editPhotoDetails(photoId, editTitle, editDescription);
+    await editPhotoDetails(
+      photoId,
+      editTitle,
+      editDescription,
+      editCollectionIds,
+    );
     handleCancelEditing();
   }
 
@@ -146,7 +155,7 @@ export function AdminPage() {
         </header>
 
         <div className="mx-auto w-full max-w-3xl">
-          <UploadForm onSubmit={addNewPhoto} />
+          <UploadForm collections={collections} onSubmit={addNewPhoto} />
         </div>
         <section className="rounded-[2rem] border border-white/10 bg-white/5 p-6 shadow-[0_30px_80px_rgba(0,0,0,0.35)] backdrop-blur md:p-8">
           <div className="mb-5 flex items-center justify-between gap-4">
@@ -234,11 +243,14 @@ export function AdminPage() {
           {!isLoading && photos.length > 0 && (
             <PhotoList
               photos={photos}
+              collections={collections}
               editingPhotoId={editingPhotoId}
               editTitle={editTitle}
               editDescription={editDescription}
+              editCollectionIds={editCollectionIds}
               onEditTitleChange={setEditTitle}
               onEditDescriptionChange={setEditDescription}
+              onEditCollectionIdsChange={setEditCollectionIds}
               onStartEditing={handleStartEditing}
               onCancelEditing={handleCancelEditing}
               onSavePhotoDetails={handleSavePhotoDetails}
