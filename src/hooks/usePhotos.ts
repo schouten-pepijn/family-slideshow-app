@@ -13,6 +13,7 @@ import {
   deletePhoto,
 } from "../api/photos";
 import { useAuth } from "./useAuth";
+import { useCollections } from "./useCollections";
 import type { Photo } from "../types/photo";
 
 type UsePhotosResult = {
@@ -24,11 +25,13 @@ type UsePhotosResult = {
     file: File,
     title?: string,
     description?: string,
+    collectionIds?: number[],
   ) => Promise<void>;
   editPhotoDetails: (
     photoId: number,
     title?: string,
     description?: string,
+    collectionIds?: number[],
   ) => Promise<void>;
   toggleActive: (photoId: number) => Promise<void>;
   removePhoto: (photoId: number) => Promise<void>;
@@ -38,6 +41,7 @@ const PhotosContext = createContext<UsePhotosResult | null>(null);
 
 function usePhotosState(): UsePhotosResult {
   const { isAuthenticated, isLoading: isAuthLoading } = useAuth();
+  const { refresh: refreshCollections } = useCollections();
   const [photos, setPhotos] = useState<Photo[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isRefreshing, setIsRefreshing] = useState(false);
@@ -67,11 +71,19 @@ function usePhotosState(): UsePhotosResult {
     }
   }
 
-  async function addNewPhoto(file: File, title?: string, description?: string) {
+  async function addNewPhoto(
+    file: File,
+    title?: string,
+    description?: string,
+    collectionIds?: number[],
+  ) {
     try {
       setError(null);
-      await uploadPhoto(file, title, description);
-      await refresh({ silent: true });
+      await uploadPhoto(file, title, description, collectionIds);
+      await Promise.all([
+        refresh({ silent: true }),
+        refreshCollections({ silent: true }),
+      ]);
     } catch {
       setError("Er is een fout opgetreden bij het toevoegen van de foto.");
     }
@@ -81,6 +93,7 @@ function usePhotosState(): UsePhotosResult {
     photoId: number,
     title?: string,
     description?: string,
+    collectionIds?: number[],
   ) {
     try {
       setError(null);
@@ -88,8 +101,12 @@ function usePhotosState(): UsePhotosResult {
       await updatePhoto(photoId, {
         title: title?.trim() || null,
         description: description?.trim() || null,
+        collection_ids: collectionIds,
       });
-      await refresh({ silent: true });
+      await Promise.all([
+        refresh({ silent: true }),
+        refreshCollections({ silent: true }),
+      ]);
     } catch {
       setError("Er is een fout opgetreden bij het bijwerken van de foto.");
     }
@@ -117,7 +134,10 @@ function usePhotosState(): UsePhotosResult {
     try {
       setError(null);
       await deletePhoto(photoId);
-      await refresh({ silent: true });
+      await Promise.all([
+        refresh({ silent: true }),
+        refreshCollections({ silent: true }),
+      ]);
     } catch {
       setError("Er is een fout opgetreden bij het verwijderen van de foto.");
     }
