@@ -51,7 +51,7 @@ export function PhotoDetailsDrawer({
     <div className="fixed inset-0 z-50 flex justify-end bg-black/55 p-3 sm:p-6">
       <div className="absolute inset-0" aria-hidden="true" onClick={onClose} />
 
-      <aside className="relative z-10 flex h-full w-full max-w-3xl flex-col overflow-hidden rounded-[2rem] border border-white/10 bg-[#09111dcc] shadow-[0_30px_120px_rgba(0,0,0,0.5)] backdrop-blur-xl">
+      <aside className="theme-shell relative z-10 flex h-full w-full max-w-3xl flex-col overflow-hidden rounded-[2rem] border shadow-[0_30px_120px_rgba(0,0,0,0.5)] backdrop-blur-xl">
         <div className="flex items-start justify-between gap-4 border-b border-white/10 px-5 py-5 sm:px-6">
           <div>
             <p className="text-xs font-semibold uppercase tracking-[0.24em] text-white/45">

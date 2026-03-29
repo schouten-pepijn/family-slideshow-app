@@ -37,7 +37,7 @@ export function CollectionDrawer({
         aria-hidden="true"
       />
 
-      <div className="fixed inset-y-0 right-0 z-50 flex w-full max-w-md flex-col bg-[#0f0f0f] shadow-2xl ring-1 ring-white/10">
+      <div className="theme-shell fixed inset-y-0 right-0 z-50 flex w-full max-w-md flex-col border-l shadow-2xl backdrop-blur-xl">
         <div className="flex items-center justify-between border-b border-white/10 px-6 py-4">
           <div className="min-w-0">
             <p className="text-xs font-semibold uppercase tracking-[0.18em] text-white/45">
