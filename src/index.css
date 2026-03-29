@@ -3,30 +3,49 @@
 :root,
 :root[data-theme="standaard"] {
   --app-bg:
-    radial-gradient(circle at top, rgba(242, 196, 125, 0.12), transparent 38%),
+    radial-gradient(circle at top, rgba(126, 182, 255, 0.18), transparent 38%),
     radial-gradient(
       circle at 20% 20%,
-      rgba(111, 162, 216, 0.16),
+      rgba(79, 150, 255, 0.24),
       transparent 30%
     ),
-    linear-gradient(180deg, #0a1019 0%, #101927 52%, #0e1623 100%);
-  --app-fullscreen-bg: #0a1019;
+    linear-gradient(180deg, #091527 0%, #0b223d 52%, #0a1d33 100%);
+  --app-fullscreen-bg: #091527;
+  --app-bg-size: auto;
+  --app-bg-position: center;
+  --app-bg-repeat: no-repeat;
+  --app-bg-attachment: scroll;
 }
 
-:root[data-theme="ember"] {
+:root[data-theme="madeliefjes"] {
   --app-bg:
     radial-gradient(
-      circle at 80% 10%,
-      rgba(255, 191, 138, 0.18),
-      transparent 35%
+      circle at 85% 10%,
+      rgba(255, 243, 176, 0.42),
+      transparent 36%
     ),
     radial-gradient(
-      circle at 10% 80%,
-      rgba(255, 121, 69, 0.16),
-      transparent 30%
+      circle at 12% 18%,
+      rgba(255, 203, 126, 0.32),
+      transparent 33%
     ),
-    linear-gradient(180deg, #1a0f0b 0%, #241410 52%, #301915 100%);
-  --app-fullscreen-bg: #1a0f0b;
+    radial-gradient(
+      circle at 22% 84%,
+      rgba(255, 171, 116, 0.24),
+      transparent 32%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(54, 30, 15, 0.34) 0%,
+      rgba(43, 24, 10, 0.48) 55%,
+      rgba(36, 20, 8, 0.58) 100%
+    ),
+    url("/backgrounds/madeliefje_bg.png");
+  --app-fullscreen-bg: #5a3119;
+  --app-bg-size: cover;
+  --app-bg-position: center 26%;
+  --app-bg-repeat: no-repeat;
+  --app-bg-attachment: scroll;
 }
 
 html,
@@ -38,6 +57,10 @@ body,
 body {
   margin: 0;
   background: var(--app-bg);
+  background-size: var(--app-bg-size);
+  background-position: var(--app-bg-position);
+  background-repeat: var(--app-bg-repeat);
+  background-attachment: var(--app-bg-attachment);
   color: #f5f7ff;
   font-feature-settings:
     "liga" 1,
