@@ -16,6 +16,14 @@ type PhotoSortOption =
   | "title-desc"
   | "size-desc"
   | "size-asc";
+type CollectionVisibilityFilter = "all" | "public" | "private";
+type CollectionSortOption =
+  | "updated-desc"
+  | "updated-asc"
+  | "name-asc"
+  | "name-desc"
+  | "photos-desc"
+  | "photos-asc";
 
 const PAGE_SIZE_OPTIONS = [12, 24, 48];
 
@@ -45,6 +53,35 @@ function comparePhotos(a: Photo, b: Photo, sortOption: PhotoSortOption) {
       return b.file_size - a.file_size;
     case "size-asc":
       return a.file_size - b.file_size;
+    case "updated-desc":
+    default:
+      return (
+        new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime()
+      );
+  }
+}
+
+function compareCollections(
+  a: Collection,
+  b: Collection,
+  sortOption: CollectionSortOption,
+) {
+  const aPhotoCount = a.photo_count ?? a.photo_ids?.length ?? 0;
+  const bPhotoCount = b.photo_count ?? b.photo_ids?.length ?? 0;
+
+  switch (sortOption) {
+    case "updated-asc":
+      return (
+        new Date(a.updated_at).getTime() - new Date(b.updated_at).getTime()
+      );
+    case "name-asc":
+      return a.name.localeCompare(b.name, "nl", { sensitivity: "base" });
+    case "name-desc":
+      return b.name.localeCompare(a.name, "nl", { sensitivity: "base" });
+    case "photos-desc":
+      return bPhotoCount - aPhotoCount;
+    case "photos-asc":
+      return aPhotoCount - bPhotoCount;
     case "updated-desc":
     default:
       return (
