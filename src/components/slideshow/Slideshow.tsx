@@ -62,7 +62,7 @@ export function Slideshow({ photos, headerContent }: SlideshowProps) {
     <div
       ref={slideshowRef}
       className={`min-h-screen px-4 pt-24 pb-8 text-white sm:px-6 lg:px-8 ${
-        isFullscreen ? "bg-[#0a1019] p-0" : ""
+        isFullscreen ? "theme-fullscreen-bg p-0" : ""
       }`}
     >
       <div
@@ -79,7 +79,7 @@ export function Slideshow({ photos, headerContent }: SlideshowProps) {
               Onze leukste herinneringen
             </h1>
             <p className="mx-auto max-w-2xl text-sm leading-7 text-white/65 sm:text-base">
-              Laat automatisch doorlopen of navigeer met de pijltjestoetsen en
+              Laat automatisch doorlopen of navigeer met de pijltjestoetsen of
               de knoppen onderaan.
             </p>
 
