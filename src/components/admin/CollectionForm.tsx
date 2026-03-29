@@ -30,7 +30,7 @@ export function CollectionForm({
     >
       <div className="flex flex-col gap-4">
         <div>
-          <h2 className="text-xl font-semibold">
+          <h2 className="display-section-title text-xl font-semibold">
             {isEditing ? "Collectie bewerken" : "Collectie toevoegen"}
           </h2>
           <p className="mt-1 text-sm text-white/70">

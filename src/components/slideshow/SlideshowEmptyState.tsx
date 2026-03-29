@@ -7,7 +7,7 @@ export function SlideshowEmptyState() {
         <p className="text-xs font-semibold uppercase tracking-[0.3em] text-white/45">
           Slideshow
         </p>
-        <h1 className="mt-4 text-3xl font-semibold sm:text-4xl">
+        <h1 className="display-page-title mt-4 text-3xl font-semibold sm:text-4xl">
           Nog geen actieve foto's beschikbaar
         </h1>
         <p className="mt-4 max-w-xl text-sm leading-7 text-white/70 sm:text-base">

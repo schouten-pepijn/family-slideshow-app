@@ -350,7 +350,7 @@ export function AdminPage() {
           <p className="text-xs font-semibold uppercase tracking-[0.28em] text-white/45">
             Admin
           </p>
-          <h1 className="text-3xl font-semibold tracking-tight sm:text-5xl">
+          <h1 className="display-page-title text-3xl font-semibold sm:text-5xl">
             Beheer jouw digitale fotolijst
           </h1>
           <p className="mx-auto max-w-2xl text-sm leading-7 text-white/65 sm:text-base">
@@ -366,7 +366,9 @@ export function AdminPage() {
           <div className="mb-5 flex flex-col gap-5">
             <div className="flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
               <div>
-                <h2 className="text-2xl font-semibold">Collecties</h2>
+                <h2 className="display-section-title text-2xl font-semibold">
+                  Collecties
+                </h2>
                 <p className="mt-1 text-sm text-white/70">
                   {filteredCollections.length} van {collections.length}{" "}
                   collectie
@@ -487,7 +489,9 @@ export function AdminPage() {
           <div className="mb-5 flex flex-col gap-5">
             <div className="flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
               <div>
-                <h2 className="text-2xl font-semibold">Huidige foto's</h2>
+                <h2 className="display-section-title text-2xl font-semibold">
+                  Huidige foto's
+                </h2>
                 <p className="mt-1 text-sm text-white/70">
                   {filteredPhotos.length} van {photos.length} foto
                   {photos.length === 1 ? "" : "'s"} zichtbaar.
@@ -577,7 +581,9 @@ export function AdminPage() {
             </div>
 
             <div className="flex flex-col gap-3 rounded-[1.5rem] border border-white/10 bg-black/20 px-4 py-4 sm:flex-row sm:items-center sm:justify-between">
-              <h2 className="text-2xl font-semibold">Huidige foto's</h2>
+              <h2 className="display-section-title text-2xl font-semibold">
+                Huidige foto's
+              </h2>
               <div className="flex flex-wrap items-center gap-3 text-sm text-white/70">
                 <span>
                   Pagina {currentPage} van {totalPages}

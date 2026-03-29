@@ -106,6 +106,7 @@ body {
   background-repeat: var(--app-bg-repeat);
   background-attachment: var(--app-bg-attachment);
   color: #f5f7ff;
+  font-family: "Outfit", "Segoe UI", sans-serif;
   font-feature-settings:
     "liga" 1,
     "kern" 1;
@@ -113,12 +114,32 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-.login-display {
+.font-display {
   font-family: "Manrope", "Segoe UI", sans-serif;
 }
 
-.login-ui {
+.font-ui {
   font-family: "Outfit", "Segoe UI", sans-serif;
+}
+
+.display-hero {
+  font-family: "Manrope", "Segoe UI", sans-serif;
+  line-height: 0.95;
+  letter-spacing: -0.022em;
+  text-wrap: balance;
+}
+
+.display-page-title {
+  font-family: "Manrope", "Segoe UI", sans-serif;
+  line-height: 1.02;
+  letter-spacing: -0.018em;
+  text-wrap: balance;
+}
+
+.display-section-title {
+  font-family: "Manrope", "Segoe UI", sans-serif;
+  line-height: 1.1;
+  letter-spacing: -0.012em;
 }
 
 .theme-fullscreen-bg {

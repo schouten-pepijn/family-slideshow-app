@@ -77,7 +77,7 @@ export function Slideshow({ photos, headerContent }: SlideshowProps) {
             <p className="text-xs font-semibold uppercase tracking-[0.28em] text-white/45">
               Digitale fotolijst
             </p>
-            <h1 className="text-3xl font-semibold tracking-tight sm:text-5xl">
+            <h1 className="display-page-title text-3xl font-semibold sm:text-5xl">
               Onze leukste herinneringen
             </h1>
             <p className="mx-auto max-w-2xl text-sm leading-7 text-white/65 sm:text-base">

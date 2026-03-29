@@ -42,7 +42,7 @@ export function SlideshowPage() {
           <p className="text-xs font-semibold uppercase tracking-[0.3em] text-white/45">
             Slideshow
           </p>
-          <h1 className="mt-4 text-3xl font-semibold sm:text-4xl">
+          <h1 className="display-page-title mt-4 text-3xl font-semibold sm:text-4xl">
             Foto's worden geladen
           </h1>
           <p className="mt-4 text-sm leading-7 text-white/70 sm:text-base">
@@ -60,7 +60,7 @@ export function SlideshowPage() {
           <p className="text-xs font-semibold uppercase tracking-[0.3em] text-red-100/70">
             Fout
           </p>
-          <h1 className="mt-4 text-3xl font-semibold sm:text-4xl">
+          <h1 className="display-page-title mt-4 text-3xl font-semibold sm:text-4xl">
             De slideshow kon niet worden geladen
           </h1>
           <p className="mt-4 text-sm leading-7 text-red-50/90 sm:text-base">
@@ -92,7 +92,7 @@ export function SlideshowPage() {
             <p className="text-xs font-semibold uppercase tracking-[0.3em] text-white/45">
               Collectie
             </p>
-            <h2 className="mt-4 text-3xl font-semibold sm:text-4xl">
+            <h2 className="display-page-title mt-4 text-3xl font-semibold sm:text-4xl">
               Geen actieve foto&apos;s in deze collectie
             </h2>
             <p className="mt-4 text-sm leading-7 text-white/70 sm:text-base">

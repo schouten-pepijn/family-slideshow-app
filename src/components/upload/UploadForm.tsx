@@ -103,7 +103,9 @@ export function UploadForm({ collections, onSubmit }: UploadFormProps) {
     >
       <div className="flex flex-col gap-5">
         <div>
-          <h2 className="text-2xl font-semibold">Foto toevoegen</h2>
+          <h2 className="display-section-title text-2xl font-semibold">
+            Foto toevoegen
+          </h2>
           <p className="mt-1 text-sm text-white/70">
             Kies een afbeelding en voeg optioneel een titel en beschrijving toe.
           </p>
