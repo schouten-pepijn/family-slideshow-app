@@ -19,7 +19,7 @@
       rgba(10, 28, 52, 0.62) 60%,
       rgba(9, 25, 45, 0.74) 100%
     ),
-    url("/backgrounds/standaard_bg.png");
+    url("/backgrounds/standard_dark_bg.jpg");
   --app-fullscreen-bg: #0a1d35;
   --app-bg-size: cover;
   --app-bg-position: center 22%;
