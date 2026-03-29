@@ -85,7 +85,7 @@ export function Slideshow({ photos, headerContent }: SlideshowProps) {
               de knoppen onderaan.
             </p>
 
-            {headerContent && <div className="pt-3">{headerContent}</div>}
+            {headerContent && <div className="pt-1">{headerContent}</div>}
           </header>
         )}
 
