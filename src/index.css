@@ -114,6 +114,11 @@ body {
 
 .theme-fullscreen-bg {
   background-color: var(--app-fullscreen-bg);
+  background-image: var(--app-bg);
+  background-size: var(--app-bg-size);
+  background-position: var(--app-bg-position);
+  background-repeat: var(--app-bg-repeat);
+  background-attachment: scroll;
 }
 
 .theme-shell {
