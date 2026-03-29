@@ -4,8 +4,9 @@ import { PhotoDetailsDrawer } from "../components/admin/PhotoDetailsDrawer";
 import { UploadForm } from "../components/upload/UploadForm";
 import { usePhotos } from "../hooks/usePhotos";
 import { useCollections } from "../hooks/useCollections";
-import { CollectionForm } from "../components/admin/CollectionForm";
+import { CollectionDrawer } from "../components/admin/CollectionDrawer";
 import { CollectionList } from "../components/admin/CollectionList";
+import type { Collection } from "../types/collection";
 import type { Photo } from "../types/photo";
 
 type PhotoStatusFilter = "all" | "active" | "inactive";
@@ -110,6 +111,12 @@ export function AdminPage() {
   const [editTitle, setEditTitle] = useState("");
   const [editDescription, setEditDescription] = useState("");
   const [editCollectionIds, setEditCollectionIds] = useState<number[]>([]);
+  const [showCollectionForm, setShowCollectionForm] = useState(false);
+  const [collectionSearchQuery, setCollectionSearchQuery] = useState("");
+  const [collectionVisibilityFilter, setCollectionVisibilityFilter] =
+    useState<CollectionVisibilityFilter>("all");
+  const [collectionSortOption, setCollectionSortOption] =
+    useState<CollectionSortOption>("updated-desc");
   const [searchQuery, setSearchQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState<PhotoStatusFilter>("all");
   const [collectionFilter, setCollectionFilter] = useState<string>("all");
@@ -185,6 +192,7 @@ export function AdminPage() {
     setCollectionName(name);
     setCollectionDescription(description ?? "");
     setCollectionIsPublic(isPublic);
+    setShowCollectionForm(true);
   }
 
   function handleCancelCollectionEditing() {
@@ -192,6 +200,7 @@ export function AdminPage() {
     setCollectionName("");
     setCollectionDescription("");
     setCollectionIsPublic(false);
+    setShowCollectionForm(false);
   }
 
   async function handleSaveCollection(event: FormEvent<HTMLFormElement>) {
@@ -227,6 +236,32 @@ export function AdminPage() {
 
     await removeCollection(collectionId);
   }
+
+  const normalizedCollectionSearchQuery = collectionSearchQuery
+    .trim()
+    .toLowerCase();
+  const filteredCollections = [...collections]
+    .filter((collection) => {
+      if (collectionVisibilityFilter === "public" && !collection.is_public) {
+        return false;
+      }
+
+      if (collectionVisibilityFilter === "private" && collection.is_public) {
+        return false;
+      }
+
+      if (!normalizedCollectionSearchQuery) {
+        return true;
+      }
+
+      const searchableText = [collection.name, collection.description]
+        .filter(Boolean)
+        .join(" ")
+        .toLowerCase();
+
+      return searchableText.includes(normalizedCollectionSearchQuery);
+    })
+    .sort((a, b) => compareCollections(a, b, collectionSortOption));
 
   const normalizedSearchQuery = searchQuery.trim().toLowerCase();
   const selectedCollectionId =
@@ -290,6 +325,11 @@ export function AdminPage() {
       ? null
       : (photos.find((photo) => photo.id === editingPhotoId) ?? null);
 
+  const editingCollection =
+    editingCollectionId !== null
+      ? (collections.find((c) => c.id === editingCollectionId) ?? null)
+      : null;
+
   function resetToFirstPage() {
     setCurrentPage(1);
   }
@@ -323,28 +363,86 @@ export function AdminPage() {
           <UploadForm collections={collections} onSubmit={addNewPhoto} />
         </div>
         <section className="rounded-[2rem] border border-white/10 bg-white/5 p-6 shadow-[0_30px_80px_rgba(0,0,0,0.35)] backdrop-blur md:p-8">
-          <div className="mb-5 flex items-center justify-between gap-4">
-            <div>
-              <h2 className="text-2xl font-semibold">Collecties</h2>
-              <p className="mt-1 text-sm text-white/70">
-                Beheer welke verzamelingen zichtbaar zijn in de slideshow.
-              </p>
+          <div className="mb-5 flex flex-col gap-5">
+            <div className="flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
+              <div>
+                <h2 className="text-2xl font-semibold">Collecties</h2>
+                <p className="mt-1 text-sm text-white/70">
+                  {filteredCollections.length} van {collections.length}{" "}
+                  collectie
+                  {collections.length === 1 ? "" : "s"} zichtbaar.
+                </p>
+              </div>
+
+              <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-[minmax(0,1.35fr)_repeat(2,minmax(0,0.8fr))_auto]">
+                <label className="flex min-w-0 flex-col gap-2 text-xs font-semibold uppercase tracking-[0.14em] text-white/50">
+                  Zoeken
+                  <input
+                    type="search"
+                    value={collectionSearchQuery}
+                    onChange={(event) =>
+                      setCollectionSearchQuery(event.target.value)
+                    }
+                    placeholder="Naam of beschrijving"
+                    className="rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-sm font-medium normal-case tracking-normal text-white outline-none transition focus:border-white/25 focus:bg-black/30"
+                  />
+                </label>
+
+                <label className="flex flex-col gap-2 text-xs font-semibold uppercase tracking-[0.14em] text-white/50">
+                  Zichtbaarheid
+                  <select
+                    value={collectionVisibilityFilter}
+                    onChange={(event) =>
+                      setCollectionVisibilityFilter(
+                        event.target.value as CollectionVisibilityFilter,
+                      )
+                    }
+                    className="rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-sm font-medium normal-case tracking-normal text-white outline-none transition focus:border-white/25 focus:bg-black/30"
+                  >
+                    <option value="all">Alle collecties</option>
+                    <option value="public">Alleen publiek</option>
+                    <option value="private">Alleen admin</option>
+                  </select>
+                </label>
+
+                <label className="flex flex-col gap-2 text-xs font-semibold uppercase tracking-[0.14em] text-white/50">
+                  Sortering
+                  <select
+                    value={collectionSortOption}
+                    onChange={(event) =>
+                      setCollectionSortOption(
+                        event.target.value as CollectionSortOption,
+                      )
+                    }
+                    className="rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-sm font-medium normal-case tracking-normal text-white outline-none transition focus:border-white/25 focus:bg-black/30"
+                  >
+                    <option value="updated-desc">Recent bijgewerkt</option>
+                    <option value="updated-asc">Langst niet bijgewerkt</option>
+                    <option value="name-asc">Naam A-Z</option>
+                    <option value="name-desc">Naam Z-A</option>
+                    <option value="photos-desc">Meeste foto's</option>
+                    <option value="photos-asc">Minste foto's</option>
+                  </select>
+                </label>
+
+                <button
+                  type="button"
+                  onClick={() => {
+                    setEditingCollectionId(null);
+                    setCollectionName("");
+                    setCollectionDescription("");
+                    setCollectionIsPublic(false);
+                    setShowCollectionForm(true);
+                  }}
+                  className="theme-pill-button h-fit rounded-full px-4 py-3 text-sm font-semibold"
+                >
+                  Collectie toevoegen
+                </button>
+              </div>
             </div>
           </div>
 
           <div className="grid gap-6">
-            <CollectionForm
-              name={collectionName}
-              description={collectionDescription}
-              isPublic={collectionIsPublic}
-              isEditing={editingCollectionId !== null}
-              onNameChange={setCollectionName}
-              onDescriptionChange={setCollectionDescription}
-              onIsPublicChange={setCollectionIsPublic}
-              onSubmit={handleSaveCollection}
-              onCancel={handleCancelCollectionEditing}
-            />
-
             {collectionsLoading && (
               <p className="rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-sm text-white/70">
                 Collecties laden...
@@ -365,9 +463,18 @@ export function AdminPage() {
                 </p>
               )}
 
-            {!collectionsLoading && collections.length > 0 && (
+            {!collectionsLoading &&
+              !collectionsError &&
+              collections.length > 0 &&
+              filteredCollections.length === 0 && (
+                <p className="rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-sm text-white/70">
+                  Geen collecties gevonden voor de huidige filters.
+                </p>
+              )}
+
+            {!collectionsLoading && filteredCollections.length > 0 && (
               <CollectionList
-                collections={collections}
+                collections={filteredCollections}
                 editingCollectionId={editingCollectionId}
                 onStartEditing={handleStartEditingCollection}
                 onRemoveCollection={handleRemoveCollection}
@@ -577,6 +684,20 @@ export function AdminPage() {
           )}
         </section>
       </div>
+
+      <CollectionDrawer
+        isOpen={showCollectionForm}
+        isEditing={editingCollectionId !== null}
+        originalName={editingCollection?.name ?? ""}
+        name={collectionName}
+        description={collectionDescription}
+        isPublic={collectionIsPublic}
+        onNameChange={setCollectionName}
+        onDescriptionChange={setCollectionDescription}
+        onIsPublicChange={setCollectionIsPublic}
+        onSubmit={handleSaveCollection}
+        onClose={handleCancelCollectionEditing}
+      />
 
       <PhotoDetailsDrawer
         photo={selectedPhoto}
