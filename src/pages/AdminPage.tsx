@@ -340,13 +340,122 @@ export function AdminPage() {
         </section>
 
         <section className="rounded-[2rem] border border-white/10 bg-white/5 p-6 shadow-[0_30px_80px_rgba(0,0,0,0.35)] backdrop-blur md:p-8">
-          <div className="mb-5 flex items-center justify-between gap-4">
-            <div>
+          <div className="mb-5 flex flex-col gap-5">
+            <div className="flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
+              <div>
+                <h2 className="text-2xl font-semibold">Huidige foto's</h2>
+                <p className="mt-1 text-sm text-white/70">
+                  {filteredPhotos.length} van {photos.length} foto
+                  {photos.length === 1 ? "" : "'s"} zichtbaar.
+                </p>
+              </div>
+
+              <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-[minmax(0,1.5fr)_repeat(3,minmax(0,0.8fr))_auto]">
+                <label className="flex min-w-0 flex-col gap-2 text-xs font-semibold uppercase tracking-[0.14em] text-white/50">
+                  Zoeken
+                  <input
+                    type="search"
+                    value={searchQuery}
+                    onChange={(event) => {
+                      setSearchQuery(event.target.value);
+                      resetToFirstPage();
+                    }}
+                    placeholder="Titel, bestand of collectie"
+                    className="rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-sm font-medium normal-case tracking-normal text-white outline-none transition focus:border-white/25 focus:bg-black/30"
+                  />
+                </label>
+
+                <label className="flex flex-col gap-2 text-xs font-semibold uppercase tracking-[0.14em] text-white/50">
+                  Status
+                  <select
+                    value={statusFilter}
+                    onChange={(event) => {
+                      setStatusFilter(event.target.value as PhotoStatusFilter);
+                      resetToFirstPage();
+                    }}
+                    className="rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-sm font-medium normal-case tracking-normal text-white outline-none transition focus:border-white/25 focus:bg-black/30"
+                  >
+                    <option value="all">Alle foto's</option>
+                    <option value="active">Alleen actief</option>
+                    <option value="inactive">Alleen inactief</option>
+                  </select>
+                </label>
+
+                <label className="flex flex-col gap-2 text-xs font-semibold uppercase tracking-[0.14em] text-white/50">
+                  Collectie
+                  <select
+                    value={collectionFilter}
+                    onChange={(event) => {
+                      setCollectionFilter(event.target.value);
+                      resetToFirstPage();
+                    }}
+                    className="rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-sm font-medium normal-case tracking-normal text-white outline-none transition focus:border-white/25 focus:bg-black/30"
+                  >
+                    <option value="all">Alle collecties</option>
+                    {collections.map((collection) => (
+                      <option
+                        key={collection.id}
+                        value={collection.id.toString()}
+                      >
+                        {collection.name}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+
+                <label className="flex flex-col gap-2 text-xs font-semibold uppercase tracking-[0.14em] text-white/50">
+                  Sortering
+                  <select
+                    value={sortOption}
+                    onChange={(event) => {
+                      setSortOption(event.target.value as PhotoSortOption);
+                      resetToFirstPage();
+                    }}
+                    className="rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-sm font-medium normal-case tracking-normal text-white outline-none transition focus:border-white/25 focus:bg-black/30"
+                  >
+                    <option value="updated-desc">Recent bijgewerkt</option>
+                    <option value="updated-asc">Langst niet bijgewerkt</option>
+                    <option value="title-asc">Titel A-Z</option>
+                    <option value="title-desc">Titel Z-A</option>
+                    <option value="size-desc">Grootste bestand</option>
+                    <option value="size-asc">Kleinste bestand</option>
+                  </select>
+                </label>
+
+                <button
+                  type="button"
+                  onClick={handleClearPhotoFilters}
+                  className="theme-pill-button h-fit rounded-full px-4 py-3 text-sm font-semibold"
+                >
+                  Reset
+                </button>
+              </div>
+            </div>
+
+            <div className="flex flex-col gap-3 rounded-[1.5rem] border border-white/10 bg-black/20 px-4 py-4 sm:flex-row sm:items-center sm:justify-between">
               <h2 className="text-2xl font-semibold">Huidige foto's</h2>
-              <p className="mt-1 text-sm text-white/70">
-                {photos.length} foto{photos.length === 1 ? "" : "'s"} in de
-                huidige selectie.
-              </p>
+              <div className="flex flex-wrap items-center gap-3 text-sm text-white/70">
+                <span>
+                  Pagina {currentPage} van {totalPages}
+                </span>
+                <label className="flex items-center gap-2">
+                  <span>Per pagina</span>
+                  <select
+                    value={pageSize}
+                    onChange={(event) => {
+                      setPageSize(Number(event.target.value));
+                      setCurrentPage(1);
+                    }}
+                    className="rounded-full border border-white/10 bg-white/8 px-3 py-2 text-sm text-white outline-none transition focus:border-white/25"
+                  >
+                    {PAGE_SIZE_OPTIONS.map((option) => (
+                      <option key={option} value={option}>
+                        {option}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+              </div>
             </div>
           </div>
 
@@ -368,26 +477,84 @@ export function AdminPage() {
             </p>
           )}
 
-          {!isLoading && photos.length > 0 && (
-            <PhotoList
-              photos={photos}
-              collections={collections}
-              editingPhotoId={editingPhotoId}
-              editTitle={editTitle}
-              editDescription={editDescription}
-              editCollectionIds={editCollectionIds}
-              onEditTitleChange={setEditTitle}
-              onEditDescriptionChange={setEditDescription}
-              onEditCollectionIdsChange={setEditCollectionIds}
-              onStartEditing={handleStartEditing}
-              onCancelEditing={handleCancelEditing}
-              onSavePhotoDetails={handleSavePhotoDetails}
-              onToggleActive={toggleActive}
-              onRemovePhoto={handleRemovePhoto}
-            />
+          {!isLoading &&
+            !error &&
+            photos.length > 0 &&
+            filteredPhotos.length === 0 && (
+              <p className="rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-sm text-white/70">
+                Geen foto's gevonden voor de huidige filters. Pas je zoekterm of
+                filters aan.
+              </p>
+            )}
+
+          {!isLoading && photos.length > 0 && filteredPhotos.length > 0 && (
+            <>
+              <PhotoList
+                photos={paginatedPhotos}
+                selectedPhotoId={editingPhotoId}
+                collections={collections}
+                onSelectPhoto={(photo) =>
+                  handleStartEditing(
+                    photo.id,
+                    photo.title,
+                    photo.description,
+                    photo.collection_ids,
+                  )
+                }
+                onToggleActive={toggleActive}
+                onRemovePhoto={handleRemovePhoto}
+              />
+
+              <div className="mt-5 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                <p className="text-sm text-white/60">
+                  Toon {paginatedPhotos.length} foto
+                  {paginatedPhotos.length === 1 ? "" : "'s"} op deze pagina.
+                </p>
+                <div className="flex items-center gap-3">
+                  <button
+                    type="button"
+                    onClick={() =>
+                      setCurrentPage((page) => Math.max(1, page - 1))
+                    }
+                    disabled={currentPage === 1}
+                    className="theme-pill-button rounded-full px-4 py-2 text-sm font-semibold disabled:cursor-not-allowed disabled:opacity-50"
+                  >
+                    Vorige
+                  </button>
+                  <span className="rounded-full border border-white/10 bg-white/8 px-4 py-2 text-sm font-semibold text-white/75">
+                    {currentPage} / {totalPages}
+                  </span>
+                  <button
+                    type="button"
+                    onClick={() =>
+                      setCurrentPage((page) => Math.min(totalPages, page + 1))
+                    }
+                    disabled={currentPage === totalPages}
+                    className="theme-pill-button rounded-full px-4 py-2 text-sm font-semibold disabled:cursor-not-allowed disabled:opacity-50"
+                  >
+                    Volgende
+                  </button>
+                </div>
+              </div>
+            </>
           )}
         </section>
       </div>
+
+      <PhotoDetailsDrawer
+        photo={selectedPhoto}
+        collections={collections}
+        editTitle={editTitle}
+        editDescription={editDescription}
+        editCollectionIds={editCollectionIds}
+        onEditTitleChange={setEditTitle}
+        onEditDescriptionChange={setEditDescription}
+        onEditCollectionIdsChange={setEditCollectionIds}
+        onClose={handleCancelEditing}
+        onSavePhotoDetails={handleSavePhotoDetails}
+        onToggleActive={toggleActive}
+        onRemovePhoto={handleRemovePhoto}
+      />
     </div>
   );
 }
