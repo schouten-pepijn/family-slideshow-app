@@ -1,15 +1,25 @@
 import { FormEvent, useEffect, useState } from "react";
+import type { Collection } from "../../types/collection";
 
 // Component voor het uploaden van een nieuwe foto, inclusief bestandsselectie, titel, beschrijving en preview.
 type UploadFormProps = {
-  onSubmit: (file: File, title?: string, description?: string) => Promise<void>;
+  collections: Collection[];
+  onSubmit: (
+    file: File,
+    title?: string,
+    description?: string,
+    collectionIds?: number[],
+  ) => Promise<void>;
 };
 
 // Validaties voor het bestandstype en de bestandsgrootte worden uitgevoerd bij het selecteren van een bestand.
-export function UploadForm({ onSubmit }: UploadFormProps) {
+export function UploadForm({ collections, onSubmit }: UploadFormProps) {
   const [file, setFile] = useState<File | null>(null);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
+  const [selectedCollectionIds, setSelectedCollectionIds] = useState<number[]>(
+    [],
+  );
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -65,15 +75,24 @@ export function UploadForm({ onSubmit }: UploadFormProps) {
     try {
       setIsSubmitting(true);
       setError(null);
-      await onSubmit(file, title, description);
+      await onSubmit(file, title, description, selectedCollectionIds);
       setFile(null);
       setTitle("");
       setDescription("");
+      setSelectedCollectionIds([]);
     } catch {
       setError("Upload mislukt. Probeer het opnieuw.");
     } finally {
       setIsSubmitting(false);
     }
+  }
+
+  function handleToggleCollection(collectionId: number) {
+    setSelectedCollectionIds((current) =>
+      current.includes(collectionId)
+        ? current.filter((id) => id !== collectionId)
+        : [...current, collectionId],
+    );
   }
 
   // Het formulier bevat invoervelden voor het selecteren van een afbeelding, het invoeren van een titel en een beschrijving, en een preview van de geselecteerde afbeelding. Er worden ook foutmeldingen weergegeven bij ongeldige invoer of uploadfouten, en de submit-knop is uitgeschakeld tijdens het uploaden.
@@ -121,6 +140,46 @@ export function UploadForm({ onSubmit }: UploadFormProps) {
             className="rounded-2xl border border-white/15 bg-black/20 px-4 py-3 text-white placeholder:text-white/40"
           />
         </label>
+
+        {collections.length > 0 && (
+          <fieldset className="rounded-3xl border border-white/10 bg-black/15 p-4">
+            <legend className="px-2 text-sm font-semibold text-white/80">
+              Collecties
+            </legend>
+            <p className="mb-3 text-sm text-white/65">
+              Koppel deze foto direct aan een of meer collecties.
+            </p>
+            <div className="grid gap-2 sm:grid-cols-2">
+              {collections.map((collection) => {
+                const isChecked = selectedCollectionIds.includes(collection.id);
+
+                return (
+                  <label
+                    key={collection.id}
+                    className={`flex items-start gap-3 rounded-2xl border px-4 py-3 text-sm transition-colors ${
+                      isChecked
+                        ? "border-white/25 bg-white/10 text-white"
+                        : "border-white/10 bg-black/20 text-white/80 hover:bg-white/5"
+                    }`}
+                  >
+                    <input
+                      type="checkbox"
+                      checked={isChecked}
+                      onChange={() => handleToggleCollection(collection.id)}
+                      className="mt-0.5"
+                    />
+                    <span className="flex flex-col gap-1">
+                      <span className="font-medium">{collection.name}</span>
+                      <span className="text-xs text-white/55">
+                        {collection.description ?? "Geen beschrijving beschikbaar."}
+                      </span>
+                    </span>
+                  </label>
+                );
+              })}
+            </div>
+          </fieldset>
+        )}
 
         {previewUrl && (
           <div className="overflow-hidden rounded-3xl border border-white/10 bg-black/20">
