@@ -11,7 +11,7 @@ type SlideshowProps = {
 export function Slideshow({ photos, headerContent }: SlideshowProps) {
   const { activeIndex, activePhoto, goToNext, goToPrevious } = useSlideshow({
     photos,
-    intervalMs: 8000,
+    intervalMs: 12000,
   });
   const slideshowRef = useRef<HTMLDivElement | null>(null);
   const [isFullscreen, setIsFullscreen] = useState(false);
@@ -136,7 +136,7 @@ export function Slideshow({ photos, headerContent }: SlideshowProps) {
 
               {photos.length > 1 && (
                 <p className="text-xs uppercase tracking-[0.22em] text-white/40">
-                  Automatische wissel elke 8 seconden
+                  Automatische wissel elke 12 seconden
                 </p>
               )}
 
