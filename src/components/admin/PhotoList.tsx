@@ -1,4 +1,3 @@
-import type { FormEvent } from "react";
 import { PhotoListItem } from "./PhotoListItem";
 import type { Photo } from "../../types/photo";
 import type { Collection } from "../../types/collection";
@@ -6,24 +5,8 @@ import type { Collection } from "../../types/collection";
 type PhotoListProps = {
   photos: Photo[];
   collections: Collection[];
-  editingPhotoId: number | null;
-  editTitle: string;
-  editDescription: string;
-  editCollectionIds: number[];
-  onEditTitleChange: (value: string) => void;
-  onEditDescriptionChange: (value: string) => void;
-  onEditCollectionIdsChange: (value: number[]) => void;
-  onStartEditing: (
-    photoId: number,
-    title: string | null,
-    description: string | null,
-    collectionIds: number[],
-  ) => void;
-  onCancelEditing: () => void;
-  onSavePhotoDetails: (
-    event: FormEvent<HTMLFormElement>,
-    photoId: number,
-  ) => Promise<void>;
+  selectedPhotoId: number | null;
+  onSelectPhoto: (photo: Photo) => void;
   onToggleActive: (photoId: number) => Promise<void>;
   onRemovePhoto: (photoId: number) => Promise<void>;
 };
@@ -36,16 +19,8 @@ export function PhotoList(props: PhotoListProps) {
           key={photo.id}
           photo={photo}
           collections={props.collections}
-          isEditing={props.editingPhotoId === photo.id}
-          editTitle={props.editTitle}
-          editDescription={props.editDescription}
-          editCollectionIds={props.editCollectionIds}
-          onEditTitleChange={props.onEditTitleChange}
-          onEditDescriptionChange={props.onEditDescriptionChange}
-          onEditCollectionIdsChange={props.onEditCollectionIdsChange}
-          onStartEditing={props.onStartEditing}
-          onCancelEditing={props.onCancelEditing}
-          onSavePhotoDetails={props.onSavePhotoDetails}
+          isSelected={props.selectedPhotoId === photo.id}
+          onSelectPhoto={props.onSelectPhoto}
           onToggleActive={props.onToggleActive}
           onRemovePhoto={props.onRemovePhoto}
         />
