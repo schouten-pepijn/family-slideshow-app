@@ -1,5 +1,34 @@
 @import "tailwindcss";
 
+:root,
+:root[data-theme="standaard"] {
+  --app-bg:
+    radial-gradient(circle at top, rgba(242, 196, 125, 0.12), transparent 38%),
+    radial-gradient(
+      circle at 20% 20%,
+      rgba(111, 162, 216, 0.16),
+      transparent 30%
+    ),
+    linear-gradient(180deg, #0a1019 0%, #101927 52%, #0e1623 100%);
+  --app-fullscreen-bg: #0a1019;
+}
+
+:root[data-theme="ember"] {
+  --app-bg:
+    radial-gradient(
+      circle at 80% 10%,
+      rgba(255, 191, 138, 0.18),
+      transparent 35%
+    ),
+    radial-gradient(
+      circle at 10% 80%,
+      rgba(255, 121, 69, 0.16),
+      transparent 30%
+    ),
+    linear-gradient(180deg, #1a0f0b 0%, #241410 52%, #301915 100%);
+  --app-fullscreen-bg: #1a0f0b;
+}
+
 html,
 body,
 #root {
@@ -8,12 +37,15 @@ body,
 
 body {
   margin: 0;
-  background:
-    radial-gradient(circle at top, rgba(242, 196, 125, 0.12), transparent 38%),
-    radial-gradient(circle at 20% 20%, rgba(111, 162, 216, 0.16), transparent 30%),
-    linear-gradient(180deg, #0a1019 0%, #101927 52%, #0e1623 100%);
+  background: var(--app-bg);
   color: #f5f7ff;
-  font-feature-settings: "liga" 1, "kern" 1;
+  font-feature-settings:
+    "liga" 1,
+    "kern" 1;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.theme-fullscreen-bg {
+  background-color: var(--app-fullscreen-bg);
 }
