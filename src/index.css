@@ -3,16 +3,26 @@
 :root,
 :root[data-theme="standaard"] {
   --app-bg:
-    radial-gradient(circle at top, rgba(126, 182, 255, 0.18), transparent 38%),
     radial-gradient(
-      circle at 20% 20%,
-      rgba(79, 150, 255, 0.24),
+      circle at 78% 8%,
+      rgba(167, 216, 255, 0.26),
+      transparent 34%
+    ),
+    radial-gradient(
+      circle at 14% 18%,
+      rgba(96, 166, 255, 0.2),
       transparent 30%
     ),
-    linear-gradient(180deg, #091527 0%, #0b223d 52%, #0a1d33 100%);
-  --app-fullscreen-bg: #091527;
-  --app-bg-size: auto;
-  --app-bg-position: center;
+    linear-gradient(
+      180deg,
+      rgba(8, 21, 39, 0.44) 0%,
+      rgba(10, 28, 52, 0.62) 60%,
+      rgba(9, 25, 45, 0.74) 100%
+    ),
+    url("/backgrounds/standaard_bg.png");
+  --app-fullscreen-bg: #0a1d35;
+  --app-bg-size: cover;
+  --app-bg-position: center 22%;
   --app-bg-repeat: no-repeat;
   --app-bg-attachment: scroll;
 }
