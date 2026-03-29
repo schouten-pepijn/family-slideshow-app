@@ -38,9 +38,9 @@ export default function App() {
             </button>
             <button
               type="button"
-              onClick={() => setTheme("ember")}
+              onClick={() => setTheme("madeliefjes")}
               className={`rounded-full px-3 py-2 text-xs font-semibold uppercase tracking-[0.14em] transition-colors ${
-                theme === "ember"
+                theme === "madeliefjes"
                   ? "bg-white text-black"
                   : "bg-white/10 text-white hover:bg-white/15"
               }`}
