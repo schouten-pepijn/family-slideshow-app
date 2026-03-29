@@ -74,7 +74,7 @@ export function PhotoDetailsDrawer({
 
         <div className="grid flex-1 gap-6 overflow-y-auto p-5 lg:grid-cols-[240px_minmax(0,1fr)] lg:p-6">
           <div className="space-y-4">
-            <div className="overflow-hidden rounded-[1.5rem] border border-white/10 bg-black/30">
+            <div className="overflow-hidden rounded-[1.5rem] border border-white/10 bg-white/8">
               <img
                 src={photo.image_url}
                 alt={photo.title ?? "Foto"}
@@ -82,7 +82,7 @@ export function PhotoDetailsDrawer({
               />
             </div>
 
-            <div className="rounded-[1.5rem] border border-white/10 bg-black/20 p-4 text-sm text-white/70">
+            <div className="rounded-[1.5rem] border border-white/10 bg-white/5 p-4 text-sm text-white/70">
               <dl className="grid gap-3">
                 <div>
                   <dt className="text-xs font-semibold uppercase tracking-[0.14em] text-white/45">
@@ -123,7 +123,7 @@ export function PhotoDetailsDrawer({
                   type="text"
                   value={editTitle}
                   onChange={(event) => onEditTitleChange(event.target.value)}
-                  className="rounded-2xl border border-white/15 bg-black/30 px-4 py-3 text-white placeholder:text-white/40"
+                  className="rounded-2xl border border-white/15 bg-white/8 px-4 py-3 text-white placeholder:text-white/40 outline-none transition focus:border-white/25 focus:bg-white/10"
                   placeholder="Bijvoorbeeld: Zomerdag in de tuin"
                 />
               </label>
@@ -136,14 +136,14 @@ export function PhotoDetailsDrawer({
                     onEditDescriptionChange(event.target.value)
                   }
                   rows={4}
-                  className="rounded-2xl border border-white/15 bg-black/30 px-4 py-3 text-white placeholder:text-white/40"
+                  className="rounded-2xl border border-white/15 bg-white/8 px-4 py-3 text-white placeholder:text-white/40 outline-none transition focus:border-white/25 focus:bg-white/10"
                   placeholder="Korte toelichting bij de foto"
                 />
               </label>
             </div>
 
             {collections.length > 0 && (
-              <fieldset className="rounded-[1.5rem] border border-white/10 bg-black/20 p-4">
+              <fieldset className="rounded-[1.5rem] border border-white/10 bg-white/5 p-4">
                 <legend className="px-2 text-sm font-semibold text-white/80">
                   Collecties
                 </legend>
@@ -159,7 +159,7 @@ export function PhotoDetailsDrawer({
                         className={`flex items-start gap-3 rounded-2xl border px-3 py-3 text-sm transition-colors ${
                           isSelected
                             ? "border-white/25 bg-white/10 text-white"
-                            : "border-white/10 bg-black/20 text-white/80 hover:bg-white/5"
+                            : "border-white/10 bg-white/5 text-white/80 hover:bg-white/10"
                         }`}
                       >
                         <input
