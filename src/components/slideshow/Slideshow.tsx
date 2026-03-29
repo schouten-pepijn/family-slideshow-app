@@ -108,14 +108,14 @@ export function Slideshow({ photos, headerContent }: SlideshowProps) {
                   <>
                     <button
                       type="button"
-                      className="rounded-full border border-white/15 bg-white/8 px-5 py-3 text-sm font-semibold text-white transition-all duration-150 hover:-translate-y-px hover:bg-white/14 active:translate-y-0"
+                      className="theme-pill-button rounded-full px-5 py-3 text-sm font-semibold transition-all duration-150 hover:-translate-y-px active:translate-y-0"
                       onClick={goToPrevious}
                     >
                       Vorige
                     </button>
                     <button
                       type="button"
-                      className="rounded-full border border-white/15 bg-white/8 px-5 py-3 text-sm font-semibold text-white transition-all duration-150 hover:-translate-y-px hover:bg-white/14 active:translate-y-0"
+                      className="theme-pill-button rounded-full px-5 py-3 text-sm font-semibold transition-all duration-150 hover:-translate-y-px active:translate-y-0"
                       onClick={goToNext}
                     >
                       Volgende
@@ -125,7 +125,7 @@ export function Slideshow({ photos, headerContent }: SlideshowProps) {
 
                 <button
                   type="button"
-                  className="rounded-full border border-white/15 bg-white/8 px-5 py-3 text-sm font-semibold text-white transition-all duration-150 hover:-translate-y-px hover:bg-white/14 active:translate-y-0"
+                  className="theme-pill-button rounded-full px-5 py-3 text-sm font-semibold transition-all duration-150 hover:-translate-y-px active:translate-y-0"
                   onClick={handleToggleFullscreen}
                 >
                   Volledig scherm

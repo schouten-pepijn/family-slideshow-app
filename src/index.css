@@ -25,37 +25,57 @@
   --app-bg-position: center 22%;
   --app-bg-repeat: no-repeat;
   --app-bg-attachment: scroll;
+  --shell-bg: rgba(6, 16, 30, 0.46);
+  --shell-border: rgba(185, 220, 255, 0.18);
+  --btn-bg: rgba(255, 255, 255, 0.08);
+  --btn-hover-bg: rgba(255, 255, 255, 0.16);
+  --btn-border: rgba(189, 222, 255, 0.2);
+  --btn-text: #eef6ff;
+  --btn-active-bg: #ffffff;
+  --btn-active-text: #0c213a;
+  --btn-active-border: rgba(255, 255, 255, 0.84);
+  --btn-active-shadow: 0 12px 30px rgba(155, 210, 255, 0.25);
 }
 
 :root[data-theme="madeliefjes"] {
   --app-bg:
     radial-gradient(
-      circle at 85% 10%,
-      rgba(255, 243, 176, 0.42),
-      transparent 36%
+      circle at 88% 9%,
+      rgba(255, 243, 170, 0.3),
+      transparent 34%
     ),
     radial-gradient(
-      circle at 12% 18%,
-      rgba(255, 203, 126, 0.32),
+      circle at 14% 84%,
+      rgba(255, 236, 158, 0.22),
       transparent 33%
     ),
     radial-gradient(
-      circle at 22% 84%,
-      rgba(255, 171, 116, 0.24),
-      transparent 32%
+      circle at 14% 16%,
+      rgba(218, 255, 230, 0.18),
+      transparent 30%
     ),
     linear-gradient(
       180deg,
-      rgba(54, 30, 15, 0.34) 0%,
-      rgba(43, 24, 10, 0.48) 55%,
-      rgba(36, 20, 8, 0.58) 100%
+      rgba(22, 47, 36, 0.44) 0%,
+      rgba(21, 48, 35, 0.5) 56%,
+      rgba(18, 40, 30, 0.56) 100%
     ),
     url("/backgrounds/madeliefje_bg.png");
-  --app-fullscreen-bg: #5a3119;
+  --app-fullscreen-bg: #1f4634;
   --app-bg-size: cover;
-  --app-bg-position: center 26%;
+  --app-bg-position: center;
   --app-bg-repeat: no-repeat;
   --app-bg-attachment: scroll;
+  --shell-bg: rgba(239, 251, 243, 0.2);
+  --shell-border: rgba(227, 247, 233, 0.5);
+  --btn-bg: rgba(246, 255, 248, 0.24);
+  --btn-hover-bg: rgba(249, 255, 250, 0.38);
+  --btn-border: rgba(226, 247, 232, 0.62);
+  --btn-text: #1c3e2f;
+  --btn-active-bg: #ffe07a;
+  --btn-active-text: #624c00;
+  --btn-active-border: rgba(255, 245, 201, 0.95);
+  --btn-active-shadow: 0 12px 30px rgba(255, 209, 90, 0.34);
 }
 
 html,
@@ -81,4 +101,35 @@ body {
 
 .theme-fullscreen-bg {
   background-color: var(--app-fullscreen-bg);
+}
+
+.theme-shell {
+  border-color: var(--shell-border);
+  background-color: var(--shell-bg);
+}
+
+.theme-pill-button {
+  border: 1px solid var(--btn-border);
+  background-color: var(--btn-bg);
+  color: var(--btn-text);
+  transition:
+    background-color 160ms ease,
+    border-color 160ms ease,
+    transform 140ms ease;
+}
+
+.theme-pill-button:hover {
+  background-color: var(--btn-hover-bg);
+  border-color: color-mix(in srgb, var(--btn-border) 70%, #ffffff 30%);
+}
+
+.theme-pill-button:active {
+  transform: translateY(0);
+}
+
+.theme-pill-button-active {
+  border: 1px solid var(--btn-active-border);
+  background-color: var(--btn-active-bg);
+  color: var(--btn-active-text);
+  box-shadow: var(--btn-active-shadow);
 }

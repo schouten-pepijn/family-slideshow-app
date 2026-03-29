@@ -24,14 +24,14 @@ export default function App() {
     <div className="min-h-screen">
       <nav className="pointer-events-none fixed inset-x-0 top-0 z-20">
         <div className="mx-auto flex w-full max-w-7xl justify-between px-4 py-4 sm:px-6 lg:px-8">
-          <div className="pointer-events-auto flex items-center gap-1 rounded-full border border-white/10 bg-black/35 p-1.5 shadow-[0_18px_50px_rgba(0,0,0,0.3)] backdrop-blur-md">
+          <div className="theme-shell pointer-events-auto flex items-center gap-1 rounded-full border p-1.5 shadow-[0_18px_50px_rgba(0,0,0,0.3)] backdrop-blur-md">
             <button
               type="button"
               onClick={() => setTheme("standaard")}
-              className={`rounded-full px-3 py-2 text-xs font-semibold uppercase tracking-[0.14em] transition-colors ${
+              className={`rounded-full px-3 py-2 text-xs font-semibold uppercase tracking-[0.14em] ${
                 theme === "standaard"
-                  ? "bg-white text-black"
-                  : "bg-white/10 text-white hover:bg-white/15"
+                  ? "theme-pill-button-active"
+                  : "theme-pill-button"
               }`}
             >
               Standaard
@@ -39,10 +39,10 @@ export default function App() {
             <button
               type="button"
               onClick={() => setTheme("madeliefjes")}
-              className={`rounded-full px-3 py-2 text-xs font-semibold uppercase tracking-[0.14em] transition-colors ${
+              className={`rounded-full px-3 py-2 text-xs font-semibold uppercase tracking-[0.14em] ${
                 theme === "madeliefjes"
-                  ? "bg-white text-black"
-                  : "bg-white/10 text-white hover:bg-white/15"
+                  ? "theme-pill-button-active"
+                  : "theme-pill-button"
               }`}
             >
               Madeliefjes
@@ -50,15 +50,13 @@ export default function App() {
           </div>
 
           {isAuthenticated && (
-            <div className="pointer-events-auto flex items-center gap-2 rounded-full border border-white/10 bg-black/35 p-2 shadow-[0_18px_50px_rgba(0,0,0,0.3)] backdrop-blur-md">
+            <div className="theme-shell pointer-events-auto flex items-center gap-2 rounded-full border p-2 shadow-[0_18px_50px_rgba(0,0,0,0.3)] backdrop-blur-md">
               <NavLink
                 to="/"
                 end
                 className={({ isActive }) =>
-                  `rounded-full px-4 py-2 text-sm font-semibold transition-colors ${
-                    isActive
-                      ? "bg-white text-black"
-                      : "bg-white/10 text-white hover:bg-white/15"
+                  `rounded-full px-4 py-2 text-sm font-semibold ${
+                    isActive ? "theme-pill-button-active" : "theme-pill-button"
                   }`
                 }
               >
@@ -69,10 +67,10 @@ export default function App() {
                 <NavLink
                   to="/admin"
                   className={({ isActive }) =>
-                    `rounded-full px-4 py-2 text-sm font-semibold transition-colors ${
+                    `rounded-full px-4 py-2 text-sm font-semibold ${
                       isActive
-                        ? "bg-white text-black"
-                        : "bg-white/10 text-white hover:bg-white/15"
+                        ? "theme-pill-button-active"
+                        : "theme-pill-button"
                     }`
                   }
                 >
@@ -87,7 +85,7 @@ export default function App() {
                 <button
                   type="button"
                   onClick={() => void handleLogout()}
-                  className="rounded-full bg-white/10 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-white/15"
+                  className="theme-pill-button rounded-full px-4 py-2 text-sm font-semibold"
                 >
                   Uitloggen
                 </button>
