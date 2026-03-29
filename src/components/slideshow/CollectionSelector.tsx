@@ -12,18 +12,9 @@ export function CollectionSelector({
   onSelectCollection,
 }: CollectionSelectorProps) {
   return (
-    <section className="mx-auto w-full max-w-4xl rounded-[1.5rem] border border-white/10 bg-black/18 px-3 py-3 shadow-[0_16px_40px_rgba(0,0,0,0.2)] backdrop-blur-md sm:px-4">
-      <div className="flex items-center justify-between gap-3">
-        <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-white/45">
-          Collectie
-        </p>
-        <p className="text-xs text-white/45">
-          {collections.length + 1} filters
-        </p>
-      </div>
-
-      <div className="mt-3 overflow-x-auto pb-1">
-        <div className="flex min-w-max gap-2">
+    <section className="mx-auto w-full max-w-6xl">
+      <div className="overflow-x-auto">
+        <div className="flex min-w-max justify-center gap-2 px-2">
           <button
             type="button"
             onClick={() => onSelectCollection("all")}
