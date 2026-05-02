@@ -99,7 +99,7 @@ export function UploadForm({ collections, onSubmit }: UploadFormProps) {
   return (
     <form
       onSubmit={handleSubmit}
-      className="w-full max-w-3xl rounded-3xl border border-white/10 bg-white/5 p-6 text-white shadow-[0_20px_60px_rgba(0,0,0,0.25)] backdrop-blur"
+      className="w-full max-w-3xl rounded-[1.5rem] border border-white/10 bg-white/5 p-4 text-white shadow-[0_20px_60px_rgba(0,0,0,0.25)] backdrop-blur sm:rounded-3xl sm:p-6"
     >
       <div className="flex flex-col gap-5">
         <div>
@@ -117,7 +117,7 @@ export function UploadForm({ collections, onSubmit }: UploadFormProps) {
             type="file"
             accept="image/*"
             onChange={handleFileChange}
-            className="rounded-2xl border border-white/15 bg-black/20 px-4 py-3 text-sm text-white file:mr-4 file:rounded-full file:border-0 file:bg-white file:px-4 file:py-2 file:text-sm file:font-semibold file:text-black"
+            className="rounded-2xl border border-white/15 bg-black/20 px-4 py-3 text-base text-white file:mr-4 file:rounded-full file:border-0 file:bg-white file:px-4 file:py-2 file:text-sm file:font-semibold file:text-black sm:text-sm"
           />
         </label>
 
@@ -128,7 +128,7 @@ export function UploadForm({ collections, onSubmit }: UploadFormProps) {
             value={title}
             onChange={(event) => setTitle(event.target.value)}
             placeholder="Bijvoorbeeld: Zomerdag in de tuin"
-            className="rounded-2xl border border-white/15 bg-black/20 px-4 py-3 text-white placeholder:text-white/40"
+            className="rounded-2xl border border-white/15 bg-black/20 px-4 py-3 text-base text-white placeholder:text-white/40 sm:text-sm"
           />
         </label>
 
@@ -139,7 +139,7 @@ export function UploadForm({ collections, onSubmit }: UploadFormProps) {
             onChange={(event) => setDescription(event.target.value)}
             placeholder="Korte toelichting bij de foto"
             rows={4}
-            className="rounded-2xl border border-white/15 bg-black/20 px-4 py-3 text-white placeholder:text-white/40"
+            className="rounded-2xl border border-white/15 bg-black/20 px-4 py-3 text-base text-white placeholder:text-white/40 sm:text-sm"
           />
         </label>
 
@@ -206,7 +206,7 @@ export function UploadForm({ collections, onSubmit }: UploadFormProps) {
         <button
           type="submit"
           disabled={isSubmitting}
-          className="theme-pill-button rounded-full px-5 py-3 font-semibold disabled:cursor-not-allowed disabled:opacity-60"
+          className="theme-pill-button min-h-12 rounded-full px-5 py-3 font-semibold disabled:cursor-not-allowed disabled:opacity-60"
         >
           {isSubmitting ? "Bezig met uploaden..." : "Foto toevoegen"}
         </button>
