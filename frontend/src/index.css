@@ -61,7 +61,7 @@
       rgba(21, 48, 35, 0.5) 56%,
       rgba(18, 40, 30, 0.56) 100%
     ),
-    url("/backgrounds/madeliefje_bg.png");
+    url("/backgrounds/madeliefje_frame.png");
   --app-fullscreen-bg: #1f4634;
   --app-bg-size: cover;
   --app-bg-position: center;
