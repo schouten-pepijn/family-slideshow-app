@@ -289,6 +289,36 @@ body::before {
   color: #422465;
 }
 
+:root[data-theme="madeliefjes"] .login-page {
+  background:
+    radial-gradient(
+      circle at 88% 9%,
+      rgba(255, 243, 170, 0.3),
+      transparent 34%
+    ),
+    radial-gradient(
+      circle at 14% 84%,
+      rgba(255, 236, 158, 0.22),
+      transparent 33%
+    ),
+    radial-gradient(
+      circle at 14% 16%,
+      rgba(218, 255, 230, 0.18),
+      transparent 30%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(22, 47, 36, 0.44) 0%,
+      rgba(21, 48, 35, 0.5) 56%,
+      rgba(18, 40, 30, 0.56) 100%
+    ),
+    url("/backgrounds/madeliefje_login.png");
+  background-attachment: scroll;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
 :root[data-theme="eenhoorn"] .theme-page,
 :root[data-theme="eenhoorn"] .theme-page .text-white {
   color: #3f245f;
