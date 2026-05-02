@@ -16,7 +16,7 @@ from fastapi import (
     UploadFile,
     status,
 )
-from fastapi.responses import FileResponse
+from fastapi.responses import FileResponse, RedirectResponse
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from src.database import get_db
@@ -33,8 +33,11 @@ from src.services.photo_service import (
     update_photo,
 )
 from src.storage.files import (
+    create_read_url,
     delete_file,
+    file_exists,
     get_file_path,
+    is_local_storage,
     make_stored_filename,
     save_upload_file,
 )
@@ -119,7 +122,7 @@ async def upload_photo(
     stored_filename = make_stored_filename(file.filename or "upload.bin")
 
     await file.seek(0)
-    await save_upload_file(file, stored_filename)
+    await save_upload_file(file, stored_filename, file.content_type)
 
     photo = await create_photo(
         db,
@@ -180,17 +183,17 @@ async def remove_photo(
 
     stored_filename = photo.stored_filename
     await delete_photo(db, photo)
-    delete_file(stored_filename)
+    await delete_file(stored_filename)
 
     return Response(status_code=status.HTTP_204_NO_CONTENT)
 
 
-@router.get("/{photo_id}/image")
+@router.get("/{photo_id}/image", response_model=None)
 async def get_photo_image(
     photo_id: int,
     db: get_db_dependency,
     _: get_current_user_dependency,
-) -> FileResponse:
+) -> Response:
     photo = await get_photo_by_id(db, photo_id)
     if photo is None:
         raise HTTPException(
@@ -198,11 +201,16 @@ async def get_photo_image(
             detail="Photo not found",
         )
 
-    file_path = get_file_path(photo.stored_filename)
-    if not file_path.exists():
+    if not await file_exists(photo.stored_filename):
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
             detail="Image file not found",
         )
 
-    return FileResponse(path=file_path, media_type=photo.mime_type)
+    if is_local_storage():
+        return FileResponse(
+            path=get_file_path(photo.stored_filename),
+            media_type=photo.mime_type,
+        )
+
+    return RedirectResponse(create_read_url(photo.stored_filename))
