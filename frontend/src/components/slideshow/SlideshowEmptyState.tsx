@@ -1,6 +1,10 @@
 import { Link } from "react-router-dom";
 
+import { useAuth } from "../../hooks/useAuth";
+
 export function SlideshowEmptyState() {
+  const { isAdmin } = useAuth();
+
   return (
     <div className="theme-page flex min-h-screen items-center px-4 py-8 text-white sm:px-6 lg:px-8">
       <div className="mx-auto flex w-full max-w-3xl flex-col items-center rounded-[2rem] border border-white/10 bg-black/25 px-8 py-14 text-center shadow-[0_30px_80px_rgba(0,0,0,0.35)] backdrop-blur-md">
@@ -15,12 +19,14 @@ export function SlideshowEmptyState() {
           beheerscherm. Zodra er actieve foto's zijn, verschijnt de fotolijst
           hier automatisch.
         </p>
-        <Link
-          to="/admin"
-          className="theme-pill-button mt-8 rounded-full px-6 py-3 text-sm font-semibold"
-        >
-          Open beheer
-        </Link>
+        {isAdmin && (
+          <Link
+            to="/admin"
+            className="theme-pill-button mt-8 rounded-full px-6 py-3 text-sm font-semibold"
+          >
+            Open beheer
+          </Link>
+        )}
       </div>
     </div>
   );
