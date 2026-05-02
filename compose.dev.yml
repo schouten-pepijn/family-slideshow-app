@@ -41,7 +41,7 @@ services:
       - ./backend/alembic:/app/alembic
       - ./backend/alembic.ini:/app/alembic.ini
       - ./backend/src:/app/src
-      - backend-data:/data
+      - uploads-dev-data:/data/uploads
     ports:
       - "${BACKEND_DEV_PORT:-8000}:8000"
 
@@ -65,4 +65,5 @@ services:
       - "${FRONTEND_DEV_PORT:-5173}:5173"
 
 volumes:
-  backend-data:
+  postgres-dev-data:
+  uploads-dev-data:
