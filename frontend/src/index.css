@@ -41,55 +41,62 @@
 :root[data-theme="madeliefjes"] {
   --app-bg:
     radial-gradient(
-      circle at 88% 9%,
-      rgba(255, 243, 170, 0.3),
+      circle at 84% 10%,
+      rgba(255, 233, 92, 0.34),
       transparent 34%
     ),
     radial-gradient(
-      circle at 14% 84%,
-      rgba(255, 236, 158, 0.22),
+      circle at 13% 85%,
+      rgba(255, 210, 69, 0.24),
       transparent 33%
     ),
     radial-gradient(
-      circle at 14% 16%,
-      rgba(218, 255, 230, 0.18),
+      circle at 18% 18%,
+      rgba(167, 230, 141, 0.22),
+      transparent 30%
+    ),
+    radial-gradient(
+      circle at 72% 76%,
+      rgba(111, 203, 139, 0.18),
       transparent 30%
     ),
     linear-gradient(
       180deg,
-      rgba(22, 47, 36, 0.44) 0%,
-      rgba(21, 48, 35, 0.5) 56%,
-      rgba(18, 40, 30, 0.56) 100%
+      rgba(20, 71, 46, 0.24) 0%,
+      rgba(27, 89, 51, 0.28) 56%,
+      rgba(25, 78, 45, 0.34) 100%
     ),
     url("/backgrounds/madeliefje_frame.png");
-  --app-fullscreen-bg: #1f4634;
+  --app-fullscreen-bg: #dbeed5;
   --app-bg-size: cover;
   --app-bg-position: center;
   --app-bg-repeat: no-repeat;
   --app-bg-attachment: scroll;
-  --shell-bg: rgba(239, 251, 243, 0.2);
-  --shell-border: rgba(227, 247, 233, 0.5);
-  --btn-bg: rgba(246, 255, 248, 0.24);
-  --btn-hover-bg: rgba(249, 255, 250, 0.38);
-  --btn-border: rgba(226, 247, 232, 0.62);
-  --btn-text: #1c3e2f;
-  --btn-active-bg: #ffe07a;
-  --btn-active-text: #624c00;
-  --btn-active-border: rgba(255, 245, 201, 0.95);
-  --btn-active-shadow: 0 12px 30px rgba(255, 209, 90, 0.34);
+  --shell-bg: rgba(250, 255, 239, 0.46);
+  --shell-border: rgba(255, 255, 232, 0.7);
+  --btn-bg: rgba(255, 255, 238, 0.48);
+  --btn-hover-bg: rgba(255, 246, 163, 0.68);
+  --btn-border: rgba(255, 244, 177, 0.76);
+  --btn-text: #24472c;
+  --btn-active-bg: #ffd83d;
+  --btn-active-text: #3f3600;
+  --btn-active-border: rgba(255, 249, 207, 0.98);
+  --btn-active-shadow:
+    0 14px 34px rgba(255, 200, 40, 0.34),
+    0 0 22px rgba(124, 210, 113, 0.22);
   --btn-active-rainbow: var(--btn-rainbow);
   --btn-rainbow: repeating-linear-gradient(
     112deg,
-    #ff4d4d 0%,
-    #ff9f1a 14%,
-    #ffe94d 28%,
-    #52d66a 42%,
-    #3ca8ff 56%,
-    #7a5cff 70%,
-    #ff5ccf 84%,
-    #ff4d4d 100%
+    #ffdd3d 0%,
+    #ff9f1a 12%,
+    #fff36e 24%,
+    #89df56 38%,
+    #34c97b 52%,
+    #55c7ff 66%,
+    #ffa6d6 82%,
+    #ffdd3d 100%
   );
-  --btn-rainbow-speed: 7.5s;
+  --btn-rainbow-speed: 6.8s;
 }
 
 :root[data-theme="eenhoorn"] {
@@ -191,6 +198,25 @@ body::before {
       rgba(255, 255, 255, 0.28) 0%,
       rgba(255, 255, 255, 0.16) 36%,
       transparent 70%
+    );
+}
+
+:root[data-theme="madeliefjes"] body::before {
+  background:
+    radial-gradient(
+      circle at 18% 28%,
+      rgba(255, 231, 77, 0.16),
+      transparent 25%
+    ),
+    radial-gradient(
+      circle at 86% 18%,
+      rgba(255, 248, 171, 0.18),
+      transparent 28%
+    ),
+    radial-gradient(
+      ellipse at 50% 95%,
+      rgba(80, 169, 94, 0.14),
+      transparent 56%
     );
 }
 
