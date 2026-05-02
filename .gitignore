@@ -28,5 +28,8 @@ frontend/yarn-error.log*
 .vscode/
 .DS_Store
 
+# Local notes
+notes/
+
 # Local compose secrets
 .env
