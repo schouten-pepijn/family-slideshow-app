@@ -344,7 +344,7 @@ export function AdminPage() {
   }
 
   return (
-    <div className="theme-page min-h-screen px-4 pt-24 pb-8 text-white sm:px-6 lg:px-8">
+    <div className="theme-page min-h-screen px-3 pt-36 pb-8 text-white sm:px-6 sm:pt-24 lg:px-8">
       <div className="mx-auto flex w-full max-w-7xl flex-col gap-8">
         <header className="flex flex-col gap-3 text-center">
           <p className="text-xs font-semibold uppercase tracking-[0.28em] text-white/45">
@@ -362,7 +362,7 @@ export function AdminPage() {
         <div className="mx-auto w-full max-w-3xl">
           <UploadForm collections={collections} onSubmit={addNewPhoto} />
         </div>
-        <section className="rounded-[2rem] border border-white/10 bg-white/5 p-6 shadow-[0_30px_80px_rgba(0,0,0,0.35)] backdrop-blur md:p-8">
+        <section className="rounded-[1.5rem] border border-white/10 bg-white/5 p-4 shadow-[0_30px_80px_rgba(0,0,0,0.35)] backdrop-blur sm:rounded-[2rem] sm:p-6 md:p-8">
           <div className="mb-5 flex flex-col gap-5">
             <div className="flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
               <div>
@@ -436,7 +436,7 @@ export function AdminPage() {
                     setCollectionIsPublic(false);
                     setShowCollectionForm(true);
                   }}
-                  className="theme-pill-button h-fit rounded-full px-4 py-3 text-sm font-semibold"
+                  className="theme-pill-button min-h-11 rounded-full px-4 py-3 text-sm font-semibold xl:h-fit"
                 >
                   Collectie toevoegen
                 </button>
@@ -485,7 +485,7 @@ export function AdminPage() {
           </div>
         </section>
 
-        <section className="rounded-[2rem] border border-white/10 bg-white/5 p-6 shadow-[0_30px_80px_rgba(0,0,0,0.35)] backdrop-blur md:p-8">
+        <section className="rounded-[1.5rem] border border-white/10 bg-white/5 p-4 shadow-[0_30px_80px_rgba(0,0,0,0.35)] backdrop-blur sm:rounded-[2rem] sm:p-6 md:p-8">
           <div className="mb-5 flex flex-col gap-5">
             <div className="flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
               <div>
@@ -573,7 +573,7 @@ export function AdminPage() {
                 <button
                   type="button"
                   onClick={handleClearPhotoFilters}
-                  className="theme-pill-button h-fit rounded-full px-4 py-3 text-sm font-semibold"
+                  className="theme-pill-button min-h-11 rounded-full px-4 py-3 text-sm font-semibold xl:h-fit"
                 >
                   Reset
                 </button>
@@ -660,14 +660,14 @@ export function AdminPage() {
                   Toon {paginatedPhotos.length} foto
                   {paginatedPhotos.length === 1 ? "" : "'s"} op deze pagina.
                 </p>
-                <div className="flex items-center gap-3">
+                <div className="grid grid-cols-[1fr_auto_1fr] items-center gap-2 sm:flex sm:gap-3">
                   <button
                     type="button"
                     onClick={() =>
                       setCurrentPage((page) => Math.max(1, page - 1))
                     }
                     disabled={currentPage === 1}
-                    className="theme-pill-button rounded-full px-4 py-2 text-sm font-semibold disabled:cursor-not-allowed disabled:opacity-50"
+                    className="theme-pill-button min-h-11 rounded-full px-4 py-2 text-sm font-semibold disabled:cursor-not-allowed disabled:opacity-50"
                   >
                     Vorige
                   </button>
@@ -680,7 +680,7 @@ export function AdminPage() {
                       setCurrentPage((page) => Math.min(totalPages, page + 1))
                     }
                     disabled={currentPage === totalPages}
-                    className="theme-pill-button rounded-full px-4 py-2 text-sm font-semibold disabled:cursor-not-allowed disabled:opacity-50"
+                    className="theme-pill-button min-h-11 rounded-full px-4 py-2 text-sm font-semibold disabled:cursor-not-allowed disabled:opacity-50"
                   >
                     Volgende
                   </button>
