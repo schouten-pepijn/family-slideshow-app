@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 export function SlideshowEmptyState() {
   return (
-    <div className="flex min-h-screen items-center px-4 py-8 text-white sm:px-6 lg:px-8">
+    <div className="theme-page flex min-h-screen items-center px-4 py-8 text-white sm:px-6 lg:px-8">
       <div className="mx-auto flex w-full max-w-3xl flex-col items-center rounded-[2rem] border border-white/10 bg-black/25 px-8 py-14 text-center shadow-[0_30px_80px_rgba(0,0,0,0.35)] backdrop-blur-md">
         <p className="text-xs font-semibold uppercase tracking-[0.3em] text-white/45">
           Slideshow

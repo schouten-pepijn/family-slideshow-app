@@ -23,8 +23,8 @@ export default function App() {
   return (
     <div className="min-h-screen">
       <nav className="pointer-events-none fixed inset-x-0 top-0 z-20">
-        <div className="mx-auto flex w-full max-w-7xl justify-between px-4 py-4 sm:px-6 lg:px-8">
-          <div className="theme-shell pointer-events-auto flex items-center gap-1 rounded-full border p-1.5 shadow-[0_18px_50px_rgba(0,0,0,0.3)] backdrop-blur-md">
+        <div className="mx-auto flex w-full max-w-7xl flex-wrap justify-between gap-3 px-4 py-4 sm:px-6 lg:px-8">
+          <div className="theme-shell pointer-events-auto flex max-w-full items-center gap-1 overflow-x-auto rounded-full border p-1.5 shadow-[0_18px_50px_rgba(0,0,0,0.3)] backdrop-blur-md">
             <button
               type="button"
               onClick={() => setTheme("standaard")}
@@ -46,6 +46,17 @@ export default function App() {
               }`}
             >
               Madeliefjes
+            </button>
+            <button
+              type="button"
+              onClick={() => setTheme("eenhoorn")}
+              className={`rounded-full px-3 py-2 text-xs font-semibold uppercase tracking-[0.14em] ${
+                theme === "eenhoorn"
+                  ? "theme-pill-button-active"
+                  : "theme-pill-button"
+              }`}
+            >
+              EENHOORN
             </button>
           </div>
 

@@ -92,6 +92,62 @@
   --btn-rainbow-speed: 7.5s;
 }
 
+:root[data-theme="eenhoorn"] {
+  --app-bg:
+    radial-gradient(
+      circle at 20% 52%,
+      rgba(255, 255, 255, 0.2),
+      transparent 24%
+    ),
+    radial-gradient(
+      circle at 78% 11%,
+      rgba(255, 241, 179, 0.24),
+      transparent 26%
+    ),
+    radial-gradient(
+      circle at 86% 88%,
+      rgba(255, 171, 230, 0.18),
+      transparent 33%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(80, 62, 145, 0.16) 0%,
+      rgba(107, 91, 178, 0.2) 48%,
+      rgba(128, 80, 166, 0.22) 100%
+    ),
+    url("/backgrounds/eenhoorn_frame.png");
+  --app-fullscreen-bg: #d9ceff;
+  --app-bg-size: cover;
+  --app-bg-position: center;
+  --app-bg-repeat: no-repeat;
+  --app-bg-attachment: scroll;
+  --shell-bg: rgba(255, 250, 255, 0.58);
+  --shell-border: rgba(255, 255, 255, 0.64);
+  --btn-bg: rgba(255, 255, 255, 0.5);
+  --btn-hover-bg: rgba(255, 255, 255, 0.66);
+  --btn-border: rgba(255, 255, 255, 0.68);
+  --btn-text: #4a2d73;
+  --btn-active-bg: #fff7ff;
+  --btn-active-text: #53316f;
+  --btn-active-border: rgba(255, 255, 255, 0.96);
+  --btn-active-shadow:
+    0 14px 34px rgba(156, 109, 218, 0.28),
+    0 0 22px rgba(255, 239, 168, 0.3);
+  --btn-active-rainbow: var(--btn-rainbow);
+  --btn-rainbow: repeating-linear-gradient(
+    112deg,
+    #ff8fd6 0%,
+    #ffd37b 14%,
+    #fff5a7 28%,
+    #9cf5c4 42%,
+    #8fd6ff 56%,
+    #b7a3ff 70%,
+    #f1a6ff 84%,
+    #ff8fd6 100%
+  );
+  --btn-rainbow-speed: 8s;
+}
+
 html,
 body,
 #root {
@@ -112,6 +168,35 @@ body {
     "kern" 1;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+:root[data-theme="eenhoorn"] body::before {
+  background:
+    radial-gradient(
+      ellipse at 24% 50%,
+      rgba(61, 36, 100, 0.2) 0%,
+      rgba(116, 80, 157, 0.12) 34%,
+      transparent 66%
+    ),
+    linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.28) 0%,
+      rgba(255, 255, 255, 0.16) 36%,
+      transparent 70%
+    );
+}
+
+#root {
+  position: relative;
+  z-index: 1;
 }
 
 .font-display {
@@ -173,6 +258,204 @@ body {
   background-color: var(--shell-bg);
 }
 
+:root[data-theme="eenhoorn"] .login-page {
+  background:
+    radial-gradient(
+      circle at 20% 52%,
+      rgba(255, 255, 255, 0.2),
+      transparent 24%
+    ),
+    radial-gradient(
+      circle at 78% 11%,
+      rgba(255, 241, 179, 0.24),
+      transparent 26%
+    ),
+    radial-gradient(
+      circle at 86% 88%,
+      rgba(255, 171, 230, 0.18),
+      transparent 33%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(80, 62, 145, 0.16) 0%,
+      rgba(107, 91, 178, 0.2) 48%,
+      rgba(128, 80, 166, 0.22) 100%
+    ),
+    url("/backgrounds/eenhoorn_login.png");
+  background-attachment: scroll;
+  background-position: 6% 72%;
+  background-repeat: no-repeat;
+  background-size: max(124vw, 178vh) auto;
+  color: #422465;
+}
+
+:root[data-theme="eenhoorn"] .theme-page,
+:root[data-theme="eenhoorn"] .theme-page .text-white {
+  color: #3f245f;
+}
+
+:root[data-theme="eenhoorn"] .theme-page .text-white\/40,
+:root[data-theme="eenhoorn"] .theme-page .text-white\/45,
+:root[data-theme="eenhoorn"] .theme-page .text-white\/50,
+:root[data-theme="eenhoorn"] .theme-page .text-white\/55,
+:root[data-theme="eenhoorn"] .theme-page .text-white\/60 {
+  color: rgba(72, 42, 108, 0.58);
+}
+
+:root[data-theme="eenhoorn"] .theme-page .text-white\/65,
+:root[data-theme="eenhoorn"] .theme-page .text-white\/70,
+:root[data-theme="eenhoorn"] .theme-page .text-white\/75,
+:root[data-theme="eenhoorn"] .theme-page .text-white\/80,
+:root[data-theme="eenhoorn"] .theme-page .text-white\/82 {
+  color: rgba(55, 31, 83, 0.76);
+}
+
+:root[data-theme="eenhoorn"] .theme-shell .text-white {
+  color: #3f245f;
+}
+
+:root[data-theme="eenhoorn"] .theme-shell .text-white\/45,
+:root[data-theme="eenhoorn"] .theme-shell .text-white\/50,
+:root[data-theme="eenhoorn"] .theme-shell .text-white\/55,
+:root[data-theme="eenhoorn"] .theme-shell .text-white\/60,
+:root[data-theme="eenhoorn"] .theme-shell .text-white\/70,
+:root[data-theme="eenhoorn"] .theme-shell .text-white\/75,
+:root[data-theme="eenhoorn"] .theme-shell .text-white\/80,
+:root[data-theme="eenhoorn"] .theme-shell .text-white\/82 {
+  color: rgba(55, 31, 83, 0.76);
+}
+
+:root[data-theme="eenhoorn"] .login-hero-copy,
+:root[data-theme="eenhoorn"] .login-hero-copy .text-white,
+:root[data-theme="eenhoorn"] .login-card,
+:root[data-theme="eenhoorn"] .login-card .text-white {
+  color: #3f245f;
+}
+
+:root[data-theme="eenhoorn"] .login-hero-copy .text-white\/48,
+:root[data-theme="eenhoorn"] .login-card .text-white\/46 {
+  color: rgba(72, 42, 108, 0.62);
+}
+
+:root[data-theme="eenhoorn"] .login-hero-copy .text-white\/66,
+:root[data-theme="eenhoorn"] .login-hero-copy .text-white\/68,
+:root[data-theme="eenhoorn"] .login-card .text-white\/82 {
+  color: rgba(55, 31, 83, 0.78);
+}
+
+:root[data-theme="eenhoorn"] .login-role-card {
+  border-color: rgba(255, 255, 255, 0.58);
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.62),
+      rgba(246, 230, 255, 0.44)
+    );
+  box-shadow:
+    0 22px 54px rgba(102, 67, 147, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.55);
+}
+
+:root[data-theme="eenhoorn"] .login-card {
+  box-shadow:
+    0 32px 72px rgba(93, 57, 132, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.55);
+}
+
+:root[data-theme="eenhoorn"] .login-card input {
+  border-color: rgba(91, 58, 125, 0.18);
+  background: rgba(255, 255, 255, 0.38);
+  color: #392157;
+}
+
+:root[data-theme="eenhoorn"] .login-card input::placeholder {
+  color: rgba(69, 42, 98, 0.42);
+}
+
+:root[data-theme="eenhoorn"] .login-card input:focus {
+  border-color: rgba(100, 63, 139, 0.42);
+  background: rgba(255, 255, 255, 0.58);
+}
+
+:root[data-theme="eenhoorn"] .theme-page .border-white\/10,
+:root[data-theme="eenhoorn"] .theme-page .border-white\/12,
+:root[data-theme="eenhoorn"] .theme-page .border-white\/15,
+:root[data-theme="eenhoorn"] .theme-page .border-white\/20,
+:root[data-theme="eenhoorn"] .theme-page .border-white\/25,
+:root[data-theme="eenhoorn"] .theme-shell {
+  border-color: rgba(255, 255, 255, 0.58);
+}
+
+:root[data-theme="eenhoorn"] .theme-page .bg-white\/5,
+:root[data-theme="eenhoorn"] .theme-page .bg-white\/8,
+:root[data-theme="eenhoorn"] .theme-page .bg-white\/10,
+:root[data-theme="eenhoorn"] .theme-page .bg-black\/15,
+:root[data-theme="eenhoorn"] .theme-page .bg-black\/20,
+:root[data-theme="eenhoorn"] .theme-page .bg-black\/25 {
+  background-color: rgba(255, 250, 255, 0.5);
+}
+
+:root[data-theme="eenhoorn"] .theme-page section.bg-white\/5,
+:root[data-theme="eenhoorn"] .theme-page .rounded-\[2rem\].bg-black\/25,
+:root[data-theme="eenhoorn"] .theme-page .rounded-3xl.bg-black\/20,
+:root[data-theme="eenhoorn"] .theme-page .rounded-3xl.bg-white\/5 {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.62),
+      rgba(246, 230, 255, 0.44)
+    );
+  box-shadow:
+    0 26px 70px rgba(93, 57, 132, 0.16),
+    inset 0 1px 0 rgba(255, 255, 255, 0.55);
+}
+
+:root[data-theme="eenhoorn"] .theme-page input,
+:root[data-theme="eenhoorn"] .theme-page select,
+:root[data-theme="eenhoorn"] .theme-page textarea,
+:root[data-theme="eenhoorn"] .theme-shell input,
+:root[data-theme="eenhoorn"] .theme-shell select,
+:root[data-theme="eenhoorn"] .theme-shell textarea {
+  border-color: rgba(91, 58, 125, 0.18);
+  background-color: rgba(255, 255, 255, 0.42);
+  color: #392157;
+}
+
+:root[data-theme="eenhoorn"] .theme-page input::placeholder,
+:root[data-theme="eenhoorn"] .theme-page textarea::placeholder,
+:root[data-theme="eenhoorn"] .theme-shell input::placeholder,
+:root[data-theme="eenhoorn"] .theme-shell textarea::placeholder {
+  color: rgba(69, 42, 98, 0.42);
+}
+
+:root[data-theme="eenhoorn"] .theme-page input:focus,
+:root[data-theme="eenhoorn"] .theme-page select:focus,
+:root[data-theme="eenhoorn"] .theme-page textarea:focus,
+:root[data-theme="eenhoorn"] .theme-shell input:focus,
+:root[data-theme="eenhoorn"] .theme-shell select:focus,
+:root[data-theme="eenhoorn"] .theme-shell textarea:focus {
+  border-color: rgba(100, 63, 139, 0.42);
+  background-color: rgba(255, 255, 255, 0.62);
+}
+
+:root[data-theme="eenhoorn"] .theme-page option {
+  color: #392157;
+  background: #fff7ff;
+}
+
+:root[data-theme="eenhoorn"] .photo-stage,
+:root[data-theme="eenhoorn"] .photo-stage .text-white,
+:root[data-theme="eenhoorn"] .photo-stage .text-white\/75,
+:root[data-theme="eenhoorn"] .photo-stage .text-white\/80,
+:root[data-theme="eenhoorn"] .photo-stage .text-white\/82 {
+  color: #ffffff;
+}
+
+:root[data-theme="eenhoorn"] .photo-stage .bg-black\/45,
+:root[data-theme="eenhoorn"] .photo-stage .bg-black\/48 {
+  background-color: rgba(0, 0, 0, 0.48);
+}
+
 .theme-pill-button {
   border: 1px solid var(--btn-border);
   background-color: var(--btn-bg);
@@ -188,13 +471,18 @@ body {
   border-color: color-mix(in srgb, var(--btn-border) 70%, #ffffff 30%);
 }
 
-:root[data-theme="madeliefjes"] .theme-pill-button:hover {
+:root[data-theme="madeliefjes"] .theme-pill-button:hover,
+:root[data-theme="eenhoorn"] .theme-pill-button:hover {
   background-image: var(--btn-rainbow);
   background-size: 180% 100%;
   background-position: 0% 50%;
   animation: rainbowShift var(--btn-rainbow-speed) linear infinite;
   border-color: rgba(255, 255, 255, 0.75);
   color: #123022;
+}
+
+:root[data-theme="eenhoorn"] .theme-pill-button:hover {
+  color: #4b2a75;
 }
 
 @keyframes rainbowShift {
@@ -218,11 +506,16 @@ body {
   box-shadow: var(--btn-active-shadow);
 }
 
-:root[data-theme="madeliefjes"] .theme-pill-button-active:hover {
+:root[data-theme="madeliefjes"] .theme-pill-button-active:hover,
+:root[data-theme="eenhoorn"] .theme-pill-button-active:hover {
   background-image: var(--btn-active-rainbow);
   background-size: 180% 100%;
   background-position: 0% 50%;
   animation: rainbowShift var(--btn-rainbow-speed) linear infinite;
   border-color: color-mix(in srgb, var(--btn-active-border) 75%, #ffffff 25%);
   color: #4f3d00;
+}
+
+:root[data-theme="eenhoorn"] .theme-pill-button-active:hover {
+  color: #472264;
 }

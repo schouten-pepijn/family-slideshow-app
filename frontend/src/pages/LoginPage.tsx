@@ -39,9 +39,9 @@ export function LoginPage() {
   }
 
   return (
-    <div className="flex min-h-screen items-center px-4 py-8 sm:px-6 lg:px-8">
+    <div className="login-page flex min-h-screen items-center px-4 py-8 sm:px-6 lg:px-8">
       <div className="mx-auto grid w-full max-w-6xl gap-8 lg:grid-cols-[1.05fr_0.95fr] lg:items-stretch lg:gap-10">
-        <section className="flex flex-col justify-center text-white">
+        <section className="login-hero-copy flex flex-col justify-center text-white">
           <div className="space-y-5">
             <p className="font-ui text-xs font-semibold uppercase tracking-[0.32em] text-white/48">
               Digitaal fotolijstje
@@ -55,13 +55,13 @@ export function LoginPage() {
             </p>
           </div>
           <div className="mt-7 grid gap-4 sm:grid-cols-2">
-            <article className="rounded-[1.25rem] border border-white/12 bg-white/[0.07] p-5 shadow-[0_24px_60px_rgba(0,0,0,0.22)] backdrop-blur-md">
+            <article className="login-role-card rounded-[1.25rem] border border-white/12 bg-white/[0.07] p-5 shadow-[0_24px_60px_rgba(0,0,0,0.22)] backdrop-blur-md">
               <p className="font-ui text-sm font-semibold text-white">Kijker</p>
               <p className="font-ui mt-2 text-sm leading-6 text-white/68">
                 Kan de slideshow met geselecteerde foto's bekijken.
               </p>
             </article>
-            <article className="rounded-[1.25rem] border border-white/12 bg-white/[0.07] p-5 shadow-[0_24px_60px_rgba(0,0,0,0.22)] backdrop-blur-md">
+            <article className="login-role-card rounded-[1.25rem] border border-white/12 bg-white/[0.07] p-5 shadow-[0_24px_60px_rgba(0,0,0,0.22)] backdrop-blur-md">
               <p className="font-ui text-sm font-semibold text-white">
                 Beheerder
               </p>
@@ -73,7 +73,7 @@ export function LoginPage() {
         </section>
 
         <section className="flex items-center lg:justify-end">
-          <div className="theme-shell w-full rounded-[1.8rem] border p-6 shadow-[0_32px_72px_rgba(0,0,0,0.35)] backdrop-blur-lg sm:max-w-[30rem] sm:p-8">
+          <div className="login-card theme-shell w-full rounded-[1.8rem] border p-6 shadow-[0_32px_72px_rgba(0,0,0,0.35)] backdrop-blur-lg sm:max-w-[30rem] sm:p-8">
             <div className="mb-6 border-b border-white/10 pb-4">
               <p className="font-ui text-xs font-semibold uppercase tracking-[0.3em] text-white/46">
                 Inloggen

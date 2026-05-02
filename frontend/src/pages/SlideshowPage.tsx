@@ -37,7 +37,7 @@ export function SlideshowPage() {
 
   if (isLoading) {
     return (
-      <div className="flex min-h-screen items-center px-4 py-8 text-white sm:px-6 lg:px-8">
+      <div className="theme-page flex min-h-screen items-center px-4 py-8 text-white sm:px-6 lg:px-8">
         <div className="mx-auto w-full max-w-3xl rounded-[2rem] border border-white/10 bg-black/25 px-8 py-14 text-center shadow-[0_30px_80px_rgba(0,0,0,0.35)] backdrop-blur-md">
           <p className="text-xs font-semibold uppercase tracking-[0.3em] text-white/45">
             Slideshow
@@ -55,7 +55,7 @@ export function SlideshowPage() {
 
   if (error) {
     return (
-      <div className="flex min-h-screen items-center px-4 py-8 text-white sm:px-6 lg:px-8">
+      <div className="theme-page flex min-h-screen items-center px-4 py-8 text-white sm:px-6 lg:px-8">
         <div className="mx-auto w-full max-w-3xl rounded-[2rem] border border-red-400/20 bg-red-500/10 px-8 py-14 text-center shadow-[0_30px_80px_rgba(0,0,0,0.35)] backdrop-blur-md">
           <p className="text-xs font-semibold uppercase tracking-[0.3em] text-red-100/70">
             Fout
@@ -84,7 +84,7 @@ export function SlideshowPage() {
 
   if (filteredPhotos.length === 0) {
     return (
-      <div className="min-h-screen px-4 pt-24 pb-8 text-white sm:px-6 lg:px-8">
+      <div className="theme-page min-h-screen px-4 pt-24 pb-8 text-white sm:px-6 lg:px-8">
         <div className="mx-auto flex w-full max-w-7xl flex-col gap-6">
           {selector}
 
