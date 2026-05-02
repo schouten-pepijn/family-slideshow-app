@@ -38,7 +38,6 @@ function useAuthState(): UseAuthResult {
       const currentUser = await fetchCurrentUser();
       setUser(currentUser);
     } catch {
-      setError("Gebruiker ophalen mislukt.");
       setUser(null);
     } finally {
       setIsLoading(false);
