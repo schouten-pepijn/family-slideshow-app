@@ -340,9 +340,177 @@ body::before {
     ),
     url("/backgrounds/madeliefje_login.png");
   background-attachment: scroll;
-  background-position: center;
+  background-position: 42% center;
   background-repeat: no-repeat;
   background-size: cover;
+}
+
+:root[data-theme="madeliefjes"] .theme-page,
+:root[data-theme="madeliefjes"] .theme-page .text-white {
+  color: #163d25;
+}
+
+:root[data-theme="madeliefjes"] .theme-page .text-white\/40,
+:root[data-theme="madeliefjes"] .theme-page .text-white\/45,
+:root[data-theme="madeliefjes"] .theme-page .text-white\/50,
+:root[data-theme="madeliefjes"] .theme-page .text-white\/55,
+:root[data-theme="madeliefjes"] .theme-page .text-white\/60 {
+  color: rgba(26, 74, 39, 0.58);
+}
+
+:root[data-theme="madeliefjes"] .theme-page .text-white\/65,
+:root[data-theme="madeliefjes"] .theme-page .text-white\/70,
+:root[data-theme="madeliefjes"] .theme-page .text-white\/75,
+:root[data-theme="madeliefjes"] .theme-page .text-white\/80,
+:root[data-theme="madeliefjes"] .theme-page .text-white\/82 {
+  color: rgba(21, 63, 33, 0.76);
+}
+
+:root[data-theme="madeliefjes"] .theme-shell .text-white {
+  color: #173c24;
+}
+
+:root[data-theme="madeliefjes"] .theme-shell .text-white\/45,
+:root[data-theme="madeliefjes"] .theme-shell .text-white\/50,
+:root[data-theme="madeliefjes"] .theme-shell .text-white\/55,
+:root[data-theme="madeliefjes"] .theme-shell .text-white\/60,
+:root[data-theme="madeliefjes"] .theme-shell .text-white\/70,
+:root[data-theme="madeliefjes"] .theme-shell .text-white\/75,
+:root[data-theme="madeliefjes"] .theme-shell .text-white\/80,
+:root[data-theme="madeliefjes"] .theme-shell .text-white\/82 {
+  color: rgba(21, 63, 33, 0.76);
+}
+
+:root[data-theme="madeliefjes"] .login-hero-copy,
+:root[data-theme="madeliefjes"] .login-hero-copy .text-white,
+:root[data-theme="madeliefjes"] .login-card,
+:root[data-theme="madeliefjes"] .login-card .text-white {
+  color: #173c24;
+}
+
+:root[data-theme="madeliefjes"] .login-hero-copy .text-white\/48,
+:root[data-theme="madeliefjes"] .login-card .text-white\/46 {
+  color: rgba(31, 78, 42, 0.62);
+}
+
+:root[data-theme="madeliefjes"] .login-hero-copy .text-white\/66,
+:root[data-theme="madeliefjes"] .login-hero-copy .text-white\/68,
+:root[data-theme="madeliefjes"] .login-card .text-white\/82 {
+  color: rgba(21, 63, 33, 0.78);
+}
+
+:root[data-theme="madeliefjes"] .login-role-card {
+  border-color: rgba(255, 255, 228, 0.66);
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 255, 241, 0.68),
+      rgba(225, 248, 215, 0.5)
+    );
+  box-shadow:
+    0 22px 54px rgba(74, 132, 61, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.65);
+}
+
+:root[data-theme="madeliefjes"] .login-card {
+  box-shadow:
+    0 32px 72px rgba(68, 128, 58, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.62);
+}
+
+:root[data-theme="madeliefjes"] .login-card input {
+  border-color: rgba(92, 128, 62, 0.2);
+  background: rgba(255, 255, 239, 0.48);
+  color: #173c24;
+}
+
+:root[data-theme="madeliefjes"] .login-card input::placeholder {
+  color: rgba(35, 76, 43, 0.42);
+}
+
+:root[data-theme="madeliefjes"] .login-card input:focus {
+  border-color: rgba(226, 185, 23, 0.5);
+  background: rgba(255, 255, 242, 0.68);
+}
+
+:root[data-theme="madeliefjes"] .theme-page .border-white\/10,
+:root[data-theme="madeliefjes"] .theme-page .border-white\/12,
+:root[data-theme="madeliefjes"] .theme-page .border-white\/15,
+:root[data-theme="madeliefjes"] .theme-page .border-white\/20,
+:root[data-theme="madeliefjes"] .theme-page .border-white\/25,
+:root[data-theme="madeliefjes"] .theme-shell {
+  border-color: rgba(255, 255, 228, 0.66);
+}
+
+:root[data-theme="madeliefjes"] .theme-page .bg-white\/5,
+:root[data-theme="madeliefjes"] .theme-page .bg-white\/8,
+:root[data-theme="madeliefjes"] .theme-page .bg-white\/10,
+:root[data-theme="madeliefjes"] .theme-page .bg-black\/15,
+:root[data-theme="madeliefjes"] .theme-page .bg-black\/20,
+:root[data-theme="madeliefjes"] .theme-page .bg-black\/25 {
+  background-color: rgba(250, 255, 238, 0.48);
+}
+
+:root[data-theme="madeliefjes"] .theme-page section.bg-white\/5,
+:root[data-theme="madeliefjes"] .theme-page .rounded-\[2rem\].bg-black\/25,
+:root[data-theme="madeliefjes"] .theme-page .rounded-3xl.bg-black\/20,
+:root[data-theme="madeliefjes"] .theme-page .rounded-3xl.bg-white\/5 {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 255, 241, 0.68),
+      rgba(225, 248, 215, 0.5)
+    );
+  box-shadow:
+    0 26px 70px rgba(72, 132, 59, 0.15),
+    0 0 34px rgba(255, 222, 72, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.62);
+}
+
+:root[data-theme="madeliefjes"] .theme-page input,
+:root[data-theme="madeliefjes"] .theme-page select,
+:root[data-theme="madeliefjes"] .theme-page textarea,
+:root[data-theme="madeliefjes"] .theme-shell input,
+:root[data-theme="madeliefjes"] .theme-shell select,
+:root[data-theme="madeliefjes"] .theme-shell textarea {
+  border-color: rgba(92, 128, 62, 0.2);
+  background-color: rgba(255, 255, 239, 0.48);
+  color: #173c24;
+}
+
+:root[data-theme="madeliefjes"] .theme-page input::placeholder,
+:root[data-theme="madeliefjes"] .theme-page textarea::placeholder,
+:root[data-theme="madeliefjes"] .theme-shell input::placeholder,
+:root[data-theme="madeliefjes"] .theme-shell textarea::placeholder {
+  color: rgba(35, 76, 43, 0.42);
+}
+
+:root[data-theme="madeliefjes"] .theme-page input:focus,
+:root[data-theme="madeliefjes"] .theme-page select:focus,
+:root[data-theme="madeliefjes"] .theme-page textarea:focus,
+:root[data-theme="madeliefjes"] .theme-shell input:focus,
+:root[data-theme="madeliefjes"] .theme-shell select:focus,
+:root[data-theme="madeliefjes"] .theme-shell textarea:focus {
+  border-color: rgba(226, 185, 23, 0.5);
+  background-color: rgba(255, 255, 242, 0.68);
+}
+
+:root[data-theme="madeliefjes"] .theme-page option {
+  color: #173c24;
+  background: #fbfff0;
+}
+
+:root[data-theme="madeliefjes"] .photo-stage,
+:root[data-theme="madeliefjes"] .photo-stage .text-white,
+:root[data-theme="madeliefjes"] .photo-stage .text-white\/75,
+:root[data-theme="madeliefjes"] .photo-stage .text-white\/80,
+:root[data-theme="madeliefjes"] .photo-stage .text-white\/82 {
+  color: #ffffff;
+}
+
+:root[data-theme="madeliefjes"] .photo-stage .bg-black\/45,
+:root[data-theme="madeliefjes"] .photo-stage .bg-black\/48 {
+  background-color: rgba(0, 0, 0, 0.48);
 }
 
 :root[data-theme="eenhoorn"] .theme-page,
