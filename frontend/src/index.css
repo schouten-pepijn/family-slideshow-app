@@ -345,6 +345,31 @@ body::before {
   background-size: cover;
 }
 
+:root[data-theme="madeliefjes"] .login-page::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(
+      90deg,
+      rgba(210, 231, 204, 0.34) 0%,
+      rgba(185, 215, 188, 0.26) 45%,
+      rgba(124, 167, 135, 0.16) 100%
+    ),
+    radial-gradient(
+      ellipse at 28% 55%,
+      rgba(255, 224, 71, 0.18),
+      transparent 42%
+    );
+}
+
+:root[data-theme="madeliefjes"] .login-page > * {
+  position: relative;
+  z-index: 1;
+}
+
 :root[data-theme="madeliefjes"] .theme-page,
 :root[data-theme="madeliefjes"] .theme-page .text-white {
   color: #163d25;
