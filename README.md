@@ -74,6 +74,14 @@ Use `task docker:logs` to follow the container logs, and `task docker:down` to s
 
 If port `8080` is already in use, set `FRONTEND_PORT` and `ALLOWED_ORIGINS` in `.env` before running Compose.
 
+For Docker-based development with backend and frontend reload on source changes, run:
+
+```powershell
+task docker:dev
+```
+
+Open `http://localhost:5173`. Use `task docker:dev:down` to stop the dev stack. If ports are in use, set `FRONTEND_DEV_PORT` or `BACKEND_DEV_PORT` in `.env`.
+
 For a real production deployment, run behind HTTPS and set:
 
 ```text
