@@ -80,16 +80,16 @@ export function SlideshowImage({
           )}
 
           {showOverlayCaption && (
-            <div className="pointer-events-none absolute inset-x-0 bottom-0 rounded-b-[0.5rem] bg-gradient-to-t from-black/80 via-black/30 to-transparent px-3.5 pt-18 pb-3.5 sm:px-5 sm:pb-4.5">
+            <div className="pointer-events-none absolute inset-x-0 bottom-0 rounded-b-[0.5rem] bg-gradient-to-t from-black/80 via-black/30 to-transparent px-3 pt-14 pb-3 sm:px-5 sm:pt-18 sm:pb-4.5">
               <div className="max-w-3xl">
-                <div className="inline-block rounded-2xl border border-white/20 bg-black/48 px-3.5 py-2.5 shadow-[0_10px_35px_rgba(0,0,0,0.35)] backdrop-blur-md sm:px-4.5 sm:py-2.5">
+                <div className="inline-block max-w-[calc(100svw-1.5rem)] rounded-xl border border-white/20 bg-black/48 px-3 py-2 shadow-[0_10px_35px_rgba(0,0,0,0.35)] backdrop-blur-md sm:rounded-2xl sm:px-4.5 sm:py-2.5">
                   {photo.title && (
-                    <strong className="block text-lg font-semibold text-white sm:text-xl">
+                    <strong className="block text-sm font-semibold text-white sm:text-xl">
                       {photo.title}
                     </strong>
                   )}
                   {photo.description && (
-                    <p className="mt-1.5 text-xs leading-5 text-white/82 sm:text-sm">
+                    <p className="mt-1 max-h-12 overflow-hidden text-xs leading-5 text-white/82 sm:mt-1.5 sm:max-h-none sm:text-sm">
                       {photo.description}
                     </p>
                   )}
