@@ -1,0 +1,28 @@
+[project]
+name = "slideshow-backend"
+version = "0.2.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "aiosqlite>=0.22.1",
+    "alembic>=1.18.4",
+    "argon2-cffi>=25.1.0",
+    "fastapi[standard]>=0.135.1",
+    "pydantic-settings>=2.13.1",
+    "python-multipart>=0.0.22",
+    "sqlalchemy[asyncio]>=2.0.48",
+]
+
+[dependency-groups]
+dev = ["black>=26.3.1", "bump-my-version>=1.2.7"]
+
+[tool.bumpversion]
+current_version = "0.2.0"
+commit = true
+tag = true
+
+[[tool.bumpversion.files]]
+filename = "pyproject.toml"
+search = 'version = "{current_version}"'
+replace = 'version = "{new_version}"'
