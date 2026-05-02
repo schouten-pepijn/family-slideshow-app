@@ -1,0 +1,32 @@
+services:
+  backend:
+    build:
+      context: ./backend
+    environment:
+      DATABASE_URL: sqlite+aiosqlite:////data/slideshow.db
+      SECRET_KEY: ${SECRET_KEY:?Set SECRET_KEY in your shell or .env}
+      SESSION_COOKIE_NAME: session
+      SESSION_COOKIE_SAMESITE: lax
+      SESSION_MAX_AGE: 2592000
+      UPLOADS_DIR: /data/uploads
+      ALLOWED_ORIGINS: '${ALLOWED_ORIGINS:-["http://localhost:8080"]}'
+      ENVIRONMENT: ${ENVIRONMENT:-development}
+      ADMIN_USERNAME: ${ADMIN_USERNAME:-admin}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD:?Set ADMIN_PASSWORD in your shell or .env}
+      VIEWER_USERNAME: ${VIEWER_USERNAME:-viewer}
+      VIEWER_PASSWORD: ${VIEWER_PASSWORD:?Set VIEWER_PASSWORD in your shell or .env}
+    volumes:
+      - backend-data:/data
+    expose:
+      - "8000"
+
+  frontend:
+    build:
+      context: ./frontend
+    depends_on:
+      - backend
+    ports:
+      - "${FRONTEND_PORT:-8080}:80"
+
+volumes:
+  backend-data:
