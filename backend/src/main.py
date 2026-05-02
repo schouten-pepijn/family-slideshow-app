@@ -4,7 +4,7 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from src.database import Base, SessionLocal, engine
+from src.database import SessionLocal
 from src.config import settings
 from src.routers import (
     auth_router,
@@ -16,11 +16,6 @@ from src.services.seed_service import seed_users
 
 @asynccontextmanager
 async def lifespan(_: FastAPI) -> AsyncIterator[None]:
-    from src import models  # noqa: F401
-
-    async with engine.begin() as conn:
-        await conn.run_sync(Base.metadata.create_all)
-
     async with SessionLocal() as session:
         await seed_users(session)
     yield
