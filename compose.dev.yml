@@ -4,7 +4,7 @@ services:
     environment:
       POSTGRES_DB: slideshow
       POSTGRES_USER: slideshow
-      POSTGRES_PASSWORD: slideshow
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in your shell or .env}
     volumes:
       - postgres-dev-data:/var/lib/postgresql/data
     ports:
