@@ -3,18 +3,25 @@ version: '3'
 tasks:
   backend:install:
     dir: backend
+    env:
+      UV_CACHE_DIR: '{{.TASKFILE_DIR}}/backend/.uv-cache'
     cmds:
       - uv sync
 
   backend:dev:
     dir: backend
+    env:
+      PYTHONUTF8: '1'
+      UV_CACHE_DIR: '{{.TASKFILE_DIR}}/backend/.uv-cache'
     cmds:
-      - uv run fastapi dev src/main.py --reload
+      - uv run python -m fastapi dev src/main.py --reload
 
   backend:migrate:
     dir: backend
+    env:
+      UV_CACHE_DIR: '{{.TASKFILE_DIR}}/backend/.uv-cache'
     cmds:
-      - uv run alembic upgrade head
+      - uv run python -m alembic upgrade head
 
   frontend:install:
     dir: frontend

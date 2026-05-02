@@ -3,11 +3,14 @@ version: '3'
 
 tasks:
   run-dev:
+    env:
+      PYTHONUTF8: '1'
+      UV_CACHE_DIR: .uv-cache
     cmds:
-      - uv run fastapi dev src/main.py --reload
+      - uv run python -m fastapi dev src/main.py --reload
 
   alembic-head:
+    env:
+      UV_CACHE_DIR: .uv-cache
     cmds:
-      - uv run alembic upgrade head
-
-
+      - uv run python -m alembic upgrade head
