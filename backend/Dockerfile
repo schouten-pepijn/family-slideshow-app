@@ -15,4 +15,4 @@ COPY src ./src
 
 EXPOSE 8000
 
-CMD ["sh", "-c", "uv run alembic upgrade head && uv run fastapi run src/main.py --host 0.0.0.0 --port 8000"]
+CMD ["sh", "-c", "uv run python -m alembic upgrade head && uv run python -m fastapi run src/main.py --host 0.0.0.0 --port 8000"]
