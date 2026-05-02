@@ -6,6 +6,7 @@ backend/dist/
 backend/wheels/
 backend/*.egg-info/
 backend/.venv/
+backend/.uv-cache/
 
 # Backend local config and runtime state
 backend/.env
