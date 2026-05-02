@@ -92,6 +92,62 @@
   --btn-rainbow-speed: 7.5s;
 }
 
+:root[data-theme="eenhoorn"] {
+  --app-bg:
+    radial-gradient(
+      circle at 20% 52%,
+      rgba(255, 255, 255, 0.2),
+      transparent 24%
+    ),
+    radial-gradient(
+      circle at 78% 11%,
+      rgba(255, 241, 179, 0.24),
+      transparent 26%
+    ),
+    radial-gradient(
+      circle at 86% 88%,
+      rgba(255, 171, 230, 0.18),
+      transparent 33%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(80, 62, 145, 0.16) 0%,
+      rgba(107, 91, 178, 0.2) 48%,
+      rgba(128, 80, 166, 0.22) 100%
+    ),
+    url("/backgrounds/eenhoorn_bg.png");
+  --app-fullscreen-bg: #d9ceff;
+  --app-bg-size: max(118vw, 170vh) auto;
+  --app-bg-position: 12% 58%;
+  --app-bg-repeat: no-repeat;
+  --app-bg-attachment: scroll;
+  --shell-bg: rgba(255, 249, 255, 0.32);
+  --shell-border: rgba(255, 255, 255, 0.64);
+  --btn-bg: rgba(255, 255, 255, 0.36);
+  --btn-hover-bg: rgba(255, 255, 255, 0.52);
+  --btn-border: rgba(255, 255, 255, 0.68);
+  --btn-text: #4e397e;
+  --btn-active-bg: #fff7ff;
+  --btn-active-text: #53316f;
+  --btn-active-border: rgba(255, 255, 255, 0.96);
+  --btn-active-shadow:
+    0 14px 34px rgba(156, 109, 218, 0.28),
+    0 0 22px rgba(255, 239, 168, 0.3);
+  --btn-active-rainbow: var(--btn-rainbow);
+  --btn-rainbow: repeating-linear-gradient(
+    112deg,
+    #ff8fd6 0%,
+    #ffd37b 14%,
+    #fff5a7 28%,
+    #9cf5c4 42%,
+    #8fd6ff 56%,
+    #b7a3ff 70%,
+    #f1a6ff 84%,
+    #ff8fd6 100%
+  );
+  --btn-rainbow-speed: 8s;
+}
+
 html,
 body,
 #root {
@@ -188,13 +244,18 @@ body {
   border-color: color-mix(in srgb, var(--btn-border) 70%, #ffffff 30%);
 }
 
-:root[data-theme="madeliefjes"] .theme-pill-button:hover {
+:root[data-theme="madeliefjes"] .theme-pill-button:hover,
+:root[data-theme="eenhoorn"] .theme-pill-button:hover {
   background-image: var(--btn-rainbow);
   background-size: 180% 100%;
   background-position: 0% 50%;
   animation: rainbowShift var(--btn-rainbow-speed) linear infinite;
   border-color: rgba(255, 255, 255, 0.75);
   color: #123022;
+}
+
+:root[data-theme="eenhoorn"] .theme-pill-button:hover {
+  color: #4b2a75;
 }
 
 @keyframes rainbowShift {
@@ -218,11 +279,16 @@ body {
   box-shadow: var(--btn-active-shadow);
 }
 
-:root[data-theme="madeliefjes"] .theme-pill-button-active:hover {
+:root[data-theme="madeliefjes"] .theme-pill-button-active:hover,
+:root[data-theme="eenhoorn"] .theme-pill-button-active:hover {
   background-image: var(--btn-active-rainbow);
   background-size: 180% 100%;
   background-position: 0% 50%;
   animation: rainbowShift var(--btn-rainbow-speed) linear infinite;
   border-color: color-mix(in srgb, var(--btn-active-border) 75%, #ffffff 25%);
   color: #4f3d00;
+}
+
+:root[data-theme="eenhoorn"] .theme-pill-button-active:hover {
+  color: #472264;
 }

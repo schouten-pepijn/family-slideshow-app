@@ -7,7 +7,7 @@ import {
   type ReactNode,
 } from "react";
 
-export type ThemeName = "standaard" | "madeliefjes";
+export type ThemeName = "standaard" | "madeliefjes" | "eenhoorn";
 
 type ThemeContextValue = {
   theme: ThemeName;
@@ -20,7 +20,9 @@ const DEFAULT_THEME: ThemeName = "standaard";
 const ThemeContext = createContext<ThemeContextValue | undefined>(undefined);
 
 function isThemeName(value: string): value is ThemeName {
-  return value === "standaard" || value === "madeliefjes";
+  return (
+    value === "standaard" || value === "madeliefjes" || value === "eenhoorn"
+  );
 }
 
 function getInitialTheme(): ThemeName {
