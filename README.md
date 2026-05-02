@@ -65,10 +65,12 @@ Copy-Item .env.compose.template .env
 Set real values for `SECRET_KEY`, `ADMIN_PASSWORD`, and `VIEWER_PASSWORD`, then run:
 
 ```powershell
-task docker:up
+task init
 ```
 
 Open `http://localhost:8080`.
+
+Use `task docker:logs` to follow the container logs, and `task docker:down` to stop the stack.
 
 If port `8080` is already in use, set `FRONTEND_PORT` and `ALLOWED_ORIGINS` in `.env` before running Compose.
 
