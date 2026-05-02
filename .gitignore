@@ -26,3 +26,6 @@ frontend/yarn-error.log*
 # Local editor/system files
 .vscode/
 .DS_Store
+
+# Local compose secrets
+.env
