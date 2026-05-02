@@ -1,6 +1,11 @@
 version: '3'
 
 tasks:
+  init:
+    desc: Build and run the full app with Docker Compose.
+    cmds:
+      - task: docker:init
+
   backend:install:
     dir: backend
     env:
@@ -52,6 +57,38 @@ tasks:
     desc: Build and start the full app in Docker.
     cmds:
       - docker compose up --build -d
+
+  docker:dev:
+    desc: Run the full app in Docker with backend and frontend hot reload.
+    cmds:
+      - docker compose -f compose.dev.yml up --build
+
+  docker:dev:detached:
+    desc: Run the Docker dev app with hot reload in the background.
+    cmds:
+      - docker compose -f compose.dev.yml up --build -d
+
+  docker:dev:logs:
+    desc: Follow Docker dev app logs.
+    cmds:
+      - docker compose -f compose.dev.yml logs -f
+
+  docker:dev:down:
+    desc: Stop the Docker dev app.
+    cmds:
+      - docker compose -f compose.dev.yml down
+
+  docker:rebuild:
+    desc: Rebuild Docker images without cache and start the full app.
+    cmds:
+      - docker compose down --remove-orphans
+      - docker compose build --no-cache
+      - docker compose up -d
+
+  docker:repair-build-cache:
+    desc: Prune Docker builder cache after BuildKit snapshot errors.
+    cmds:
+      - docker builder prune --force
 
   docker:up:
     desc: Build and start the full app in Docker, attached to logs.
