@@ -1,8 +1,9 @@
-from datetime import datetime, timezone
+from datetime import datetime
 from sqlalchemy import DateTime, ForeignKey, String
 from sqlalchemy.orm import Mapped, mapped_column
 
 from src.database import Base
+from src.utils.datetime import utc_now_naive
 
 
 class Session(Base):
