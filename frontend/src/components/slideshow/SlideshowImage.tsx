@@ -30,7 +30,7 @@ export function SlideshowImage({
 
   if (fullscreen) {
     return (
-      <div className="photo-stage flex h-screen w-screen items-center justify-center bg-transparent">
+      <div className="photo-stage flex h-[100svh] w-screen items-center justify-center bg-transparent">
         {/* figure auto-sizes to the actual rendered image dimensions */}
         <figure
           className="relative"
@@ -47,7 +47,7 @@ export function SlideshowImage({
           />
 
           {showCounter && (
-            <div className="absolute top-4 right-4 rounded-full border border-white/10 bg-black/45 px-4 py-2 text-sm font-medium text-white/80 backdrop-blur-md">
+            <div className="absolute top-3 right-3 rounded-full border border-white/10 bg-black/45 px-3 py-2 text-xs font-medium text-white/80 backdrop-blur-md sm:top-4 sm:right-4 sm:px-4 sm:text-sm">
               {currentIndex + 1} / {totalPhotos}
             </div>
           )}
@@ -76,30 +76,30 @@ export function SlideshowImage({
   }
 
   return (
-    <div className="photo-stage relative flex w-full items-center justify-center overflow-hidden rounded-[2rem] border border-white/10 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.09),transparent_55%),rgba(5,10,20,0.92)] p-6 shadow-[0_30px_80px_rgba(0,0,0,0.45)] min-h-[60vh] sm:min-h-[68vh] sm:p-8">
+    <div className="photo-stage relative flex w-full items-center justify-center overflow-hidden rounded-[1.5rem] border border-white/10 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.09),transparent_55%),rgba(5,10,20,0.92)] p-3 shadow-[0_30px_80px_rgba(0,0,0,0.45)] min-h-[52svh] sm:min-h-[68vh] sm:rounded-[2rem] sm:p-8">
       <div className="relative inline-flex max-w-full items-end justify-center">
         <img
-          className="block max-h-[72vh] max-w-full rounded-[1.5rem] object-contain shadow-[0_25px_70px_rgba(0,0,0,0.35)]"
+          className="block max-h-[60svh] max-w-full rounded-[1rem] object-contain shadow-[0_25px_70px_rgba(0,0,0,0.35)] sm:max-h-[72vh] sm:rounded-[1.5rem]"
           src={photo.image_url}
           alt={photo.title ?? "Foto"}
         />
 
         {showCounter && (
-          <div className="absolute top-5 right-5 rounded-full border border-white/10 bg-black/45 px-4 py-2 text-sm font-medium text-white/80 backdrop-blur-md">
+          <div className="absolute top-3 right-3 rounded-full border border-white/10 bg-black/45 px-3 py-2 text-xs font-medium text-white/80 backdrop-blur-md sm:top-5 sm:right-5 sm:px-4 sm:text-sm">
             {currentIndex + 1} / {totalPhotos}
           </div>
         )}
 
         {showOverlayCaption && (
-          <div className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent px-5 pt-20 pb-5 sm:px-6 sm:pb-6">
+          <div className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent px-4 pt-16 pb-4 sm:px-6 sm:pt-20 sm:pb-6">
             <div className="max-w-2xl">
               {photo.title && (
-                <strong className="block text-lg font-semibold text-white sm:text-xl">
+                <strong className="block text-base font-semibold text-white sm:text-xl">
                   {photo.title}
                 </strong>
               )}
               {photo.description && (
-                <p className="mt-2 text-sm leading-6 text-white/75 sm:text-base">
+                <p className="mt-1.5 text-xs leading-5 text-white/75 sm:mt-2 sm:text-base sm:leading-6">
                   {photo.description}
                 </p>
               )}
