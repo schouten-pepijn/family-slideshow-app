@@ -344,7 +344,7 @@ export function AdminPage() {
   }
 
   return (
-    <div className="min-h-screen px-4 pt-24 pb-8 text-white sm:px-6 lg:px-8">
+    <div className="theme-page min-h-screen px-4 pt-24 pb-8 text-white sm:px-6 lg:px-8">
       <div className="mx-auto flex w-full max-w-7xl flex-col gap-8">
         <header className="flex flex-col gap-3 text-center">
           <p className="text-xs font-semibold uppercase tracking-[0.28em] text-white/45">

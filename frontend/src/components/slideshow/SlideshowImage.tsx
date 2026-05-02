@@ -30,7 +30,7 @@ export function SlideshowImage({
 
   if (fullscreen) {
     return (
-      <div className="flex h-screen w-screen items-center justify-center bg-transparent">
+      <div className="photo-stage flex h-screen w-screen items-center justify-center bg-transparent">
         {/* figure auto-sizes to the actual rendered image dimensions */}
         <figure
           className="relative"
@@ -76,7 +76,7 @@ export function SlideshowImage({
   }
 
   return (
-    <div className="relative flex w-full items-center justify-center overflow-hidden rounded-[2rem] border border-white/10 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.09),transparent_55%),rgba(5,10,20,0.92)] p-6 shadow-[0_30px_80px_rgba(0,0,0,0.45)] min-h-[60vh] sm:min-h-[68vh] sm:p-8">
+    <div className="photo-stage relative flex w-full items-center justify-center overflow-hidden rounded-[2rem] border border-white/10 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.09),transparent_55%),rgba(5,10,20,0.92)] p-6 shadow-[0_30px_80px_rgba(0,0,0,0.45)] min-h-[60vh] sm:min-h-[68vh] sm:p-8">
       <div className="relative inline-flex max-w-full items-end justify-center">
         <img
           className="block max-h-[72vh] max-w-full rounded-[1.5rem] object-contain shadow-[0_25px_70px_rgba(0,0,0,0.35)]"

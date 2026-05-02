@@ -64,7 +64,7 @@ export function Slideshow({ photos, headerContent }: SlideshowProps) {
       className={
         isFullscreen
           ? "theme-fullscreen-bg min-h-screen w-screen p-0 text-white"
-          : "min-h-screen px-4 pt-24 pb-8 text-white sm:px-6 lg:px-8"
+          : "theme-page min-h-screen px-4 pt-24 pb-8 text-white sm:px-6 lg:px-8"
       }
     >
       <div
