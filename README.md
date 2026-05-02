@@ -19,11 +19,18 @@ Monorepo for the photo slideshow backend and frontend.
 ## Backend
 
 ```powershell
-cd C:\Users\71861\Own\Projects\photo_slideshow\slideshow_app
+cd C:\Users\71861\Own\Projects\family-slideshow-app\slideshow-app
 Copy-Item backend\.env.template backend\.env
 task backend:install
+docker compose -f compose.dev.yml up postgres -d
 task backend:migrate
 task backend:dev
+```
+
+The backend now uses PostgreSQL. For direct local backend runs, `backend/.env` should point at the local Postgres instance from `compose.dev.yml`:
+
+```text
+DATABASE_URL=postgresql+asyncpg://slideshow:slideshow@localhost:5432/slideshow
 ```
 
 Set `SECRET_KEY`, `ADMIN_PASSWORD`, and `VIEWER_PASSWORD` in `backend/.env` before using the app beyond local smoke testing.
@@ -37,7 +44,7 @@ Invoke-RestMethod http://localhost:8000/health
 ## Frontend
 
 ```powershell
-cd C:\Users\71861\Own\Projects\photo_slideshow\slideshow_app
+cd C:\Users\71861\Own\Projects\family-slideshow-app\slideshow-app
 task frontend:install
 task frontend:dev
 ```
@@ -54,7 +61,13 @@ task backend:migrate
 
 ## Docker
 
-The production-shaped local setup runs the frontend as static files served by Nginx and proxies `/api` to the backend service. The backend runs Alembic migrations before starting FastAPI.
+The production-shaped local setup runs three services:
+
+- `postgres`: local PostgreSQL for app data
+- `backend`: FastAPI plus Alembic migrations on startup
+- `frontend`: static frontend served by Nginx
+
+The backend stores uploads in a separate Docker volume mounted at `/data/uploads`.
 
 Create a local Compose env file:
 
@@ -80,7 +93,7 @@ For Docker-based development with backend and frontend reload on source changes,
 task docker:dev
 ```
 
-Open `http://localhost:5173`. Use `task docker:dev:down` to stop the dev stack. If ports are in use, set `FRONTEND_DEV_PORT` or `BACKEND_DEV_PORT` in `.env`.
+Open `http://localhost:5173`. Use `task docker:dev:down` to stop the dev stack. If ports are in use, set `FRONTEND_DEV_PORT`, `BACKEND_DEV_PORT`, or `POSTGRES_DEV_PORT` in `.env`.
 
 For a real production deployment, run behind HTTPS and set:
 
@@ -89,4 +102,4 @@ ENVIRONMENT=production
 ALLOWED_ORIGINS=["https://your-domain.example"]
 ```
 
-The default Compose file uses a Docker volume named `backend-data` for SQLite and uploaded files. For larger or multi-instance deployments, move `DATABASE_URL` to a managed database and store uploads in object storage.
+For production, point `DATABASE_URL` at a managed PostgreSQL instance instead of running the local `postgres` container. For larger or multi-instance deployments, also move uploads from the Docker volume to object storage.

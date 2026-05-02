@@ -1,9 +1,10 @@
-from datetime import datetime, timezone
+from datetime import datetime
 
 from sqlalchemy import Integer, ForeignKey, UniqueConstraint, DateTime
 from sqlalchemy.orm import Mapped, mapped_column
 
 from src.database import Base
+from src.utils.datetime import utc_now_naive
 
 
 class PhotoCollectionJunction(Base):
@@ -41,5 +42,5 @@ class PhotoCollectionJunction(Base):
     created_at: Mapped[datetime] = mapped_column(
         DateTime,
         nullable=False,
-        default=lambda: datetime.now(timezone.utc),
+        default=utc_now_naive,
     )

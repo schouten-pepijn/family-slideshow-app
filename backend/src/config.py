@@ -8,7 +8,9 @@ class Settings(BaseSettings):
         env_file_encoding="utf-8",
     )
 
-    database_url: str = "sqlite+aiosqlite:///./slideshow.db"
+    database_url: str = (
+        "postgresql+asyncpg://slideshow:slideshow@localhost:5432/slideshow"
+    )
     secret_key: str
     session_cookie_name: str = "session"
     session_cookie_samesite: Literal["lax", "strict", "none"] = "lax"
