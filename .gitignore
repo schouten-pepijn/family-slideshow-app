@@ -10,6 +10,7 @@ backend/.uv-cache/
 
 # Backend local config and runtime state
 backend/.env
+backend/.env.local
 backend/slideshow.db
 backend/*.db
 backend/uploads/
@@ -31,5 +32,6 @@ frontend/yarn-error.log*
 # Local notes
 notes/
 
-# Local compose secrets
+# Local env files
 .env
+.env.local
