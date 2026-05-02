@@ -235,6 +235,7 @@ body::before {
 
 .display-hero {
   font-family: "Manrope", "Segoe UI", sans-serif;
+  font-size: clamp(2.35rem, 8vw, 4.75rem);
   line-height: 0.95;
   letter-spacing: -0.022em;
   text-wrap: balance;
@@ -242,6 +243,7 @@ body::before {
 
 .display-page-title {
   font-family: "Manrope", "Segoe UI", sans-serif;
+  font-size: clamp(1.95rem, 5.2vw, 3.75rem);
   line-height: 1.02;
   letter-spacing: -0.018em;
   text-wrap: balance;
@@ -249,8 +251,34 @@ body::before {
 
 .display-section-title {
   font-family: "Manrope", "Segoe UI", sans-serif;
+  font-size: clamp(1.35rem, 3vw, 2rem);
   line-height: 1.1;
   letter-spacing: -0.012em;
+}
+
+.slideshow-caption-title {
+  font-size: clamp(0.875rem, 2.4vw, 1.25rem);
+  line-height: 1.15;
+  text-wrap: balance;
+}
+
+.slideshow-caption-description {
+  font-size: clamp(0.75rem, 1.6vw, 1rem);
+  line-height: 1.45;
+}
+
+@media (min-width: 1024px) {
+  .display-hero {
+    font-size: clamp(3.75rem, 5.6vw, 6rem);
+  }
+
+  .display-page-title {
+    font-size: clamp(3rem, 4vw, 4.85rem);
+  }
+
+  .display-section-title {
+    font-size: clamp(1.5rem, 2.2vw, 2.35rem);
+  }
 }
 
 .theme-fullscreen-bg {
