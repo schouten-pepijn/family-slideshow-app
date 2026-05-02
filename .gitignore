@@ -1,1 +1,28 @@
-notes/
+# Python
+backend/__pycache__/
+backend/**/*.py[oc]
+backend/build/
+backend/dist/
+backend/wheels/
+backend/*.egg-info/
+backend/.venv/
+
+# Backend local config and runtime state
+backend/.env
+backend/slideshow.db
+backend/*.db
+backend/uploads/
+
+# Frontend dependencies and build output
+frontend/node_modules/
+frontend/dist/
+frontend/.env
+frontend/.env.*
+!frontend/.env.template
+frontend/npm-debug.log*
+frontend/yarn-debug.log*
+frontend/yarn-error.log*
+
+# Local editor/system files
+.vscode/
+.DS_Store

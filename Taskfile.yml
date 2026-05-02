@@ -1,0 +1,37 @@
+version: '3'
+
+tasks:
+  backend:install:
+    dir: backend
+    cmds:
+      - uv sync
+
+  backend:dev:
+    dir: backend
+    cmds:
+      - uv run fastapi dev src/main.py --reload
+
+  backend:migrate:
+    dir: backend
+    cmds:
+      - uv run alembic upgrade head
+
+  frontend:install:
+    dir: frontend
+    cmds:
+      - npm install
+
+  frontend:dev:
+    dir: frontend
+    cmds:
+      - npm run dev
+
+  frontend:typecheck:
+    dir: frontend
+    cmds:
+      - npm run typecheck
+
+  frontend:build:
+    dir: frontend
+    cmds:
+      - npm run build
