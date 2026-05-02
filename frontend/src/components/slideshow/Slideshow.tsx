@@ -63,8 +63,8 @@ export function Slideshow({ photos, headerContent }: SlideshowProps) {
       ref={slideshowRef}
       className={
         isFullscreen
-          ? "theme-fullscreen-bg min-h-screen w-screen p-0 text-white"
-          : "theme-page min-h-screen px-4 pt-24 pb-8 text-white sm:px-6 lg:px-8"
+          ? "theme-fullscreen-bg min-h-[100svh] w-screen p-0 text-white"
+          : "theme-page min-h-screen px-3 pt-36 pb-8 text-white sm:px-6 sm:pt-24 lg:px-8"
       }
     >
       <div
@@ -104,20 +104,20 @@ export function Slideshow({ photos, headerContent }: SlideshowProps) {
           />
 
           {!isFullscreen && (
-            <div className="flex flex-col items-center gap-3">
-              <div className="flex flex-wrap items-center justify-center gap-3">
+            <div className="flex w-full max-w-xl flex-col items-center gap-3">
+              <div className="grid w-full grid-cols-2 gap-2 sm:flex sm:flex-wrap sm:items-center sm:justify-center sm:gap-3">
                 {photos.length > 1 && (
                   <>
                     <button
                       type="button"
-                      className="theme-pill-button rounded-full px-5 py-3 text-sm font-semibold transition-all duration-150 hover:-translate-y-px active:translate-y-0"
+                      className="theme-pill-button min-h-11 rounded-full px-5 py-3 text-sm font-semibold transition-all duration-150 hover:-translate-y-px active:translate-y-0"
                       onClick={goToPrevious}
                     >
                       Vorige
                     </button>
                     <button
                       type="button"
-                      className="theme-pill-button rounded-full px-5 py-3 text-sm font-semibold transition-all duration-150 hover:-translate-y-px active:translate-y-0"
+                      className="theme-pill-button min-h-11 rounded-full px-5 py-3 text-sm font-semibold transition-all duration-150 hover:-translate-y-px active:translate-y-0"
                       onClick={goToNext}
                     >
                       Volgende
@@ -127,7 +127,7 @@ export function Slideshow({ photos, headerContent }: SlideshowProps) {
 
                 <button
                   type="button"
-                  className="theme-pill-button rounded-full px-5 py-3 text-sm font-semibold transition-all duration-150 hover:-translate-y-px active:translate-y-0"
+                  className="theme-pill-button col-span-2 min-h-11 rounded-full px-5 py-3 text-sm font-semibold transition-all duration-150 hover:-translate-y-px active:translate-y-0 sm:col-span-1"
                   onClick={handleToggleFullscreen}
                 >
                   Volledig scherm
