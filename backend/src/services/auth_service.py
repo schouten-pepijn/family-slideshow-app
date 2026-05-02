@@ -7,6 +7,7 @@ from sqlalchemy import select, delete
 
 from src.models import User, Session
 from src.config import settings
+from src.utils.datetime import utc_now_naive
 
 
 ph = PasswordHasher()
@@ -37,8 +38,7 @@ async def create_session(db: AsyncSession, user: User) -> Session:
     session = Session(
         id=generate_session_id(),
         user_id=user.id,
-        expires_at=datetime.now(timezone.utc)
-        + timedelta(seconds=settings.session_max_age),
+        expires_at=utc_now_naive() + timedelta(seconds=settings.session_max_age),
     )
 
     db.add(session)
