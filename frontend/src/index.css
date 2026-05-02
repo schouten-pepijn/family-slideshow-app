@@ -334,9 +334,9 @@ body::before {
     ),
     linear-gradient(
       180deg,
-      rgba(22, 47, 36, 0.44) 0%,
-      rgba(21, 48, 35, 0.5) 56%,
-      rgba(18, 40, 30, 0.56) 100%
+      rgba(53, 91, 67, 0.34) 0%,
+      rgba(43, 87, 61, 0.4) 56%,
+      rgba(35, 76, 55, 0.48) 100%
     ),
     url("/backgrounds/madeliefje_login.png");
   background-attachment: scroll;
