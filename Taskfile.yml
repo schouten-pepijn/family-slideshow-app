@@ -44,13 +44,31 @@ tasks:
       - npm run build
 
   docker:build:
+    desc: Build the Docker images.
     cmds:
       - docker compose build
 
+  docker:init:
+    desc: Build and start the full app in Docker.
+    cmds:
+      - docker compose up --build -d
+
   docker:up:
+    desc: Build and start the full app in Docker, attached to logs.
     cmds:
       - docker compose up --build
 
   docker:down:
+    desc: Stop the Docker app.
     cmds:
       - docker compose down
+
+  docker:destroy:
+    desc: Stop Docker app and remove persisted data.
+    cmds:
+      - docker compose down --volumes
+
+  docker:logs:
+    desc: Follow Docker app logs.
+    cmds:
+      - docker compose logs -f
