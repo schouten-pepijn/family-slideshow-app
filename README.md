@@ -51,3 +51,32 @@ task frontend:typecheck
 task frontend:build
 task backend:migrate
 ```
+
+## Docker
+
+The production-shaped local setup runs the frontend as static files served by Nginx and proxies `/api` to the backend service. The backend runs Alembic migrations before starting FastAPI.
+
+Create a local Compose env file:
+
+```powershell
+Copy-Item .env.compose.template .env
+```
+
+Set real values for `SECRET_KEY`, `ADMIN_PASSWORD`, and `VIEWER_PASSWORD`, then run:
+
+```powershell
+task docker:up
+```
+
+Open `http://localhost:8080`.
+
+If port `8080` is already in use, set `FRONTEND_PORT` and `ALLOWED_ORIGINS` in `.env` before running Compose.
+
+For a real production deployment, run behind HTTPS and set:
+
+```text
+ENVIRONMENT=production
+ALLOWED_ORIGINS=["https://your-domain.example"]
+```
+
+The default Compose file uses a Docker volume named `backend-data` for SQLite and uploaded files. For larger or multi-instance deployments, move `DATABASE_URL` to a managed database and store uploads in object storage.
