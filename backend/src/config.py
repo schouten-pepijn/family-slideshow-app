@@ -17,6 +17,13 @@ class Settings(BaseSettings):
     session_max_age: int = 86400 * 30
     uploads_dir: str = "uploads"
     max_upload_size_bytes: int = 20 * 1024 * 1024
+    storage_backend: Literal["local", "s3"] = "local"
+    s3_endpoint_url: str | None = None
+    s3_bucket: str | None = None
+    s3_access_key_id: str | None = None
+    s3_secret_access_key: str | None = None
+    s3_region: str = "auto"
+    s3_presigned_url_ttl_seconds: int = 300
     allowed_origins: list[str] = ["http://localhost:5173"]
     environment: str = "development"
 
