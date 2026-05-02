@@ -466,6 +466,45 @@ body::before {
   background: rgba(255, 255, 242, 0.68);
 }
 
+:root[data-theme="madeliefjes"] .login-card .theme-pill-button {
+  border-color: rgba(255, 235, 116, 0.95);
+  background: #ffe45c;
+  color: #253c08;
+  box-shadow:
+    0 14px 28px rgba(202, 158, 20, 0.22),
+    inset 0 1px 0 rgba(255, 255, 238, 0.72);
+}
+
+:root[data-theme="madeliefjes"] .login-card .theme-pill-button:hover {
+  background-image: var(--btn-rainbow);
+  background-size: 180% 100%;
+  background-position: 0% 50%;
+  animation: rainbowShift var(--btn-rainbow-speed) linear infinite;
+  border-color: rgba(255, 252, 196, 0.98);
+  color: #163d25;
+}
+
+:root[data-theme="madeliefjes"] .login-card .border-red-400\/30,
+:root[data-theme="madeliefjes"] .theme-page .border-red-400\/20,
+:root[data-theme="madeliefjes"] .theme-page .border-red-400\/30,
+:root[data-theme="madeliefjes"] .theme-shell .border-red-400\/30 {
+  border-color: rgba(176, 43, 43, 0.42);
+}
+
+:root[data-theme="madeliefjes"] .login-card .bg-red-500\/10,
+:root[data-theme="madeliefjes"] .theme-page .bg-red-500\/10,
+:root[data-theme="madeliefjes"] .theme-shell .bg-red-500\/10 {
+  background-color: rgba(255, 238, 226, 0.82);
+}
+
+:root[data-theme="madeliefjes"] .login-card .text-red-100,
+:root[data-theme="madeliefjes"] .theme-page .text-red-100,
+:root[data-theme="madeliefjes"] .theme-page .text-red-100\/70,
+:root[data-theme="madeliefjes"] .theme-page .text-red-50\/90,
+:root[data-theme="madeliefjes"] .theme-shell .text-red-100 {
+  color: #8a1f1f;
+}
+
 :root[data-theme="madeliefjes"] .theme-page .border-white\/10,
 :root[data-theme="madeliefjes"] .theme-page .border-white\/12,
 :root[data-theme="madeliefjes"] .theme-page .border-white\/15,
