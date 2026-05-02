@@ -35,3 +35,15 @@ tasks:
     dir: frontend
     cmds:
       - npm run build
+
+  docker:build:
+    cmds:
+      - docker compose build
+
+  docker:up:
+    cmds:
+      - docker compose up --build
+
+  docker:down:
+    cmds:
+      - docker compose down
