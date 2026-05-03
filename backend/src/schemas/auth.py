@@ -12,3 +12,8 @@ class AuthUserResponse(BaseModel):
     role: str
 
     model_config = ConfigDict(from_attributes=True)
+
+
+class LoginResponse(AuthUserResponse):
+    access_token: str
+    token_type: str = "bearer"

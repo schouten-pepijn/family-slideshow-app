@@ -1,9 +1,10 @@
 import type { Collection } from "../types/collection";
-import { buildApiUrl } from "../lib/api";
+import { buildApiUrl, buildAuthHeaders } from "../lib/api";
 
 export async function fetchCollections(): Promise<Collection[]> {
   const res = await fetch(buildApiUrl("/api/collections"), {
     credentials: "include",
+    headers: buildAuthHeaders(),
   });
 
   if (!res.ok) throw new Error("Collecties ophalen mislukt.");
@@ -26,9 +27,9 @@ export async function createCollection(
   const res = await fetch(buildApiUrl("/api/collections"), {
     method: "POST",
     credentials: "include",
-    headers: {
+    headers: buildAuthHeaders({
       "Content-Type": "application/json",
-    },
+    }),
     body: JSON.stringify(input),
   });
 
@@ -47,9 +48,9 @@ export async function updateCollection(
   const res = await fetch(buildApiUrl(`/api/collections/${collectionId}`), {
     method: "PATCH",
     credentials: "include",
-    headers: {
+    headers: buildAuthHeaders({
       "Content-Type": "application/json",
-    },
+    }),
     body: JSON.stringify(updates),
   });
 
@@ -65,6 +66,7 @@ export async function deleteCollection(collectionId: number): Promise<void> {
   const res = await fetch(buildApiUrl(`/api/collections/${collectionId}`), {
     method: "DELETE",
     credentials: "include",
+    headers: buildAuthHeaders(),
   });
 
   if (!res.ok) {

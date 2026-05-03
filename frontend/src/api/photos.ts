@@ -1,16 +1,17 @@
 import type { Photo } from "../types/photo";
-import { buildApiUrl, resolveAssetUrl } from "../lib/api";
+import { buildApiUrl, buildAuthHeaders, resolveAssetUrl } from "../lib/api";
 
 function normalizePhoto(photo: Photo): Photo {
   return {
     ...photo,
-    image_url: resolveAssetUrl(photo.image_url),
+    image_url: resolveAssetUrl(photo.image_url, { includeAuthToken: true }),
   };
 }
 
 export async function fetchPhotos(): Promise<Photo[]> {
   const res = await fetch(buildApiUrl("/api/photos"), {
     credentials: "include",
+    headers: buildAuthHeaders(),
   });
 
   if (!res.ok) {
@@ -43,6 +44,7 @@ export async function uploadPhoto(
   const res = await fetch(buildApiUrl("/api/photos/upload"), {
     method: "POST",
     credentials: "include",
+    headers: buildAuthHeaders(),
     body: formData,
   });
 
@@ -63,7 +65,7 @@ export async function updatePhoto(
   const res = await fetch(buildApiUrl(`/api/photos/${photoId}`), {
     method: "PATCH",
     credentials: "include",
-    headers: { "Content-Type": "application/json" },
+    headers: buildAuthHeaders({ "Content-Type": "application/json" }),
     body: JSON.stringify(updates),
   });
 
@@ -79,6 +81,7 @@ export async function deletePhoto(photoId: number): Promise<void> {
   const res = await fetch(buildApiUrl(`/api/photos/${photoId}`), {
     method: "DELETE",
     credentials: "include",
+    headers: buildAuthHeaders(),
   });
 
   if (!res.ok) {
