@@ -107,7 +107,7 @@ export function UploadForm({ collections, onSubmit }: UploadFormProps) {
             Foto toevoegen
           </h2>
           <p className="mt-1 text-sm text-white/70">
-            Kies een afbeelding en voeg optioneel een titel en beschrijving toe.
+            Kies een afbeelding en voeg eventueel een titel of beschrijving toe.
           </p>
         </div>
 
@@ -149,7 +149,7 @@ export function UploadForm({ collections, onSubmit }: UploadFormProps) {
               Collecties
             </legend>
             <p className="mb-3 text-sm text-white/65">
-              Koppel deze foto direct aan een of meer collecties.
+              Koppel deze foto aan een of meer collecties.
             </p>
             <div className="grid gap-2 sm:grid-cols-2">
               {collections.map((collection) => {
