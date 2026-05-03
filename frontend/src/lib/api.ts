@@ -42,36 +42,10 @@ export function buildAuthHeaders(headers: HeadersInit = {}): Headers {
   return authHeaders;
 }
 
-function pointsAtApi(url: string): boolean {
-  return (
-    url.startsWith("/api/") ||
-    Boolean(API_BASE_URL && url.startsWith(`${API_BASE_URL}/api/`))
-  );
-}
-
-function appendAccessToken(url: string): string {
-  const token = getAuthToken();
-
-  if (!token || !pointsAtApi(url)) {
+export function resolveAssetUrl(url: string): string {
+  if (url.startsWith("http://") || url.startsWith("https://")) {
     return url;
   }
 
-  const separator = url.includes("?") ? "&" : "?";
-  return `${url}${separator}access_token=${encodeURIComponent(token)}`;
-}
-
-export function resolveAssetUrl(
-  url: string,
-  options?: { includeAuthToken?: boolean },
-): string {
-  const resolvedUrl =
-    url.startsWith("http://") || url.startsWith("https://")
-      ? url
-      : buildApiUrl(url);
-
-  if (options?.includeAuthToken) {
-    return appendAccessToken(resolvedUrl);
-  }
-
-  return resolvedUrl;
+  return buildApiUrl(url);
 }
