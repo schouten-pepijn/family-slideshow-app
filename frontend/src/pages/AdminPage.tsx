@@ -351,11 +351,10 @@ export function AdminPage() {
             Admin
           </p>
           <h1 className="display-page-title text-3xl font-semibold sm:text-5xl">
-            Beheer jouw digitale fotolijst
+            Beheer jouw fotolijst
           </h1>
           <p className="mx-auto max-w-2xl text-sm leading-7 text-white/65 sm:text-base">
-            Voeg nieuwe foto's toe, bekijk de huidige selectie, verwijder foto's
-            en zet foto's actief of inactief voor de slideshow.
+            Voeg nieuwe foto's toe, bekijk de huidige selectie, verwijder foto's en zet foto's op (in)actief of inactief.
           </p>
         </header>
 

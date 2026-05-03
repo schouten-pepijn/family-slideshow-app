@@ -81,8 +81,7 @@ export function Slideshow({ photos, headerContent }: SlideshowProps) {
               Onze leukste herinneringen
             </h1>
             <p className="mx-auto max-w-2xl text-sm leading-7 text-white/65 sm:text-base">
-              Laat automatisch doorlopen of navigeer met de pijltjestoetsen of
-              de knoppen onderaan.
+              Laat automatisch doorlopen of navigeer met de pijltjestoetsen of de knoppen.
             </p>
 
             {headerContent && <div className="pt-1">{headerContent}</div>}

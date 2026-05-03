@@ -93,7 +93,7 @@ export function SlideshowPage() {
               Collectie
             </p>
             <h2 className="display-page-title mt-4 text-3xl font-semibold sm:text-4xl">
-              Geen actieve foto&apos;s in deze collectie
+              Geen actieve foto's in deze collectie
             </h2>
             <p className="mt-4 text-sm leading-7 text-white/70 sm:text-base">
               {selectedCollection

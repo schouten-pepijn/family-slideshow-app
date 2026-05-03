@@ -15,9 +15,8 @@ export function SlideshowEmptyState() {
           Nog geen actieve foto's beschikbaar
         </h1>
         <p className="mt-4 max-w-xl text-sm leading-7 text-white/70 sm:text-base">
-          Voeg eerst een paar foto's toe of zet bestaande items actief in het
-          beheerscherm. Zodra er actieve foto's zijn, verschijnt de fotolijst
-          hier automatisch.
+          Voeg eerst foto's toe of zet bestaande items actief in het
+          beheerscherm. De fotolijst verschijnt dan automatisch.
         </p>
         {isAdmin && (
           <Link

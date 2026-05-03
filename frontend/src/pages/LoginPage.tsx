@@ -47,11 +47,10 @@ export function LoginPage() {
               Digitaal fotolijstje
             </p>
             <h1 className="display-hero max-w-3xl text-4xl font-semibold sm:text-5xl lg:text-6xl">
-              Welkom bij het digitale fotolijstje van de familie
+              Welkom bij ons digitale fotolijstje
             </h1>
             <p className="font-ui max-w-2xl text-sm leading-7 text-white/66 sm:text-base">
-              Een rustige plek voor jullie mooiste momenten, met snelle toegang
-              voor kijken en beheren.
+              Een rustige plek voor al onze mooiste momenten.
             </p>
           </div>
           <div className="mt-7 grid gap-4 sm:grid-cols-2">
