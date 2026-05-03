@@ -20,7 +20,11 @@ from fastapi.responses import FileResponse, RedirectResponse
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from src.database import get_db
-from src.dependencies import get_current_user, require_admin
+from src.dependencies import (
+    get_current_user,
+    get_current_user_with_query_token,
+    require_admin,
+)
 from src.models.photo import Photo
 from src.models.user import User
 from src.schemas.photo import PhotoResponse, PhotoUpdateRequest
@@ -46,6 +50,10 @@ router = APIRouter(prefix="/api/photos", tags=["photos"])
 
 get_db_dependency = Annotated[AsyncSession, Depends(get_db)]
 get_current_user_dependency = Annotated[User, Depends(get_current_user)]
+get_current_user_with_query_token_dependency = Annotated[
+    User,
+    Depends(get_current_user_with_query_token),
+]
 require_admin_dependency = Annotated[User, Depends(require_admin)]
 
 ALLOWED_MIME_TYPES = {
@@ -192,7 +200,7 @@ async def remove_photo(
 async def get_photo_image(
     photo_id: int,
     db: get_db_dependency,
-    _: get_current_user_dependency,
+    _: get_current_user_with_query_token_dependency,
 ) -> Response:
     photo = await get_photo_by_id(db, photo_id)
     if photo is None:
