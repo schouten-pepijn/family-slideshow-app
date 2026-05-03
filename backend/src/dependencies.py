@@ -12,11 +12,7 @@ from src.services.auth_service import get_user_by_session_id
 get_db_dependency = Annotated[AsyncSession, Depends(get_db)]
 
 
-def get_session_ids_from_request(
-    request: Request,
-    *,
-    allow_query_token: bool = False,
-) -> list[str]:
+def get_session_ids_from_request(request: Request) -> list[str]:
     session_ids: list[str] = []
 
     authorization = request.headers.get("authorization")
@@ -29,23 +25,11 @@ def get_session_ids_from_request(
     if session_id:
         session_ids.append(session_id)
 
-    if allow_query_token:
-        access_token = request.query_params.get("access_token")
-        if access_token:
-            session_ids.append(access_token)
-
     return session_ids
 
 
-def get_session_id_from_request(
-    request: Request,
-    *,
-    allow_query_token: bool = False,
-) -> str | None:
-    session_ids = get_session_ids_from_request(
-        request,
-        allow_query_token=allow_query_token,
-    )
+def get_session_id_from_request(request: Request) -> str | None:
+    session_ids = get_session_ids_from_request(request)
 
     return session_ids[0] if session_ids else None
 
@@ -53,13 +37,8 @@ def get_session_id_from_request(
 async def get_user_from_request(
     request: Request,
     db: AsyncSession,
-    *,
-    allow_query_token: bool = False,
 ) -> User:
-    session_ids = get_session_ids_from_request(
-        request,
-        allow_query_token=allow_query_token,
-    )
+    session_ids = get_session_ids_from_request(request)
     if not session_ids:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
@@ -94,22 +73,7 @@ async def get_current_user(
     return await get_user_from_request(request, db)
 
 
-async def get_current_user_with_query_token(
-    request: Request,
-    db: get_db_dependency,
-) -> User:
-    return await get_user_from_request(
-        request,
-        db,
-        allow_query_token=True,
-    )
-
-
 get_current_user_dependency = Annotated[User, Depends(get_current_user)]
-get_current_user_with_query_token_dependency = Annotated[
-    User,
-    Depends(get_current_user_with_query_token),
-]
 
 
 async def require_admin(

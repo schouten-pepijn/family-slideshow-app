@@ -24,6 +24,7 @@ class Settings(BaseSettings):
     s3_secret_access_key: str | None = None
     s3_region: str = "auto"
     s3_presigned_url_ttl_seconds: int = 300
+    image_url_token_ttl_seconds: int = 86400
     allowed_origins: list[str] = ["http://localhost:5173"]
     environment: str = "development"
 

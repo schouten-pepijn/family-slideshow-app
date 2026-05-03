@@ -12,6 +12,7 @@ from fastapi import (
     File,
     Form,
     HTTPException,
+    Query,
     Response,
     UploadFile,
     status,
@@ -20,15 +21,15 @@ from fastapi.responses import FileResponse, RedirectResponse
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from src.database import get_db
-from src.dependencies import (
-    get_current_user,
-    get_current_user_with_query_token,
-    require_admin,
-)
+from src.dependencies import get_current_user, require_admin
 from src.models.photo import Photo
 from src.models.user import User
 from src.schemas.photo import PhotoResponse, PhotoUpdateRequest
 from src.services.collection_service import list_collection_photo_ids
+from src.services.image_token_service import (
+    create_image_token,
+    is_valid_image_token,
+)
 from src.services.photo_service import (
     create_photo,
     delete_photo,
@@ -50,10 +51,6 @@ router = APIRouter(prefix="/api/photos", tags=["photos"])
 
 get_db_dependency = Annotated[AsyncSession, Depends(get_db)]
 get_current_user_dependency = Annotated[User, Depends(get_current_user)]
-get_current_user_with_query_token_dependency = Annotated[
-    User,
-    Depends(get_current_user_with_query_token),
-]
 require_admin_dependency = Annotated[User, Depends(require_admin)]
 
 ALLOWED_MIME_TYPES = {
@@ -79,7 +76,9 @@ async def to_photo_response(db: AsyncSession, photo: Photo) -> PhotoResponse:
         sort_order=photo.sort_order,
         created_at=photo.created_at,
         updated_at=photo.updated_at,
-        image_url=f"/api/photos/{photo.id}/image",
+        image_url=(
+            f"/api/photos/{photo.id}/image?token={create_image_token(photo.id)}"
+        ),
         collection_ids=collection_ids,
     )
 
@@ -200,8 +199,14 @@ async def remove_photo(
 async def get_photo_image(
     photo_id: int,
     db: get_db_dependency,
-    _: get_current_user_with_query_token_dependency,
+    token: Annotated[str | None, Query(alias="token")] = None,
 ) -> Response:
+    if token is None or not is_valid_image_token(token, photo_id):
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Invalid or expired image token",
+        )
+
     photo = await get_photo_by_id(db, photo_id)
     if photo is None:
         raise HTTPException(
