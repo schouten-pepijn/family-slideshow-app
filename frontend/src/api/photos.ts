@@ -4,7 +4,7 @@ import { buildApiUrl, buildAuthHeaders, resolveAssetUrl } from "../lib/api";
 function normalizePhoto(photo: Photo): Photo {
   return {
     ...photo,
-    image_url: resolveAssetUrl(photo.image_url, { includeAuthToken: true }),
+    image_url: resolveAssetUrl(photo.image_url),
   };
 }
 
