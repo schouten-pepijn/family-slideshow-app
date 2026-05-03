@@ -7,9 +7,9 @@ from fastapi import APIRouter, Depends, HTTPException, Request, Response, status
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from src.database import get_db
-from src.dependencies import get_current_user
+from src.dependencies import get_current_user, get_session_id_from_request
 from src.models import User
-from src.schemas.auth import AuthUserResponse, LoginRequest
+from src.schemas.auth import AuthUserResponse, LoginRequest, LoginResponse
 from src.services.auth_service import (
     create_session,
     delete_session,
@@ -25,12 +25,12 @@ get_current_user_dependency = Annotated[User, Depends(get_current_user)]
 router = APIRouter(prefix="/api/auth", tags=["auth"])
 
 
-@router.post("/login", response_model=AuthUserResponse)
+@router.post("/login", response_model=LoginResponse)
 async def login(
     payload: LoginRequest,
     response: Response,
     db: get_db_dependency,
-) -> AuthUserResponse:
+) -> LoginResponse:
     user = await get_user_by_username(db, payload.username)
 
     if user is None or not verify_password(payload.password, user.password_hash):
@@ -57,7 +57,12 @@ async def login(
         path="/",
     )
 
-    return AuthUserResponse.model_validate(user)
+    return LoginResponse(
+        id=user.id,
+        username=user.username,
+        role=user.role,
+        access_token=session.id,
+    )
 
 
 @router.post("/logout", status_code=status.HTTP_200_OK)
@@ -66,7 +71,7 @@ async def logout(
     response: Response,
     db: get_db_dependency,
 ) -> dict:
-    session_id = request.cookies.get(settings.session_cookie_name)
+    session_id = get_session_id_from_request(request)
 
     if session_id:
         await delete_session(db, session_id)
